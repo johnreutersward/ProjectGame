@@ -21,7 +21,7 @@ namespace ProjectGame
                 MapRow thisRow = new MapRow();
                 for (int x = 0; x < MapWidth; x++)
                 {
-                    thisRow.Columns.Add(new MapCell(rand.Next(4)));
+                    thisRow.Columns.Add(new MapCell(2));
                 }
                 Rows.Add(thisRow);
             }
