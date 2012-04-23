@@ -9,10 +9,9 @@ namespace ProjectGame
     class TileMap
     {
         public List<MapRow> Rows = new List<MapRow>();
-        public int MapWidth = 100;
-        public int MapHeight = 100;
+        public int MapWidth = 50;
+        public int MapHeight = 50;
         public Random rand;
-
         public TileMap()
         {
             rand = new Random();
@@ -21,7 +20,8 @@ namespace ProjectGame
                 MapRow thisRow = new MapRow();
                 for (int x = 0; x < MapWidth; x++)
                 {
-                    thisRow.Columns.Add(new MapCell(2));
+                    //rand.Next(4)
+                    thisRow.Columns.Add(new MapCell(0));
                 }
                 Rows.Add(thisRow);
             }

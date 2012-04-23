@@ -32,8 +32,8 @@ namespace ProjectGame
 
             myMap = new TileMap();
             myChar = new Char();
-            squaresAcross = 50;
-            squaresDown = 50;
+            squaresAcross = 5;
+            squaresDown = 5;
         }
 
         /// <summary>
@@ -90,25 +90,29 @@ namespace ProjectGame
             if (kb.IsKeyDown(Keys.Left))
             {
                 myChar.myCharVector.X -= myChar.speed;
-                Camera.Location.X -= myChar.speed;
+                //Camera.Location.X -= myChar.speed;
+                Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 2, 0, (myMap.MapWidth - squaresAcross) * 32);
             }
 
             if (kb.IsKeyDown(Keys.Right))
             {
                 myChar.myCharVector.X += myChar.speed;
-                Camera.Location.X += myChar.speed;
+                //Camera.Location.X += myChar.speed;
+                Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 2, 0, (myMap.MapWidth - squaresAcross) * 32);
             }
 
             if (kb.IsKeyDown(Keys.Up))
             {
                 myChar.myCharVector.Y -= myChar.speed;
-                Camera.Location.Y -= myChar.speed;
+                //Camera.Location.Y -= myChar.speed;
+                Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 2, 0, (myMap.MapHeight - squaresDown) * 32);
             }
 
             if (kb.IsKeyDown(Keys.Down))
             {
                 myChar.myCharVector.Y += myChar.speed;
-                Camera.Location.Y += myChar.speed;
+                //Camera.Location.Y += myChar.speed;
+                Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 2, 0, (myMap.MapHeight - squaresDown) * 32);
             }
 
             
@@ -143,7 +147,7 @@ namespace ProjectGame
                         Color.White);
                 }
             }
-            spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+            //spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
 
             spriteBatch.End();
 
