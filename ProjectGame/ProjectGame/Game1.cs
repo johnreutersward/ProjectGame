@@ -19,8 +19,10 @@ namespace ProjectGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         TileMap myMap;
+        Char myChar;
         int squaresAcross;
         int squaresDown;
+
 
         public Game1()
         {
@@ -29,8 +31,9 @@ namespace ProjectGame
             IsMouseVisible = true;
 
             myMap = new TileMap();
-            squaresAcross = 25;
-            squaresDown = 25;
+            myChar = new Char();
+            squaresAcross = 50;
+            squaresDown = 50;
         }
 
         /// <summary>
@@ -55,6 +58,8 @@ namespace ProjectGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Tile.TileSetTexture = Content.Load<Texture2D>(@"Textures\TileSets\part1_tileset");
+            myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\octo");
+            myChar.myCharVector = new Vector2(25, 25);
 
             // TODO: use this.Content to load your game content here
         }
@@ -75,12 +80,38 @@ namespace ProjectGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            KeyboardState kb = Keyboard.GetState();
+
+            if (kb.IsKeyDown(Keys.Escape))
+            {
                 this.Exit();
+            }
 
-            // TODO: Add your update logic here
+            if (kb.IsKeyDown(Keys.Left))
+            {
+                myChar.myCharVector.X -= myChar.speed;
+                Camera.Location.X -= myChar.speed;
+            }
 
+            if (kb.IsKeyDown(Keys.Right))
+            {
+                myChar.myCharVector.X += myChar.speed;
+                Camera.Location.X += myChar.speed;
+            }
+
+            if (kb.IsKeyDown(Keys.Up))
+            {
+                myChar.myCharVector.Y -= myChar.speed;
+                Camera.Location.Y -= myChar.speed;
+            }
+
+            if (kb.IsKeyDown(Keys.Down))
+            {
+                myChar.myCharVector.Y += myChar.speed;
+                Camera.Location.Y += myChar.speed;
+            }
+
+            
             base.Update(gameTime);
         }
 
@@ -102,7 +133,7 @@ namespace ProjectGame
             int offsetY = (int)squareOffset.Y;
 
             for (int y = 0; y < squaresDown; y++)
-            {
+            {   
                 for (int x = 0; x < squaresAcross; x++)
                 {
                     spriteBatch.Draw(
@@ -112,6 +143,7 @@ namespace ProjectGame
                         Color.White);
                 }
             }
+            spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
 
             spriteBatch.End();
 

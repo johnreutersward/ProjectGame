@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Char.cs" />
     <Compile Include="MapCell.cs" />
     <Compile Include="MapRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
