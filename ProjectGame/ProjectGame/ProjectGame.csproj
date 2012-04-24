@@ -70,6 +70,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net" />
+    <Reference Include="xTile">
+      <HintPath>xTile\xTile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
@@ -90,8 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectGameContent\ProjectGameContent.contentproj">
-      <Name>ProjectGameContent</Name>
+      <Name>ProjectGameContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{6645551D-4F1D-4B28-8719-E63C02DC4763}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

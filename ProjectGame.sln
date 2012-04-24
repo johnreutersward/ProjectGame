@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGame", "ProjectGame\ProjectGame\ProjectGame.csproj", "{C9F165DB-BC74-486C-931B-0DE1EEE1974B}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ProjectGameContent", "ProjectGame\ProjectGameContent\ProjectGameContent.contentproj", "{6645551D-4F1D-4B28-8719-E63C02DC4763}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGameContent", "ProjectGame\ProjectGameContent\ProjectGameContent.contentproj", "{6645551D-4F1D-4B28-8719-E63C02DC4763}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xTile", "xTile", "{626C37FF-8D7B-47AC-A32D-FEA92CA95515}"
+	ProjectSection(SolutionItems) = preProject
+		ProjectGame\ProjectGame\xTile\xTile.dll = ProjectGame\ProjectGame\xTile\xTile.dll
+		ProjectGame\ProjectGame\xTile\xTile.Pipeline.dll = ProjectGame\ProjectGame\xTile\xTile.Pipeline.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

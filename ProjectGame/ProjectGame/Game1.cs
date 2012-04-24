@@ -9,6 +9,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using xTile;
+using xTile.Dimensions;
+using xTile.Display;
+
 namespace ProjectGame
 {
     /// <summary>
@@ -22,6 +26,10 @@ namespace ProjectGame
         Char myChar;
         int squaresAcross;
         int squaresDown;
+
+        Map map;
+        IDisplayDevice mapDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
 
 
         public Game1()
@@ -45,8 +53,14 @@ namespace ProjectGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
+            mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
+
+            map.LoadTileSheets(mapDisplayDevice);
+
+            viewport = new xTile.Dimensions.Rectangle(new Size(800,600));
+
+            
         }
 
         /// <summary>
@@ -61,6 +75,8 @@ namespace ProjectGame
             myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\octo");
             myChar.myCharVector = new Vector2(25, 25);
 
+
+            map = Content.Load<Map>("Maps\\Map01");
             // TODO: use this.Content to load your game content here
         }
 
@@ -92,6 +108,7 @@ namespace ProjectGame
                 myChar.myCharVector.X -= myChar.speed;
                 //Camera.Location.X -= myChar.speed;
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 2, 0, (myMap.MapWidth - squaresAcross) * 32);
+                viewport.X -= 1;
             }
 
             if (kb.IsKeyDown(Keys.Right))
@@ -99,6 +116,7 @@ namespace ProjectGame
                 myChar.myCharVector.X += myChar.speed;
                 //Camera.Location.X += myChar.speed;
                 Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 2, 0, (myMap.MapWidth - squaresAcross) * 32);
+                viewport.X += 1;
             }
 
             if (kb.IsKeyDown(Keys.Up))
@@ -106,6 +124,7 @@ namespace ProjectGame
                 myChar.myCharVector.Y -= myChar.speed;
                 //Camera.Location.Y -= myChar.speed;
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 2, 0, (myMap.MapHeight - squaresDown) * 32);
+                viewport.Y -= 1;
             }
 
             if (kb.IsKeyDown(Keys.Down))
@@ -113,8 +132,10 @@ namespace ProjectGame
                 myChar.myCharVector.Y += myChar.speed;
                 //Camera.Location.Y += myChar.speed;
                 Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 2, 0, (myMap.MapHeight - squaresDown) * 32);
+                viewport.Y += 1;
             }
 
+            map.Update(gameTime.ElapsedGameTime.Milliseconds);
             
             base.Update(gameTime);
         }
@@ -128,26 +149,29 @@ namespace ProjectGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            Vector2 firstSquare = new Vector2(Camera.Location.X / 32, Camera.Location.Y / 32);
-            int firstX = (int)firstSquare.X;
-            int firstY = (int)firstSquare.Y;
+            map.Draw(mapDisplayDevice, viewport);
 
-            Vector2 squareOffset = new Vector2(Camera.Location.X % 32, Camera.Location.Y % 32);
-            int offsetX = (int)squareOffset.X;
-            int offsetY = (int)squareOffset.Y;
 
-            for (int y = 0; y < squaresDown; y++)
-            {   
-                for (int x = 0; x < squaresAcross; x++)
-                {
-                    spriteBatch.Draw(
-                        Tile.TileSetTexture,
-                        new Rectangle((x * 32) - offsetX, (y * 32) - offsetY, 32, 32),
-                        Tile.GetSourceRectangle(myMap.Rows[y + firstY].Columns[x + firstX].TileID),
-                        Color.White);
-                }
-            }
-            //spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+            //Vector2 firstSquare = new Vector2(Camera.Location.X / 32, Camera.Location.Y / 32);
+            //int firstX = (int)firstSquare.X;
+            //int firstY = (int)firstSquare.Y;
+
+            //Vector2 squareOffset = new Vector2(Camera.Location.X % 32, Camera.Location.Y % 32);
+            //int offsetX = (int)squareOffset.X;
+            //int offsetY = (int)squareOffset.Y;
+
+            //for (int y = 0; y < squaresDown; y++)
+            //{   
+            //    for (int x = 0; x < squaresAcross; x++)
+            //    {
+            //        spriteBatch.Draw(
+            //            Tile.TileSetTexture,
+            //            new Rectangle((x * 32) - offsetX, (y * 32) - offsetY, 32, 32),
+            //            Tile.GetSourceRectangle(myMap.Rows[y + firstY].Columns[x + firstX].TileID),
+            //            Color.White);
+            //    }
+            //}
+            spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
 
             spriteBatch.End();
 
