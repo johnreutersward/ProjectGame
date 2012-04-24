@@ -76,7 +76,8 @@ namespace ProjectGame
             myChar.myCharVector = new Vector2(25, 25);
 
 
-            map = Content.Load<Map>("Maps\\Map01");
+            //map = Content.Load<Map>("Maps\\Map01");
+            map = Content.Load<Map>("Maps\\theRoad");
             // TODO: use this.Content to load your game content here
         }
 
