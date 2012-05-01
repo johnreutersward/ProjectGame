@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+
 using Microsoft.Xna.Framework.Media;
 
 using xTile;
@@ -15,22 +15,34 @@ using xTile.Display;
 
 namespace ProjectGame
 {
+    using Microsoft.Xna.Framework.Input;
     /// <summary>
     /// This is the main type for your game
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        private Input input;
+        public static GameStates gamestate;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         TileMap myMap;
         Char myChar;
         int squaresAcross;
         int squaresDown;
-
+        private SpriteFont text;
+        private Menu menu;
+        private Settings settings;
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
 
+        public enum GameStates
+        {
+            MainMenu,
+            Game,
+            Settings,
+            End
+        }
 
         public Game1()
         {
@@ -52,15 +64,16 @@ namespace ProjectGame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            base.Initialize();
+            input = new Input();
+            menu = new Menu();
+            settings = new Settings();
+            gamestate = GameStates.MainMenu;
+
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
 
-            map.LoadTileSheets(mapDisplayDevice);
-
-            viewport = new xTile.Dimensions.Rectangle(new Size(800,600));
-
-            
+            viewport = new xTile.Dimensions.Rectangle(new Size(800, 600));
+            // TODO: Add your initialization logic here
+            base.Initialize();
         }
 
         /// <summary>
@@ -69,16 +82,25 @@ namespace ProjectGame
         /// </summary>
         protected override void LoadContent()
         {
+            /// full editable, if you have a font installed in the system, just change the name of the font you want to use in the file Neverwinter // arial
+            /// If you installed some new fonts, restart visual express in order to make fonts visible 
+            /// you can find some good fonts i.e. http://www.dafont.com/
+            /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
+            /// it is already changed to that font.
+
+            text = Content.Load<SpriteFont>("Fonts\\Arial");
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Tile.TileSetTexture = Content.Load<Texture2D>(@"Textures\TileSets\part1_tileset");
             myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\octo");
             myChar.myCharVector = new Vector2(25, 25);
 
-
             //map = Content.Load<Map>("Maps\\Map01");
             map = Content.Load<Map>("Maps\\theRoad");
             // TODO: use this.Content to load your game content here
+
+            map.LoadTileSheets(mapDisplayDevice);
         }
 
         /// <summary>
@@ -97,47 +119,99 @@ namespace ProjectGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState kb = Keyboard.GetState();
+            input.Update();
 
-            if (kb.IsKeyDown(Keys.Escape))
+            // Manages menu 
+            if (gamestate == GameStates.MainMenu)
             {
-                this.Exit();
+                if (input.Down)
+                {
+                    menu.Iterator++;
+                }
+                else if (input.Up)
+                {
+                    menu.Iterator--;
+                }
+
+                if (input.Enter)
+                {
+                    if (menu.Iterator == 0)
+                    {
+                        gamestate = GameStates.Game;
+                    }
+                    else if (menu.Iterator == 1)
+                    {
+                        gamestate = GameStates.Settings;
+                    }
+                    else if (menu.Iterator == 2)
+                    {
+                        //gamestate = GameStates.Something;
+                    }
+                    else if (menu.Iterator == 3)
+                    {
+                        this.Exit();
+                    }
+                    menu.Iterator = 0;
+                }
             }
 
-            if (kb.IsKeyDown(Keys.Left))
+            else if (gamestate == GameStates.End)
             {
-                myChar.myCharVector.X -= myChar.speed;
-                //Camera.Location.X -= myChar.speed;
-                Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 2, 0, (myMap.MapWidth - squaresAcross) * 32);
-                viewport.X -= 1;
+                if (input.Enter)
+                {
+                    gamestate = GameStates.MainMenu;
+                }
             }
-
-            if (kb.IsKeyDown(Keys.Right))
+            else if (gamestate == GameStates.Settings)
             {
-                myChar.myCharVector.X += myChar.speed;
-                //Camera.Location.X += myChar.speed;
-                Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 2, 0, (myMap.MapWidth - squaresAcross) * 32);
-                viewport.X += 1;
+                if (input.Enter)
+                {
+                    gamestate = GameStates.MainMenu;
+                }
             }
-
-            if (kb.IsKeyDown(Keys.Up))
+            else if (gamestate == GameStates.Game)
             {
-                myChar.myCharVector.Y -= myChar.speed;
-                //Camera.Location.Y -= myChar.speed;
-                Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 2, 0, (myMap.MapHeight - squaresDown) * 32);
-                viewport.Y -= 1;
-            }
+                KeyboardState kb = Keyboard.GetState();
 
-            if (kb.IsKeyDown(Keys.Down))
-            {
-                myChar.myCharVector.Y += myChar.speed;
-                //Camera.Location.Y += myChar.speed;
-                Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 2, 0, (myMap.MapHeight - squaresDown) * 32);
-                viewport.Y += 1;
-            }
+                if (kb.IsKeyDown(Keys.Escape))
+                {
+                    gamestate = GameStates.MainMenu;
+                }
 
+                if (kb.IsKeyDown(Keys.Left))
+                {
+                    myChar.myCharVector.X -= myChar.speed;
+                    //Camera.Location.X -= myChar.speed;
+                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 2, 0, (myMap.MapWidth - squaresAcross) * 32);
+                    viewport.X -= 1;
+                }
+
+                if (kb.IsKeyDown(Keys.Right))
+                {
+                    myChar.myCharVector.X += myChar.speed;
+                    //Camera.Location.X += myChar.speed;
+                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 2, 0, (myMap.MapWidth - squaresAcross) * 32);
+                    viewport.X += 1;
+                }
+
+                if (kb.IsKeyDown(Keys.Up))
+                {
+                    myChar.myCharVector.Y -= myChar.speed;
+                    //Camera.Location.Y -= myChar.speed;
+                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 2, 0, (myMap.MapHeight - squaresDown) * 32);
+                    viewport.Y -= 1;
+                }
+
+                if (kb.IsKeyDown(Keys.Down))
+                {
+                    myChar.myCharVector.Y += myChar.speed;
+                    //Camera.Location.Y += myChar.speed;
+                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 2, 0, (myMap.MapHeight - squaresDown) * 32);
+                    viewport.Y += 1;
+                }
+            }
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
-            
+
             base.Update(gameTime);
         }
 
@@ -147,10 +221,32 @@ namespace ProjectGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            // background color
+            GraphicsDevice.Clear(Color.Black);
+
             spriteBatch.Begin();
 
-            map.Draw(mapDisplayDevice, viewport);
+
+            if (gamestate == GameStates.MainMenu)
+            {
+                menu.DrawMenu(spriteBatch, 800, text);
+            }
+            else if (gamestate == GameStates.Settings)
+            {
+                settings.DrawMenu(spriteBatch, 800, text);
+            }
+            else if (gamestate == GameStates.Game)
+            {
+                map.Draw(mapDisplayDevice, viewport);
+                spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+
+            }
+
+            else if (gamestate == GameStates.End)
+            {
+                menu.DrawEnd(spriteBatch, 800, text);
+            }
+
 
 
             //Vector2 firstSquare = new Vector2(Camera.Location.X / 32, Camera.Location.Y / 32);
@@ -172,7 +268,6 @@ namespace ProjectGame
             //            Color.White);
             //    }
             //}
-            spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
 
             spriteBatch.End();
 
