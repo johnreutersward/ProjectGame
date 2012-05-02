@@ -27,14 +27,14 @@ namespace ProjectGame
         {
             get
             {
-                if (Game1.gamestate == Game1.GameStates.MainMenu)
+                if (Game1.gamestate == Game1.GameStates.MainMenu || Game1.gamestate == Game1.GameStates.ChooseCharacter)
                 {
                     return keyboardState.IsKeyDown(Keys.Up) && lastState.IsKeyUp(Keys.Up);
                 }
                 else
                 {
                     return keyboardState.IsKeyDown(Keys.Up);
-                }
+                } 
             }
         }
 
@@ -42,7 +42,7 @@ namespace ProjectGame
         {
             get
             {
-                if (Game1.gamestate == Game1.GameStates.MainMenu)
+                if (Game1.gamestate == Game1.GameStates.MainMenu || Game1.gamestate == Game1.GameStates.ChooseCharacter)
                 {
                     return keyboardState.IsKeyDown(Keys.Down) && lastState.IsKeyUp(Keys.Down);
                 }

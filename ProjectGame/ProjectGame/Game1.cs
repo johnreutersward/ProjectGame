@@ -32,15 +32,18 @@ namespace ProjectGame
         private SpriteFont text;
         private Menu menu;
         private Settings settings;
+        private ChooseChar choosechar;
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
+        
 
         public enum GameStates
         {
             MainMenu,
             Game,
             Settings,
+            ChooseCharacter,
             End
         }
 
@@ -64,9 +67,11 @@ namespace ProjectGame
         /// </summary>
         protected override void Initialize()
         {
+            
             input = new Input();
             menu = new Menu();
             settings = new Settings();
+            choosechar = new ChooseChar();
             gamestate = GameStates.MainMenu;
 
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
@@ -88,7 +93,10 @@ namespace ProjectGame
             /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
             /// it is already changed to that font.
 
+            
             text = Content.Load<SpriteFont>("Fonts\\Arial");
+            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\octo");
+            myChar.KnightIco = Content.Load<Texture2D>(@"Textures\Misc\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -137,7 +145,7 @@ namespace ProjectGame
                 {
                     if (menu.Iterator == 0)
                     {
-                        gamestate = GameStates.Game;
+                        gamestate = GameStates.ChooseCharacter;
                     }
                     else if (menu.Iterator == 1)
                     {
@@ -169,6 +177,44 @@ namespace ProjectGame
                     gamestate = GameStates.MainMenu;
                 }
             }
+
+           else  if (gamestate == GameStates.ChooseCharacter)
+            {
+                if (input.Down)
+                {
+                    choosechar.IterChar++;
+                }
+                else if (input.Up)
+                {
+                    choosechar.IterChar--;
+                }
+                
+                if (input.Enter)
+                {
+                    if (choosechar.IterChar == 0)
+                    {
+                        // Set character to wizard 
+                        myChar.chosenChar = 0;
+                        gamestate = GameStates.Game;
+                    }
+                    else if (choosechar.IterChar == 1)
+                    {
+                        //set character to Knight
+                        myChar.chosenChar = 1;
+                        gamestate = GameStates.Game;
+                    }
+                   
+                    else if (choosechar.IterChar == 2)
+                    {
+                        gamestate = GameStates.MainMenu;
+                    }
+                    
+                }
+
+
+            }
+
+
             else if (gamestate == GameStates.Game)
             {
                 KeyboardState kb = Keyboard.GetState();
@@ -235,10 +281,30 @@ namespace ProjectGame
             {
                 settings.DrawMenu(spriteBatch, 800, text);
             }
+            else if (gamestate == GameStates.ChooseCharacter)
+            {
+                choosechar.DrawMenu(spriteBatch, 800, text);
+                if (choosechar.IterChar == 0)
+                {
+                    spriteBatch.Draw(myChar.WizardIco, new Vector2(500, 100), Color.White);
+                }
+                else if (choosechar.IterChar == 1)
+                {
+                    spriteBatch.Draw(myChar.KnightIco, new Vector2(500, 150), Color.White);
+                }
+
+            }
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
-                spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+                if (myChar.chosenChar == 0)
+                {
+                    spriteBatch.Draw(myChar.WizardIco, myChar.myCharVector, Color.White);
+                }
+                else if (myChar.chosenChar == 1)
+                {
+                    spriteBatch.Draw(myChar.KnightIco, myChar.myCharVector, Color.White);
+                }
 
             }
 

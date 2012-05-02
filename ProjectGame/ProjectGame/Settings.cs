@@ -12,7 +12,7 @@ namespace ProjectGame
         private List<string> SettingsItems;
         private int iterator;
         public string Options { get; set; }
-        public int Iter
+        public int IterSettings
         {
             get
             {
