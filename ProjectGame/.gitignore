@@ -3,6 +3,7 @@
 *.user
 *.suo
 *.[Cc]ache
+*.cachefile
 *.bak
 *.ncb
 *.log 
