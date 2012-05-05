@@ -80,7 +80,7 @@ namespace ProjectGame
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
             
-            viewport = new xTile.Dimensions.Rectangle(new Size(320, 320));
+            viewport = new xTile.Dimensions.Rectangle(new Size(800, 600));
 
 
             base.Initialize();
@@ -230,6 +230,8 @@ namespace ProjectGame
                     gamestate = GameStates.MainMenu;
                 }
 
+                
+
                 if (kb.IsKeyDown(Keys.Left))
                 {
                     myChar.myCharVector.X -= myChar.speed;
@@ -311,6 +313,11 @@ namespace ProjectGame
                 {
                     spriteBatch.Draw(myChar.KnightIco, myChar.myCharVector, Color.White);
                 }
+
+                //DEBUG PRINT
+                spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 300, 0), Color.White);
+                spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
+                
 
             }
 
