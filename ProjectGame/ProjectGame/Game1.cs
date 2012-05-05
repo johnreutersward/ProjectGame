@@ -317,7 +317,12 @@ namespace ProjectGame
                 //DEBUG PRINT
                 spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 300, 0), Color.White);
                 spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
-                
+                spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
+                spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
+
+                Location currentLoc = new Location();
+                currentLoc = map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size);
+                spriteBatch.DrawString(text, "layer2map: " + currentLoc.ToString(), new Vector2(viewport.Width - 300, 35 * 4), Color.White);
 
             }
 
