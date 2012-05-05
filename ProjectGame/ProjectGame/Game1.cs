@@ -33,6 +33,8 @@ namespace ProjectGame
         private Menu menu;
         private Settings settings;
         private ChooseChar choosechar;
+
+        // xTile map, display device reference and rendering viewport
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
@@ -74,10 +76,13 @@ namespace ProjectGame
             choosechar = new ChooseChar();
             gamestate = GameStates.MainMenu;
 
-            mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
 
-            viewport = new xTile.Dimensions.Rectangle(new Size(800, 600));
-            // TODO: Add your initialization logic here
+            //xTile
+            mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
+            
+            viewport = new xTile.Dimensions.Rectangle(new Size(320, 320));
+
+
             base.Initialize();
         }
 
@@ -105,10 +110,11 @@ namespace ProjectGame
             myChar.myCharVector = new Vector2(25, 25);
 
             //map = Content.Load<Map>("Maps\\Map01");
-            map = Content.Load<Map>("Maps\\theRoad");
+            //map = Content.Load<Map>("Maps\\theRoad");
+            map = Content.Load<Map>("Maps\\320x320_test1");
             // TODO: use this.Content to load your game content here
-
             map.LoadTileSheets(mapDisplayDevice);
+            
         }
 
         /// <summary>
