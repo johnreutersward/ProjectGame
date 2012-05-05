@@ -16,25 +16,28 @@ using xTile.Display;
 namespace ProjectGame
 {
     using Microsoft.Xna.Framework.Input;
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         private Input input;
         public static GameStates gamestate;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+    
+        //tile map (from XNAresources.com)
         TileMap myMap;
         Char myChar;
         int squaresAcross;
         int squaresDown;
+        
+        // menu & char screen
         private SpriteFont text;
         private Menu menu;
         private Settings settings;
         private ChooseChar choosechar;
 
-        // xTile map, display device reference and rendering viewport
+        // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
@@ -69,7 +72,7 @@ namespace ProjectGame
         /// </summary>
         protected override void Initialize()
         {
-            
+            base.Initialize();
             input = new Input();
             menu = new Menu();
             settings = new Settings();
@@ -79,11 +82,11 @@ namespace ProjectGame
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
-            
+            map.LoadTileSheets(mapDisplayDevice);
             viewport = new xTile.Dimensions.Rectangle(new Size(800, 600));
 
 
-            base.Initialize();
+            
         }
 
         /// <summary>
@@ -97,23 +100,21 @@ namespace ProjectGame
             /// you can find some good fonts i.e. http://www.dafont.com/
             /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
             /// it is already changed to that font.
-
-            
             text = Content.Load<SpriteFont>("Fonts\\Arial");
             myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\octo");
             myChar.KnightIco = Content.Load<Texture2D>(@"Textures\Misc\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Tile.TileSetTexture = Content.Load<Texture2D>(@"Textures\TileSets\part1_tileset");
+
             myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\octo");
             myChar.myCharVector = new Vector2(25, 25);
 
+            // Keeping the other maps in here for now
             //map = Content.Load<Map>("Maps\\Map01");
             //map = Content.Load<Map>("Maps\\theRoad");
             map = Content.Load<Map>("Maps\\320x320_test1");
-            // TODO: use this.Content to load your game content here
-            map.LoadTileSheets(mapDisplayDevice);
+            
             
         }
 
@@ -225,42 +226,40 @@ namespace ProjectGame
             {
                 KeyboardState kb = Keyboard.GetState();
 
+
+                // DEBUG feature only
+                if (kb.IsKeyDown(Keys.Delete))
+                {
+                    this.Exit();
+                }
+
                 if (kb.IsKeyDown(Keys.Escape))
                 {
                     gamestate = GameStates.MainMenu;
                 }
 
-                
 
                 if (kb.IsKeyDown(Keys.Left))
                 {
                     myChar.myCharVector.X -= myChar.speed;
-                    //Camera.Location.X -= myChar.speed;
-                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X - 2, 0, (myMap.MapWidth - squaresAcross) * 32);
                     viewport.X -= 1;
                 }
 
                 if (kb.IsKeyDown(Keys.Right))
                 {
                     myChar.myCharVector.X += myChar.speed;
-                    //Camera.Location.X += myChar.speed;
-                    Camera.Location.X = MathHelper.Clamp(Camera.Location.X + 2, 0, (myMap.MapWidth - squaresAcross) * 32);
                     viewport.X += 1;
                 }
 
                 if (kb.IsKeyDown(Keys.Up))
                 {
                     myChar.myCharVector.Y -= myChar.speed;
-                    //Camera.Location.Y -= myChar.speed;
-                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y - 2, 0, (myMap.MapHeight - squaresDown) * 32);
                     viewport.Y -= 1;
                 }
 
                 if (kb.IsKeyDown(Keys.Down))
                 {
                     myChar.myCharVector.Y += myChar.speed;
-                    //Camera.Location.Y += myChar.speed;
-                    Camera.Location.Y = MathHelper.Clamp(Camera.Location.Y + 2, 0, (myMap.MapHeight - squaresDown) * 32);
                     viewport.Y += 1;
                 }
             }
@@ -278,6 +277,9 @@ namespace ProjectGame
             // background color
             GraphicsDevice.Clear(Color.Black);
 
+            
+            // Draws the main map screen aswell as text and other UI stuff
+            // Break into smaller modules in ze future
             spriteBatch.Begin();
 
 
@@ -330,33 +332,7 @@ namespace ProjectGame
             {
                 menu.DrawEnd(spriteBatch, 800, text);
             }
-
-
-
-            //Vector2 firstSquare = new Vector2(Camera.Location.X / 32, Camera.Location.Y / 32);
-            //int firstX = (int)firstSquare.X;
-            //int firstY = (int)firstSquare.Y;
-
-            //Vector2 squareOffset = new Vector2(Camera.Location.X % 32, Camera.Location.Y % 32);
-            //int offsetX = (int)squareOffset.X;
-            //int offsetY = (int)squareOffset.Y;
-
-            //for (int y = 0; y < squaresDown; y++)
-            //{   
-            //    for (int x = 0; x < squaresAcross; x++)
-            //    {
-            //        spriteBatch.Draw(
-            //            Tile.TileSetTexture,
-            //            new Rectangle((x * 32) - offsetX, (y * 32) - offsetY, 32, 32),
-            //            Tile.GetSourceRectangle(myMap.Rows[y + firstY].Columns[x + firstX].TileID),
-            //            Color.White);
-            //    }
-            //}
-
             spriteBatch.End();
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
