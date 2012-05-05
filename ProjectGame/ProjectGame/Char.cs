@@ -14,7 +14,7 @@ namespace ProjectGame
         public Texture2D WizardIco;
         public Texture2D KnightIco;
         public Vector2 myCharVector = Vector2.Zero;
-        public int speed = 2;
+        public int speed = 1;
         public int chosenChar;
     }
 }

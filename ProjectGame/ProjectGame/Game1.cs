@@ -25,12 +25,9 @@ namespace ProjectGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
     
-        //tile map (from XNAresources.com)
-        TileMap myMap;
+        // octo knight
         Char myChar;
-        int squaresAcross;
-        int squaresDown;
-        
+
         // menu & char screen
         private SpriteFont text;
         private Menu menu;
@@ -41,6 +38,9 @@ namespace ProjectGame
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
+
+        int windowWidth;
+        int windowHeight;
         
 
         public enum GameStates
@@ -57,11 +57,18 @@ namespace ProjectGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            myMap = new TileMap();
             myChar = new Char();
-            squaresAcross = 5;
-            squaresDown = 5;
+
+            // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
+            // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
+            windowWidth = graphics.PreferredBackBufferWidth;
+            windowHeight = graphics.PreferredBackBufferHeight;
+            
+
+
+            
         }
 
         /// <summary>
@@ -73,6 +80,7 @@ namespace ProjectGame
         protected override void Initialize()
         {
             base.Initialize();
+            
             input = new Input();
             menu = new Menu();
             settings = new Settings();
@@ -83,7 +91,11 @@ namespace ProjectGame
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
             map.LoadTileSheets(mapDisplayDevice);
-            viewport = new xTile.Dimensions.Rectangle(new Size(800, 600));
+            // Make sure that viewport size = window size
+            viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
+            //viewport.X = viewport.Width / 2;
+            //viewport.Y = viewport.Height / 2;
+            
 
 
             
@@ -108,7 +120,7 @@ namespace ProjectGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\octo");
-            myChar.myCharVector = new Vector2(25, 25);
+            myChar.myCharVector = new Vector2(128, 0);
 
             // Keeping the other maps in here for now
             //map = Content.Load<Map>("Maps\\Map01");
@@ -233,6 +245,12 @@ namespace ProjectGame
                     this.Exit();
                 }
 
+                // DEBUG feature only (maybe)
+                if (kb.IsKeyDown(Keys.F))
+                {
+                    graphics.ToggleFullScreen();
+                }
+
                 if (kb.IsKeyDown(Keys.Escape))
                 {
                     gamestate = GameStates.MainMenu;
@@ -242,26 +260,24 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.Left))
                 {
                     myChar.myCharVector.X -= myChar.speed;
-                    viewport.X -= 1;
                 }
 
                 if (kb.IsKeyDown(Keys.Right))
                 {
                     myChar.myCharVector.X += myChar.speed;
-                    viewport.X += 1;
                 }
 
                 if (kb.IsKeyDown(Keys.Up))
                 {
                     myChar.myCharVector.Y -= myChar.speed;
-                    viewport.Y -= 1;
                 }
 
                 if (kb.IsKeyDown(Keys.Down))
                 {
                     myChar.myCharVector.Y += myChar.speed;
-                    viewport.Y += 1;
                 }
+                viewport.X = ((int)myChar.myCharVector.X - (int)viewport.Width) / 2;
+                viewport.Y = ((int)myChar.myCharVector.Y - (int)viewport.Height) / 2;
             }
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
 
@@ -302,8 +318,9 @@ namespace ProjectGame
                 {
                     spriteBatch.Draw(myChar.KnightIco, new Vector2(500, 150), Color.White);
                 }
-
             }
+
+            // ACTUALL GAME MODE
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
@@ -319,13 +336,12 @@ namespace ProjectGame
                 //DEBUG PRINT
                 spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 300, 0), Color.White);
                 spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
+                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35*4), Color.White);
                 spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
                 spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
-
-                Location currentLoc = new Location();
-                currentLoc = map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size);
-                spriteBatch.DrawString(text, "layer2map: " + currentLoc.ToString(), new Vector2(viewport.Width - 300, 35 * 4), Color.White);
-
+                spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
+                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 300, 35*6), Color.White);
+                spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 300, 35 * 7), Color.White);
             }
 
             else if (gamestate == GameStates.End)
