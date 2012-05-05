@@ -58,6 +58,7 @@
       <Name>Map01</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
