@@ -369,29 +369,15 @@ namespace ProjectGame
                 }
 
                 //DEBUG PRINT
-                spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 300, 0), Color.White);
+                spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 400, 0), Color.White);
                 //spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
-                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35*4), Color.White);
+                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 400, 35*4), Color.White);
                 //spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
                 //spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
                 //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
-                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 300, 35*6), Color.White);
-                spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 300, 35 * 7), Color.White);
-
-                
-
-                //Horrible test code for collision
-                Microsoft.Xna.Framework.Rectangle Collisionbox = new Microsoft.Xna.Framework.Rectangle(0,0,32,32);
-                Layer collision = map.GetLayer("stones");
-                Location tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32,
-                ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
-                Tile tile = collision.Tiles[tileLocation];
-                if (tile != null && tile.TileIndex == 97)
-                {
-                    spriteBatch.DrawString(text, "YO THERE IS A COLLISION", new Vector2(viewport.Width - 400, 35 * 10), Color.White);
-                }
-
-
+                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35*6), Color.White);
+                spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
+                spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 450, 35 * 10), Color.White);
             }
 
             else if (gamestate == GameStates.End)
@@ -400,6 +386,46 @@ namespace ProjectGame
             }
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private bool Collision(Vector2 pos)
+        {
+            //Horrible test code for collision
+            Microsoft.Xna.Framework.Rectangle Collisionbox = new Microsoft.Xna.Framework.Rectangle(0, 0, 1, 1);
+            Layer collision = map.GetLayer("stones");
+            Location tileLocation;
+            Tile tile;
+
+            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
+            {
+                return true;
+            }
+
+            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
+            {
+                return true;
+            }
+
+            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
+            {
+                return true;
+            }
+
+            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
+            {
+                return true;
+            }
+
+            return false;
+
         }
     }
 }
