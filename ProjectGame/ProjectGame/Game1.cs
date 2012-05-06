@@ -126,9 +126,9 @@ namespace ProjectGame
             myChar.myCharVector = new Vector2(128, 0);
 
             // Keeping the other maps in here for now
-            map = Content.Load<Map>("Maps\\Map01");
+            //map = Content.Load<Map>("Maps\\Map01");
             //map = Content.Load<Map>("Maps\\theRoad");
-            //map = Content.Load<Map>("Maps\\320x320_test1");
+            map = Content.Load<Map>("Maps\\320x320_test1");
             
             
         }
@@ -378,9 +378,19 @@ namespace ProjectGame
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 300, 35*6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 300, 35 * 7), Color.White);
 
-                //Layer collision = map.GetLayer("stones");
-                //Tile tile;
-                //tile = collision.Tiles[new Location(0, 0)];
+                
+
+                //Horrible test code for collision
+                Microsoft.Xna.Framework.Rectangle Collisionbox = new Microsoft.Xna.Framework.Rectangle(0,0,32,32);
+                Layer collision = map.GetLayer("stones");
+                Location tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32,
+                ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
+                Tile tile = collision.Tiles[tileLocation];
+                if (tile != null && tile.TileIndex == 97)
+                {
+                    spriteBatch.DrawString(text, "YO THERE IS A COLLISION", new Vector2(viewport.Width - 400, 35 * 10), Color.White);
+                }
+
 
             }
 
