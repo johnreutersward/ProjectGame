@@ -16,6 +16,8 @@ using xTile.Display;
 namespace ProjectGame
 {
     using Microsoft.Xna.Framework.Input;
+    using xTile.Layers;
+    using xTile.Tiles;
 
     public class Game1 : Microsoft.Xna.Framework.Game
     {
@@ -58,6 +60,7 @@ namespace ProjectGame
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             myChar = new Char();
+            
 
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
@@ -330,6 +333,9 @@ namespace ProjectGame
                 map.Draw(mapDisplayDevice, viewport);
                 //map.Draw(mapDisplayDevice, viewport, new Location(32, 32), false);
 
+
+
+
                 // Real ABS screen pos
                 Vector2 realPos = Vector2.Zero;
                 if (map.DisplayWidth <= windowWidth && map.DisplayHeight <= windowHeight)
@@ -371,6 +377,11 @@ namespace ProjectGame
                 //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 300, 35*6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 300, 35 * 7), Color.White);
+
+                //Layer collision = map.GetLayer("stones");
+                //Tile tile;
+                //tile = collision.Tiles[new Location(0, 0)];
+
             }
 
             else if (gamestate == GameStates.End)
