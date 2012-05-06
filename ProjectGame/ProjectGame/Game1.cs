@@ -123,9 +123,9 @@ namespace ProjectGame
             myChar.myCharVector = new Vector2(128, 0);
 
             // Keeping the other maps in here for now
-            //map = Content.Load<Map>("Maps\\Map01");
+            map = Content.Load<Map>("Maps\\Map01");
             //map = Content.Load<Map>("Maps\\theRoad");
-            map = Content.Load<Map>("Maps\\320x320_test1");
+            //map = Content.Load<Map>("Maps\\320x320_test1");
             
             
         }
@@ -260,24 +260,28 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.Left))
                 {
                     myChar.myCharVector.X -= myChar.speed;
+                    //viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
                 }
 
                 if (kb.IsKeyDown(Keys.Right))
                 {
                     myChar.myCharVector.X += myChar.speed;
+                    //viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
                 }
 
                 if (kb.IsKeyDown(Keys.Up))
                 {
                     myChar.myCharVector.Y -= myChar.speed;
+                    //viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
                 }
 
                 if (kb.IsKeyDown(Keys.Down))
                 {
                     myChar.myCharVector.Y += myChar.speed;
+                    //viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
                 }
-                viewport.X = ((int)myChar.myCharVector.X - (int)viewport.Width) / 2;
-                viewport.Y = ((int)myChar.myCharVector.Y - (int)viewport.Height) / 2;
+                viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
+                viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
             }
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
 
@@ -324,22 +328,47 @@ namespace ProjectGame
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
+                //map.Draw(mapDisplayDevice, viewport, new Location(32, 32), false);
+
+                // Real ABS screen pos
+                Vector2 realPos = Vector2.Zero;
+                if (map.DisplayWidth <= windowWidth && map.DisplayHeight <= windowHeight)
+                {
+                    realPos.X = myChar.myCharVector.X;
+                    realPos.Y = myChar.myCharVector.Y;
+                }
+                else if (map.DisplayWidth > windowWidth && map.DisplayHeight <= windowHeight)
+                {
+                    realPos.X = myChar.myCharVector.X - viewport.X;
+                    realPos.Y = myChar.myCharVector.Y;
+                }
+                else if (map.DisplayWidth <= windowWidth && map.DisplayHeight > windowHeight)
+                {
+                    realPos.X = myChar.myCharVector.X;
+                    realPos.Y = myChar.myCharVector.Y - viewport.Y;
+                }
+                else if (map.DisplayWidth > windowWidth && map.DisplayHeight > windowHeight)
+                {
+                    realPos.X = myChar.myCharVector.X - viewport.X;
+                    realPos.Y = myChar.myCharVector.Y - viewport.Y;
+                }
+
                 if (myChar.chosenChar == 0)
                 {
-                    spriteBatch.Draw(myChar.WizardIco, myChar.myCharVector, Color.White);
+                    spriteBatch.Draw(myChar.WizardIco, realPos, Color.White);
                 }
                 else if (myChar.chosenChar == 1)
                 {
-                    spriteBatch.Draw(myChar.KnightIco, myChar.myCharVector, Color.White);
+                    spriteBatch.Draw(myChar.KnightIco, realPos, Color.White);
                 }
 
                 //DEBUG PRINT
                 spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 300, 0), Color.White);
-                spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
+                //spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
                 spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35*4), Color.White);
-                spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
-                spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
-                spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
+                //spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
+                //spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
+                //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 300, 35*6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 300, 35 * 7), Color.White);
             }
