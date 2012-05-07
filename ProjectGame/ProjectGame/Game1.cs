@@ -43,7 +43,9 @@ namespace ProjectGame
 
         int windowWidth;
         int windowHeight;
-        
+
+
+        Microsoft.Xna.Framework.Rectangle Collisionbox;
 
         public enum GameStates
         {
@@ -68,8 +70,11 @@ namespace ProjectGame
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
-            
 
+            Collisionbox = new Microsoft.Xna.Framework.Rectangle();
+            Collisionbox.Height = 32;
+            Collisionbox.Width = 32;
+            Collisionbox.Location = new Point(-16, -16);
 
             
         }
@@ -116,13 +121,13 @@ namespace ProjectGame
             /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
             /// it is already changed to that font.
             text = Content.Load<SpriteFont>("Fonts\\Arial");
-            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\octo");
+            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
             myChar.KnightIco = Content.Load<Texture2D>(@"Textures\Misc\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\octo");
+            myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
             myChar.myCharVector = new Vector2(128, 0);
 
             // Keeping the other maps in here for now
@@ -331,10 +336,6 @@ namespace ProjectGame
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
-                //map.Draw(mapDisplayDevice, viewport, new Location(32, 32), false);
-
-
-
 
                 // Real ABS screen pos
                 Vector2 realPos = Vector2.Zero;
@@ -377,7 +378,8 @@ namespace ProjectGame
                 //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35*6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
-                spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 450, 35 * 10), Color.White);
+                spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
+                spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Top, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
             }
 
             else if (gamestate == GameStates.End)
@@ -391,7 +393,7 @@ namespace ProjectGame
         private bool Collision(Vector2 pos)
         {
             //Horrible test code for collision
-            Microsoft.Xna.Framework.Rectangle Collisionbox = new Microsoft.Xna.Framework.Rectangle(0, 0, 1, 1);
+            
             Layer collision = map.GetLayer("stones");
             Location tileLocation;
             Tile tile;
@@ -400,6 +402,7 @@ namespace ProjectGame
             tile = collision.Tiles[tileLocation];
             if (tile != null && tile.TileIndex == 97)
             {
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
                 return true;
             }
 
@@ -407,13 +410,15 @@ namespace ProjectGame
             tile = collision.Tiles[tileLocation];
             if (tile != null && tile.TileIndex == 97)
             {
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
                 return true;
             }
-
+            
             tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
             tile = collision.Tiles[tileLocation];
             if (tile != null && tile.TileIndex == 97)
             {
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
                 return true;
             }
 
@@ -421,6 +426,7 @@ namespace ProjectGame
             tile = collision.Tiles[tileLocation];
             if (tile != null && tile.TileIndex == 97)
             {
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
                 return true;
             }
 
