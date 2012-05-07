@@ -74,9 +74,6 @@ namespace ProjectGame
             Collisionbox = new Microsoft.Xna.Framework.Rectangle();
             Collisionbox.Height = 32;
             Collisionbox.Width = 32;
-            Collisionbox.Location = new Point(-16, -16);
-
-            
         }
 
         /// <summary>
@@ -379,7 +376,7 @@ namespace ProjectGame
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35*6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
                 spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
-                spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Top, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
+                spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Location, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
             }
 
             else if (gamestate == GameStates.End)
@@ -390,44 +387,57 @@ namespace ProjectGame
             base.Draw(gameTime);
         }
 
+
+        // Semi-Horrible test code for collision. This will be moved later, it can be more modular.
         private bool Collision(Vector2 pos)
         {
-            //Horrible test code for collision
-            
+
             Layer collision = map.GetLayer("stones");
             Location tileLocation;
             Tile tile;
 
-            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
-            tile = collision.Tiles[tileLocation];
-            if (tile != null && tile.TileIndex == 97)
+            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height) / 32);
+            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
             {
-                Debug.Print("Collision with tile at " + tileLocation.ToString());
-                return true;
+                tile = collision.Tiles[tileLocation];
+                if (tile != null && tile.TileIndex == 97)
+                {
+                    Debug.Print("Collision with tile at --" + tileLocation.ToString());
+                    return true;
+                }
             }
 
-            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
-            tile = collision.Tiles[tileLocation];
-            if (tile != null && tile.TileIndex == 97)
+            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height) / 32);
+            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
             {
-                Debug.Print("Collision with tile at " + tileLocation.ToString());
-                return true;
+                tile = collision.Tiles[tileLocation];
+                if (tile != null && tile.TileIndex == 97)
+                {
+                    Debug.Print("Collision with tile at +-" + tileLocation.ToString());
+                    return true;
+                }
             }
             
-            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
-            tile = collision.Tiles[tileLocation];
-            if (tile != null && tile.TileIndex == 97)
+            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height) / 32);
+            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
             {
-                Debug.Print("Collision with tile at " + tileLocation.ToString());
-                return true;
+                tile = collision.Tiles[tileLocation];
+                if (tile != null && tile.TileIndex == 97)
+                {
+                    Debug.Print("Collision with tile at ++" + tileLocation.ToString());
+                    return true;
+                }
             }
 
-            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
-            tile = collision.Tiles[tileLocation];
-            if (tile != null && tile.TileIndex == 97)
+            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height) / 32);
+            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
             {
-                Debug.Print("Collision with tile at " + tileLocation.ToString());
-                return true;
+                tile = collision.Tiles[tileLocation];
+                if (tile != null && tile.TileIndex == 97)
+                {
+                    Debug.Print("Collision with tile at -+" + tileLocation.ToString());
+                    return true;
+                }
             }
 
             return false;
