@@ -16,14 +16,14 @@ namespace ProjectGame
 
         //char position
         public Vector2 myCharVector = Vector2.Zero;
-        
+
         // characters movement speed
         public int speed = 1;
 
         // chosen character value
         public int chosenChar;
 
-       // string name;
+        // string name;
 
         // Character abilities
         public int HP;
@@ -55,7 +55,5 @@ namespace ProjectGame
         public void Update()
         {
         }
-
-        
     }
 }

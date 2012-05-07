@@ -308,7 +308,6 @@ namespace ProjectGame
             InitializeEnemy();
 
             #endregion
-
         }
 
         /// <summary>

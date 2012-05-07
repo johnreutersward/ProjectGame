@@ -20,9 +20,9 @@ namespace ProjectGame
         public int Money;
         public int level;
         public int Hit;
-       // public int Damage;
+        // public int Damage;
         public int ExpValue;
-      
+
         public void Initialize(Texture2D texture, Vector2 position)
         {
             enemy1 = texture;
@@ -33,12 +33,9 @@ namespace ProjectGame
             level = 1;
             HP = 20;
             MP = 5;
-            Hit = 2; 
+            Hit = 2;
 
         }
-
-       // public void Update(GameTime gameTime) { }
-
-
+        // public void Update(GameTime gameTime) { }
     }
 }
