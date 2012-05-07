@@ -24,12 +24,12 @@ namespace ProjectGame
         public static GameStates gamestate;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-       
+
         //char & enemies
         Char myChar;
         Texture2D enemyTextures;
         List<Enemy> enemies;
-     
+
         // menu & char screen
         private SpriteFont text;
         private Menu menu;
@@ -42,7 +42,7 @@ namespace ProjectGame
         xTile.Dimensions.Rectangle viewport;
         int windowWidth;
         int windowHeight;
-        
+
         Microsoft.Xna.Framework.Rectangle Collisionbox;
         #endregion
 
@@ -65,8 +65,8 @@ namespace ProjectGame
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             myChar = new Char();
-            enemies = new List<Enemy> ();
-           
+            enemies = new List<Enemy>();
+
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
             graphics.PreferredBackBufferWidth = 800;
@@ -77,11 +77,8 @@ namespace ProjectGame
             Collisionbox = new Microsoft.Xna.Framework.Rectangle();
             Collisionbox.Height = 32;
             Collisionbox.Width = 32;
-<<<<<<< HEAD
             Collisionbox.Location = new Point(-16, -16);
             #endregion
-=======
->>>>>>> 561c837a20055366b168bcccfd93c186d00f7f53
         }
 
         /// <summary>
@@ -95,7 +92,7 @@ namespace ProjectGame
             #region Initialize
 
             base.Initialize();
-            
+
             input = new Input();
             menu = new Menu();
             settings = new Settings();
@@ -161,11 +158,11 @@ namespace ProjectGame
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {   
+        {
             #region update
-            
+
             input.Update();
-            
+
             #region MainMenu
             // Manages menu 
             if (gamestate == GameStates.MainMenu)
@@ -191,7 +188,7 @@ namespace ProjectGame
                     }
                     else if (menu.Iterator == 2)
                     {
-                       gamestate = GameStates.Something;
+                        gamestate = GameStates.Something;
                     }
                     else if (menu.Iterator == 3)
                     {
@@ -216,7 +213,7 @@ namespace ProjectGame
                 }
             }
 
-           else  if (gamestate == GameStates.ChooseCharacter)
+            else if (gamestate == GameStates.ChooseCharacter)
             {
                 if (input.Down)
                 {
@@ -226,7 +223,7 @@ namespace ProjectGame
                 {
                     choosechar.IterChar--;
                 }
-                
+
                 if (input.Enter)
                 {
                     if (choosechar.IterChar == 0)
@@ -241,12 +238,12 @@ namespace ProjectGame
                         myChar.chosenChar = 1;
                         gamestate = GameStates.Game;
                     }
-                   
+
                     else if (choosechar.IterChar == 2)
                     {
                         gamestate = GameStates.MainMenu;
                     }
-                    
+
                 }
 
 
@@ -304,10 +301,10 @@ namespace ProjectGame
                 viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
             }
             #endregion
-            
+
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
-            
+
             InitializeEnemy();
 
             #endregion
@@ -412,7 +409,7 @@ namespace ProjectGame
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35 * 6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
                 spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
-                spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Location, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
+                spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Top, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
             }
 
             spriteBatch.End();
@@ -422,63 +419,45 @@ namespace ProjectGame
             #endregion
         }
 
-
-        // Semi-Horrible test code for collision. This will be moved later, it can be more modular.
         private bool Collision(Vector2 pos)
         {
-<<<<<<< HEAD
             #region collision
             //Horrible test code for collision
-            
-=======
 
->>>>>>> 561c837a20055366b168bcccfd93c186d00f7f53
             Layer collision = map.GetLayer("stones");
             Location tileLocation;
             Tile tile;
 
-            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height) / 32);
-            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
+            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
             {
-                tile = collision.Tiles[tileLocation];
-                if (tile != null && tile.TileIndex == 97)
-                {
-                    Debug.Print("Collision with tile at --" + tileLocation.ToString());
-                    return true;
-                }
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
+                return true;
             }
 
-            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height) / 32);
-            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
+            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
             {
-                tile = collision.Tiles[tileLocation];
-                if (tile != null && tile.TileIndex == 97)
-                {
-                    Debug.Print("Collision with tile at +-" + tileLocation.ToString());
-                    return true;
-                }
-            }
-            
-            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height) / 32);
-            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
-            {
-                tile = collision.Tiles[tileLocation];
-                if (tile != null && tile.TileIndex == 97)
-                {
-                    Debug.Print("Collision with tile at ++" + tileLocation.ToString());
-                    return true;
-                }
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
+                return true;
             }
 
-            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height) / 32);
-            if (tileLocation.X >= 0 && tileLocation.Y >= 0)
+            tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
             {
-                tile = collision.Tiles[tileLocation];
-                if (tile != null && tile.TileIndex == 97)
-                {
-                    Debug.Print("Collision with tile at -+" + tileLocation.ToString());
-                    return true;
-                }
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
+                return true;
+            }
+
+            tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
+            tile = collision.Tiles[tileLocation];
+            if (tile != null && tile.TileIndex == 97)
+            {
+                Debug.Print("Collision with tile at " + tileLocation.ToString());
+                return true;
             }
 
             return false;
