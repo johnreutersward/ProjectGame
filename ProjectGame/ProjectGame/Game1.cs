@@ -6,30 +6,30 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-
 using Microsoft.Xna.Framework.Media;
-
 using xTile;
 using xTile.Dimensions;
 using xTile.Display;
+using Microsoft.Xna.Framework.Input;
+using xTile.Layers;
+using xTile.Tiles;
 
 namespace ProjectGame
 {
-    using Microsoft.Xna.Framework.Input;
-    using xTile.Layers;
-    using xTile.Tiles;
-
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        #region instances
+
         private Input input;
         public static GameStates gamestate;
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-    
-        // octo knight
+       
+        //char & enemies
         Char myChar;
-
+        Texture2D enemyTextures;
+        List<Enemy> enemies;
+     
         // menu & char screen
         private SpriteFont text;
         private Menu menu;
@@ -40,30 +40,33 @@ namespace ProjectGame
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
-
         int windowWidth;
         int windowHeight;
-
-
+        
         Microsoft.Xna.Framework.Rectangle Collisionbox;
+        #endregion
 
+        #region gamestates
         public enum GameStates
         {
             MainMenu,
             Game,
             Settings,
+            Something,
             ChooseCharacter,
             End
         }
+        #endregion
 
         public Game1()
         {
+            #region initclasses etc
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             myChar = new Char();
-            
-
+            enemies = new List<Enemy> ();
+           
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
             graphics.PreferredBackBufferWidth = 800;
@@ -75,8 +78,7 @@ namespace ProjectGame
             Collisionbox.Height = 32;
             Collisionbox.Width = 32;
             Collisionbox.Location = new Point(-16, -16);
-
-            
+            #endregion
         }
 
         /// <summary>
@@ -87,42 +89,46 @@ namespace ProjectGame
         /// </summary>
         protected override void Initialize()
         {
+            #region Initialize
+
             base.Initialize();
             
             input = new Input();
             menu = new Menu();
             settings = new Settings();
             choosechar = new ChooseChar();
-            gamestate = GameStates.MainMenu;
 
+            // Default game state
+            gamestate = GameStates.MainMenu;
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
             map.LoadTileSheets(mapDisplayDevice);
+
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
             //viewport.X = viewport.Width / 2;
             //viewport.Y = viewport.Height / 2;
-            
-
-
-            
+            #endregion
         }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
+        ///  full editable fonts, if you have a font installed in the system, just change the name of the font you want to use in the file Neverwinter // arial
+        /// If you installed some new fonts, restart visual express in order to make fonts visible 
+        /// you can find some good fonts i.e. http://www.dafont.com/
+        /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
+        /// it is already changed to that font.
         /// </summary>
         protected override void LoadContent()
         {
-            /// full editable, if you have a font installed in the system, just change the name of the font you want to use in the file Neverwinter // arial
-            /// If you installed some new fonts, restart visual express in order to make fonts visible 
-            /// you can find some good fonts i.e. http://www.dafont.com/
-            /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
-            /// it is already changed to that font.
+            #region LoadContent
             text = Content.Load<SpriteFont>("Fonts\\Arial");
             myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
             myChar.KnightIco = Content.Load<Texture2D>(@"Textures\Misc\octo2");
+
+            enemyTextures = Content.Load<Texture2D>(@"Textures\Misc\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -134,8 +140,7 @@ namespace ProjectGame
             //map = Content.Load<Map>("Maps\\Map01");
             //map = Content.Load<Map>("Maps\\theRoad");
             map = Content.Load<Map>("Maps\\320x320_test1");
-            
-            
+            #endregion
         }
 
         /// <summary>
@@ -153,9 +158,12 @@ namespace ProjectGame
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
+        {   
+            #region update
+            
             input.Update();
-
+            
+            #region MainMenu
             // Manages menu 
             if (gamestate == GameStates.MainMenu)
             {
@@ -180,7 +188,7 @@ namespace ProjectGame
                     }
                     else if (menu.Iterator == 2)
                     {
-                        //gamestate = GameStates.Something;
+                       gamestate = GameStates.Something;
                     }
                     else if (menu.Iterator == 3)
                     {
@@ -241,11 +249,12 @@ namespace ProjectGame
 
             }
 
+            #endregion
 
-            else if (gamestate == GameStates.Game)
+            #region Game
+            else if (gamestate == GameStates.Game || gamestate == GameStates.Something)
             {
                 KeyboardState kb = Keyboard.GetState();
-
 
                 // DEBUG feature only
                 if (kb.IsKeyDown(Keys.Delete))
@@ -291,9 +300,15 @@ namespace ProjectGame
                 viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
                 viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
             }
+            #endregion
+            
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
-
             base.Update(gameTime);
+            
+            InitializeEnemy();
+
+            #endregion
+
         }
 
         /// <summary>
@@ -302,14 +317,14 @@ namespace ProjectGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            #region draw
             // background color
             GraphicsDevice.Clear(Color.Black);
 
-            
-            // Draws the main map screen aswell as text and other UI stuff
-            // Break into smaller modules in ze future
+            // Draws the main map screen aswell as text and other UI stuff. Break into smaller modules in ze future
             spriteBatch.Begin();
 
+            #region drawMenu
 
             if (gamestate == GameStates.MainMenu)
             {
@@ -318,6 +333,10 @@ namespace ProjectGame
             else if (gamestate == GameStates.Settings)
             {
                 settings.DrawMenu(spriteBatch, 800, text);
+            }
+            else if (gamestate == GameStates.End)
+            {
+                menu.DrawEnd(spriteBatch, 800, text);
             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
@@ -330,8 +349,19 @@ namespace ProjectGame
                 {
                     spriteBatch.Draw(myChar.KnightIco, new Vector2(500, 150), Color.White);
                 }
-            }
 
+            }
+            #endregion
+
+            #region draw enemy and char test
+            else if (gamestate == GameStates.Something)
+            {
+                spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+                spriteBatch.Draw(enemies[1].enemy1, enemies[0].enemyVector, Color.White);
+            }
+            #endregion
+
+            #region drawGame
             // ACTUALL GAME MODE
             else if (gamestate == GameStates.Game)
             {
@@ -372,26 +402,26 @@ namespace ProjectGame
                 //DEBUG PRINT
                 spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 400, 0), Color.White);
                 //spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
-                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 400, 35*4), Color.White);
+                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 400, 35 * 4), Color.White);
                 //spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
                 //spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
                 //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
-                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35*6), Color.White);
+                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35 * 6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
                 spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
                 spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Top, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
             }
 
-            else if (gamestate == GameStates.End)
-            {
-                menu.DrawEnd(spriteBatch, 800, text);
-            }
             spriteBatch.End();
             base.Draw(gameTime);
+            #endregion
+
+            #endregion
         }
 
         private bool Collision(Vector2 pos)
         {
+            #region collision
             //Horrible test code for collision
             
             Layer collision = map.GetLayer("stones");
@@ -431,7 +461,25 @@ namespace ProjectGame
             }
 
             return false;
+            #endregion
+        }
 
+        private void CreateEnemy()
+        {
+            #region createEnemy
+            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTextures.Width / 2);
+            Enemy enemy = new Enemy();
+            enemy.Initialize(enemyTextures, position);
+            enemies.Add(enemy);
+            #endregion
+        }
+
+        private void InitializeEnemy()
+        {
+            #region init enemy
+            //to do .. 
+            CreateEnemy();
+            #endregion
         }
     }
 }
