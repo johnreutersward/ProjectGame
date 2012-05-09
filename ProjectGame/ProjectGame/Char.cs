@@ -18,7 +18,7 @@ namespace ProjectGame
         public Vector2 myCharVector = Vector2.Zero;
 
         // characters movement speed
-        public int speed = 1;
+        public int speed = 10;
 
         // chosen character value
         public int chosenChar;

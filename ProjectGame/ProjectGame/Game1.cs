@@ -42,8 +42,6 @@ namespace ProjectGame
         xTile.Dimensions.Rectangle viewport;
         int windowWidth;
         int windowHeight;
-
-        Microsoft.Xna.Framework.Rectangle Collisionbox;
         #endregion
 
         #region gamestates
@@ -74,11 +72,6 @@ namespace ProjectGame
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
-
-            Collisionbox = new Microsoft.Xna.Framework.Rectangle();
-            Collisionbox.Height = 32;
-            Collisionbox.Width = 32;
-            Collisionbox.Location = new Point(-16, -16);
             #endregion
         }
 
@@ -135,12 +128,13 @@ namespace ProjectGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
-            myChar.myCharVector = new Vector2(0, 0);
+            myChar.myCharVector = new Vector2(32, 32);
 
             // Keeping the other maps in here for now
             //map = Content.Load<Map>("Maps\\Map01");
             //map = Content.Load<Map>("Maps\\theRoad");
-            map = Content.Load<Map>("Maps\\320x320_test1");
+            //map = Content.Load<Map>("Maps\\320x320_test1");
+            map = Content.Load<Map>("Maps\\standard");
             #endregion
         }
 
@@ -425,7 +419,6 @@ namespace ProjectGame
                 spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35 * 6), Color.White);
                 spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
                 spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
-                spriteBatch.DrawString(text, "boxCords " + Collisionbox.Center + " " + Collisionbox.Top, new Vector2(viewport.Width - 600, 35 * 9), Color.White);
             }
 
             spriteBatch.End();
@@ -440,7 +433,7 @@ namespace ProjectGame
             #region collision
             //Horrible test code for collision
 
-            Layer collision = map.GetLayer("stones");
+            Layer collision = map.GetLayer("obs");
             Location tileLocation;
             Tile tile;
 
@@ -461,7 +454,7 @@ namespace ProjectGame
                     {
                         tile = collision.Tiles[x, y];
                         
-                        if (tile != null && tile.TileIndex == 97)
+                        if (tile != null && tile.TileIndex == 23)
                         {
                             //Debug.Print("Collision with tile at {" + x + "," + y + "}");
                             return true;
