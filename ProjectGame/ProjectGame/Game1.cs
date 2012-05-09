@@ -66,6 +66,7 @@ namespace ProjectGame
             IsMouseVisible = true;
             myChar = new Char();
             enemies = new List<Enemy>();
+            
 
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
@@ -134,7 +135,7 @@ namespace ProjectGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
-            myChar.myCharVector = new Vector2(128, 0);
+            myChar.myCharVector = new Vector2(0, 0);
 
             // Keeping the other maps in here for now
             //map = Content.Load<Map>("Maps\\Map01");
@@ -277,26 +278,42 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.Left))
                 {
                     myChar.myCharVector.X -= myChar.speed;
-                    //viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
+                    if (Collision(myChar.myCharVector))
+                    {
+                        myChar.myCharVector.X += myChar.speed;
+                    }
                 }
 
                 if (kb.IsKeyDown(Keys.Right))
                 {
                     myChar.myCharVector.X += myChar.speed;
-                    //viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
+                    if (Collision(myChar.myCharVector))
+                    {
+                        myChar.myCharVector.X -= myChar.speed;
+                    }
                 }
+
 
                 if (kb.IsKeyDown(Keys.Up))
                 {
                     myChar.myCharVector.Y -= myChar.speed;
-                    //viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
+                    if (Collision(myChar.myCharVector))
+                    {
+                        myChar.myCharVector.Y += myChar.speed;
+                    }
                 }
+
 
                 if (kb.IsKeyDown(Keys.Down))
                 {
                     myChar.myCharVector.Y += myChar.speed;
-                    //viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
+                    if (Collision(myChar.myCharVector))
+                    {
+                        myChar.myCharVector.Y -= myChar.speed;
+                    }
                 }
+                
+              
                 viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
                 viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
             }
@@ -434,6 +451,7 @@ namespace ProjectGame
             int topTile = (int)Math.Floor((float)characterBounds.Top / 32);
             int bottomTile = (int)Math.Ceiling(((float)characterBounds.Bottom / 32)) - 1;
 
+            //Debug.Print("left: " + leftTile + " right: " + rightTile + " top: " + topTile + " bottom: " + bottomTile);
 
             for (int y = topTile; y <= bottomTile; ++y)
             {
@@ -442,9 +460,10 @@ namespace ProjectGame
                     if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
                     {
                         tile = collision.Tiles[x, y];
+                        
                         if (tile != null && tile.TileIndex == 97)
                         {
-                            Debug.Print("Collision with tile at {" + x + "," + y + "}");
+                            //Debug.Print("Collision with tile at {" + x + "," + y + "}");
                             return true;
                         }
                     }
@@ -452,39 +471,7 @@ namespace ProjectGame
             }
             return false;
 
-            //tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
-            //tile = collision.Tiles[tileLocation];
-            //if (tile != null && tile.TileIndex == 97)
-            //{
-            //    Debug.Print("Collision with tile at " + tileLocation.ToString());
-            //    return true;
-            //}
-
-            //tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y - Collisionbox.Height / 2) / 32);
-            //tile = collision.Tiles[tileLocation];
-            //if (tile != null && tile.TileIndex == 97)
-            //{
-            //    Debug.Print("Collision with tile at " + tileLocation.ToString());
-            //    return true;
-            //}
-
-            //tileLocation = new Location(((int)myChar.myCharVector.X + Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
-            //tile = collision.Tiles[tileLocation];
-            //if (tile != null && tile.TileIndex == 97)
-            //{
-            //    Debug.Print("Collision with tile at " + tileLocation.ToString());
-            //    return true;
-            //}
-
-            //tileLocation = new Location(((int)myChar.myCharVector.X - Collisionbox.Width / 2) / 32, ((int)myChar.myCharVector.Y + Collisionbox.Height / 2) / 32);
-            //tile = collision.Tiles[tileLocation];
-            //if (tile != null && tile.TileIndex == 97)
-            //{
-            //    Debug.Print("Collision with tile at " + tileLocation.ToString());
-            //    return true;
-            //}
-
-            //return false;
+          
             #endregion
         }
 
@@ -505,5 +492,7 @@ namespace ProjectGame
             CreateEnemy();
             #endregion
         }
+
+        
     }
 }
