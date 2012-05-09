@@ -434,15 +434,19 @@ namespace ProjectGame
             int topTile = (int)Math.Floor((float)characterBounds.Top / 32);
             int bottomTile = (int)Math.Ceiling(((float)characterBounds.Bottom / 32)) - 1;
 
+
             for (int y = topTile; y <= bottomTile; ++y)
             {
                 for (int x = leftTile; x <= rightTile; ++x)
                 {
-                    tile = collision.Tiles[x,y];
-                    if (tile != null && tile.TileIndex == 97)
+                    if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
                     {
-                    Debug.Print("Collision with tile at {" + x + "," + y + "}");
-                        return true;
+                        tile = collision.Tiles[x, y];
+                        if (tile != null && tile.TileIndex == 97)
+                        {
+                            Debug.Print("Collision with tile at {" + x + "," + y + "}");
+                            return true;
+                        }
                     }
                 }
             }
