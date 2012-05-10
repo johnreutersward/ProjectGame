@@ -24,7 +24,7 @@ namespace ProjectGame
         public static GameStates gamestate;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteManager spriteManager;
+        
 
         //char & enemies
         Char myChar;
@@ -38,18 +38,13 @@ namespace ProjectGame
         private ChooseChar choosechar;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
-        public Map map
-        {
-            get;
-            set;
-        }
+        Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         int windowWidth;
         int windowHeight;
         #endregion
 
-        #region gamestates
         public enum GameStates
         {
             MainMenu,
@@ -59,7 +54,6 @@ namespace ProjectGame
             ChooseCharacter,
             End
         }
-        #endregion
 
         public Game1()
         {
@@ -67,16 +61,19 @@ namespace ProjectGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            myChar = new Char();
-            enemies = new List<Enemy>();
-            
-
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
+
+
+            myChar = new Char();
+            enemies = new List<Enemy>();
+            
+
+            
             #endregion
         }
 
