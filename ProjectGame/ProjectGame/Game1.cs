@@ -24,6 +24,7 @@ namespace ProjectGame
         public static GameStates gamestate;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteManager spriteManager;
 
         //char & enemies
         Char myChar;
@@ -37,7 +38,11 @@ namespace ProjectGame
         private ChooseChar choosechar;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
-        Map map;
+        public Map map
+        {
+            get;
+            set;
+        }
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         int windowWidth;
@@ -92,17 +97,21 @@ namespace ProjectGame
             settings = new Settings();
             choosechar = new ChooseChar();
 
+            //priteManager = new SpriteManager(this);
+            //Components.Add(spriteManager);
+
             // Default game state
             gamestate = GameStates.MainMenu;
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
             map.LoadTileSheets(mapDisplayDevice);
-
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
             //viewport.X = viewport.Width / 2;
             //viewport.Y = viewport.Height / 2;
+
+            
             #endregion
         }
 
@@ -119,15 +128,15 @@ namespace ProjectGame
         {
             #region LoadContent
             text = Content.Load<SpriteFont>("Fonts\\Arial");
-            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
-            myChar.KnightIco = Content.Load<Texture2D>(@"Textures\Misc\octo2");
-
-            enemyTextures = Content.Load<Texture2D>(@"Textures\Misc\octo2");
+            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\blackbox");
+            myChar.KnightIco = Content.Load<Texture2D>(@"Textures\octo2");
+            
+            enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
+            myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
             myChar.myCharVector = new Vector2(32, 32);
 
             // Keeping the other maps in here for now
@@ -135,6 +144,7 @@ namespace ProjectGame
             //map = Content.Load<Map>("Maps\\theRoad");
             //map = Content.Load<Map>("Maps\\320x320_test1");
             map = Content.Load<Map>("Maps\\standard");
+            //spriteManager.currentMap = new Map
             #endregion
         }
 
@@ -434,7 +444,6 @@ namespace ProjectGame
             //Horrible test code for collision
 
             Layer collision = map.GetLayer("obs");
-            Location tileLocation;
             Tile tile;
 
             Microsoft.Xna.Framework.Rectangle characterBounds = new Microsoft.Xna.Framework.Rectangle((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y, 32, 32);
