@@ -132,7 +132,7 @@ namespace ProjectGame
             enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
-            Vector2 startPos = new Vector2(32, 32);
+            Vector2 startPos = new Vector2(32, 128);
             player.Initalize(Content.Load<Texture2D>(@"Textures\platearmor"), startPos);
             //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
             //myChar.myCharVector = new Vector2(32, 32);
@@ -416,14 +416,10 @@ namespace ProjectGame
                 player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
 
                 // DEBUG PRINT, magic numbers are bad, but this will do
-                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35 * 0));
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 400, 35 * 0));
                 Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
-                player.Draw(spriteBatch, new Vector2(map.DisplayWidth,map.DisplayHeight), new Vector2(windowWidth,windowHeight), new Vector2(viewport.X, viewport.Y));
-
-                // DEBUG PRINT, magic numbers are bad, but this will do
-                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35*0));
-                Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35*1));
                 Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
+                
             }
 
             spriteBatch.End();
