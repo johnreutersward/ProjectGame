@@ -27,6 +27,7 @@ namespace ProjectGame
         
 
         //char & enemies
+        Player player;
         Char myChar;
         Texture2D enemyTextures;
         List<Enemy> enemies;
@@ -41,6 +42,8 @@ namespace ProjectGame
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
+        Layer collisionLayer;
+
         int windowWidth;
         int windowHeight;
         #endregion
@@ -67,7 +70,7 @@ namespace ProjectGame
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
-
+            player = new Player();
 
             myChar = new Char();
             enemies = new List<Enemy>();
@@ -92,12 +95,13 @@ namespace ProjectGame
             menu = new Menu();
             settings = new Settings();
             choosechar = new ChooseChar();
+            
 
             //priteManager = new SpriteManager(this);
             //Components.Add(spriteManager);
 
             // Default game state
-            gamestate = GameStates.MainMenu;
+            gamestate = GameStates.Game;
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
@@ -115,6 +119,7 @@ namespace ProjectGame
         protected override void LoadContent()
         {
             #region LoadContent
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             text = Content.Load<SpriteFont>("Fonts\\Arial");
             myChar.WizardIco = Content.Load<Texture2D>(@"Textures\blackbox");
             myChar.KnightIco = Content.Load<Texture2D>(@"Textures\octo2");
@@ -122,18 +127,16 @@ namespace ProjectGame
             enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Vector2 startPos = new Vector2(32, 32);
+            player.Initalize(Content.Load<Texture2D>(@"Textures\octo"), startPos);
+            //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
+            //myChar.myCharVector = new Vector2(32, 32);
+            
 
-            myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
-            myChar.myCharVector = new Vector2(32, 32);
-
-            // Keeping the other maps in here for now
-            //map = Content.Load<Map>("Maps\\Map01");
-            //map = Content.Load<Map>("Maps\\theRoad");
-            //map = Content.Load<Map>("Maps\\320x320_test1");
+            // All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
             //map = Content.Load<Map>("Maps\\standard");
             map = Content.Load<Map>("Maps\\Forest");
-            //spriteManager.currentMap = new Map
+            collisionLayer = map.GetLayer("obs");
             #endregion
         }
 
@@ -268,47 +271,10 @@ namespace ProjectGame
                 }
 
 
-                if (kb.IsKeyDown(Keys.Left))
-                {
-                    myChar.myCharVector.X -= myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.X += myChar.speed;
-                    }
-                }
 
-                if (kb.IsKeyDown(Keys.Right))
-                {
-                    myChar.myCharVector.X += myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.X -= myChar.speed;
-                    }
-                }
-
-
-                if (kb.IsKeyDown(Keys.Up))
-                {
-                    myChar.myCharVector.Y -= myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.Y += myChar.speed;
-                    }
-                }
-
-
-                if (kb.IsKeyDown(Keys.Down))
-                {
-                    myChar.myCharVector.Y += myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.Y -= myChar.speed;
-                    }
-                }
-                
-              
-                viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
-                viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
+                player.Update(collisionLayer);
+                viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
+                viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
             }
             #endregion
 
@@ -375,38 +341,16 @@ namespace ProjectGame
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
+                player.Draw(spriteBatch, new Vector2(map.DisplayWidth,map.DisplayHeight), new Vector2(windowWidth,windowHeight), new Vector2(viewport.X, viewport.Y));
 
-                // Real ABS screen pos
-                Vector2 realPos = Vector2.Zero;
-                if (map.DisplayWidth <= windowWidth && map.DisplayHeight <= windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X;
-                    realPos.Y = myChar.myCharVector.Y;
-                }
-                else if (map.DisplayWidth > windowWidth && map.DisplayHeight <= windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X - viewport.X;
-                    realPos.Y = myChar.myCharVector.Y;
-                }
-                else if (map.DisplayWidth <= windowWidth && map.DisplayHeight > windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X;
-                    realPos.Y = myChar.myCharVector.Y - viewport.Y;
-                }
-                else if (map.DisplayWidth > windowWidth && map.DisplayHeight > windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X - viewport.X;
-                    realPos.Y = myChar.myCharVector.Y - viewport.Y;
-                }
-
-                if (myChar.chosenChar == 0)
-                {
-                    spriteBatch.Draw(myChar.WizardIco, realPos, Color.White);
-                }
-                else if (myChar.chosenChar == 1)
-                {
-                    spriteBatch.Draw(myChar.KnightIco, realPos, Color.White);
-                }
+                //if (myChar.chosenChar == 0)
+                //{
+                //    spriteBatch.Draw(myChar.WizardIco, realPos, Color.White);
+                //}
+                //else if (myChar.chosenChar == 1)
+                //{
+                //    spriteBatch.Draw(myChar.KnightIco, realPos, Color.White);
+                //}
 
                 //DEBUG PRINT
                 spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 400, 0), Color.White);
