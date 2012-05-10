@@ -6,6 +6,10 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using xTile.Layers;
+using xTile.Dimensions;
+using xTile.Tiles;
+using xTile;
 
 namespace ProjectGame
 {
@@ -32,17 +36,12 @@ namespace ProjectGame
                 inputDirection.Y -= 1;
                 if (Keyboard.GetState( ).IsKeyDown(Keys.Down))
                 inputDirection.Y += 1;
-                GamePadState gamepadState = GamePad.GetState(PlayerIndex.One);
-                if(gamepadState.ThumbSticks.Left.X != 0)
-                inputDirection.X += gamepadState.ThumbSticks.Left.X;
-                if(gamepadState.ThumbSticks.Left.Y != 0)
-                inputDirection.Y -= gamepadState.ThumbSticks.Left.Y;
-
+                
                 return inputDirection * speed;
             }
         }
 
-        public override void Update(GameTime gameTime, Rectangle clientBounds)
+        public override void Update(GameTime gameTime, Microsoft.Xna.Framework.Rectangle clientBounds)
         {
             // Move the sprite based on direction
             position += direction;
@@ -56,7 +55,40 @@ namespace ProjectGame
                 position.X = clientBounds.Width - frameSize.X;
             if (position.Y > clientBounds.Height - frameSize.Y)
                 position.Y = clientBounds.Height - frameSize.Y;
+
             base.Update(gameTime, clientBounds);
+        }
+
+        private bool Collision(Vector2 pos, Map currentMap)
+        {
+            
+            Layer collision = currentMap.GetLayer("obs");
+            Tile tile;
+
+            int leftTile = (int)Math.Floor((float)collisionRect.Left / frameSize.X);
+            int rightTile = (int)Math.Ceiling(((float)collisionRect.Right / frameSize.X)) - 1;
+            int topTile = (int)Math.Floor((float)collisionRect.Top / frameSize.Y);
+            int bottomTile = (int)Math.Ceiling(((float)collisionRect.Bottom / frameSize.Y)) - 1;
+
+            //Debug.Print("left: " + leftTile + " right: " + rightTile + " top: " + topTile + " bottom: " + bottomTile);
+
+            for (int y = topTile; y <= bottomTile; ++y)
+            {
+                for (int x = leftTile; x <= rightTile; ++x)
+                {
+                    if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
+                    {
+                        tile = collision.Tiles[x, y];
+
+                        if (tile != null && tile.TileIndex == 23)
+                        {
+                            //Debug.Print("Collision with tile at {" + x + "," + y + "}");
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }
