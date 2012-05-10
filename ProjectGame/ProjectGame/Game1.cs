@@ -418,6 +418,11 @@ namespace ProjectGame
                 // DEBUG PRINT, magic numbers are bad, but this will do
                 Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35 * 0));
                 Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
+                player.Draw(spriteBatch, new Vector2(map.DisplayWidth,map.DisplayHeight), new Vector2(windowWidth,windowHeight), new Vector2(viewport.X, viewport.Y));
+
+                // DEBUG PRINT, magic numbers are bad, but this will do
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35*0));
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35*1));
                 Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
             }
 

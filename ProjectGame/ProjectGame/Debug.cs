@@ -21,6 +21,9 @@ namespace ProjectGame
         public static void OnScreenPrint(SpriteBatch spriteBatch, SpriteFont font, String msg, Vector2 screenPosition)
         {
             spriteBatch.DrawString(font, msg, screenPosition, Color.Silver);
+
+            spriteBatch.DrawString(font, msg, screenPosition, Color.Silver); 
+
         }
     }
 }
