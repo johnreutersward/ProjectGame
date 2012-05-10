@@ -62,9 +62,9 @@ namespace ProjectGame
                 if (timeSinceLastFrame > defaultMillisecondsPerFrame)
                 {
                     timeSinceLastFrame = 0;
-                    currentFrame.Y = 0;
+                    currentFrame.Y = 1;
                     ++currentFrame.X;
-                    if (currentFrame.X >= sheetSize.X)
+                    if (currentFrame.X >= sheetSize.X-1)
                     {
                         currentFrame.X = 0;
                     }
@@ -81,9 +81,9 @@ namespace ProjectGame
                 if (timeSinceLastFrame > defaultMillisecondsPerFrame)
                 {
                     timeSinceLastFrame = 0;
-                    currentFrame.Y = 0;
+                    currentFrame.Y = 1;
                     ++currentFrame.X;
-                    if (currentFrame.X >= sheetSize.X)
+                    if (currentFrame.X >= sheetSize.X-1)
                     {
                         currentFrame.X = 0;
                     }
@@ -100,9 +100,9 @@ namespace ProjectGame
                 if (timeSinceLastFrame > defaultMillisecondsPerFrame)
                 {
                     timeSinceLastFrame = 0;
-                    currentFrame.Y = 3;
+                    currentFrame.Y = 4;
                     ++currentFrame.X;
-                    if (currentFrame.X >= sheetSize.X)
+                    if (currentFrame.X >= sheetSize.X-1)
                     {
                         currentFrame.X = 0;
                     }
@@ -119,9 +119,9 @@ namespace ProjectGame
                 if (timeSinceLastFrame > defaultMillisecondsPerFrame)
                 {
                     timeSinceLastFrame = 0;
-                    currentFrame.Y = 6;
+                    currentFrame.Y = 7;
                     ++currentFrame.X;
-                    if (currentFrame.X >= sheetSize.X)
+                    if (currentFrame.X >= sheetSize.X-1)
                     {
                         currentFrame.X = 0;
                     }
