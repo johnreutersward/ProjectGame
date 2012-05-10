@@ -21,7 +21,9 @@ namespace ProjectGame
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 0;
-        public int speed = 1;
+        public int speed = 2;
+        public int timeSinceLastFrame = 0;
+        public int defaultMillisecondsPerFrame = 60;
 
         public Rectangle playerBounds
         {
@@ -45,8 +47,9 @@ namespace ProjectGame
             this.Position = Position;
         }
 
-        public void Update(Layer collisionLayer)
+        public void Update(GameTime gameTime, Layer collisionLayer)
         {
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 playerDirection = Direction.Left;
@@ -54,6 +57,17 @@ namespace ProjectGame
                 if (Collision(Position, collisionLayer))
                 {
                     Position.X += speed;
+                }
+                
+                if (timeSinceLastFrame > defaultMillisecondsPerFrame)
+                {
+                    timeSinceLastFrame = 0;
+                    currentFrame.Y = 0;
+                    ++currentFrame.X;
+                    if (currentFrame.X >= sheetSize.X)
+                    {
+                        currentFrame.X = 0;
+                    }
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
@@ -64,6 +78,16 @@ namespace ProjectGame
                 {
                     Position.X -= speed;
                 }
+                if (timeSinceLastFrame > defaultMillisecondsPerFrame)
+                {
+                    timeSinceLastFrame = 0;
+                    currentFrame.Y = 0;
+                    ++currentFrame.X;
+                    if (currentFrame.X >= sheetSize.X)
+                    {
+                        currentFrame.X = 0;
+                    }
+                }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
@@ -72,6 +96,16 @@ namespace ProjectGame
                 if (Collision(Position, collisionLayer))
                 {
                     Position.Y += speed;
+                }
+                if (timeSinceLastFrame > defaultMillisecondsPerFrame)
+                {
+                    timeSinceLastFrame = 0;
+                    currentFrame.Y = 3;
+                    ++currentFrame.X;
+                    if (currentFrame.X >= sheetSize.X)
+                    {
+                        currentFrame.X = 0;
+                    }
                 }
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
@@ -82,12 +116,27 @@ namespace ProjectGame
                 {
                     Position.Y -= speed;
                 }
+                if (timeSinceLastFrame > defaultMillisecondsPerFrame)
+                {
+                    timeSinceLastFrame = 0;
+                    currentFrame.Y = 6;
+                    ++currentFrame.X;
+                    if (currentFrame.X >= sheetSize.X)
+                    {
+                        currentFrame.X = 0;
+                    }
+                }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)
         {
-            spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            SpriteEffects effect = SpriteEffects.None;
+            if (playerDirection == Direction.Left)
+            {
+                effect = SpriteEffects.FlipHorizontally;
+            }
+            spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
         }
 
         private Vector2 CalculateScreenPosition(Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)

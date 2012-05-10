@@ -307,7 +307,7 @@ namespace ProjectGame
 
 
 
-                player.Update(collisionLayer);
+                player.Update(gameTime, collisionLayer);
                 viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
                 viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
             }
