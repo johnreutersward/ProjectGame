@@ -16,15 +16,18 @@ namespace ProjectGame
     {
         public Direction playerDirection = Direction.Right;
         public Texture2D PlayerTexture;
+        public Point frameSize = new Point(64,64);
+        public Point currentFrame = new Point(0,0);
+        public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 0;
-        public int speed = 10;
+        public int speed = 1;
 
         public Rectangle playerBounds
         {
             get
             {
-                return new Rectangle((int)Position.X + collisionOffset, (int)Position.Y + collisionOffset, PlayerTexture.Width - (collisionOffset * 2), PlayerTexture.Height - (collisionOffset * 2));
+                return new Rectangle((int)Position.X + collisionOffset, (int)Position.Y + collisionOffset, frameSize.X - (collisionOffset * 2), frameSize.Y - (collisionOffset * 2));
             }
         }
 
@@ -84,7 +87,7 @@ namespace ProjectGame
 
         public void Draw(SpriteBatch spriteBatch, Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)
         {
-            spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
         private Vector2 CalculateScreenPosition(Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)

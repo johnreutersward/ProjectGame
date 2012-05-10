@@ -123,7 +123,7 @@ namespace ProjectGame
 
             // Create a new SpriteBatch, which can be used to draw textures.
             Vector2 startPos = new Vector2(32, 32);
-            player.Initalize(Content.Load<Texture2D>(@"Textures\octo"), startPos);
+            player.Initalize(Content.Load<Texture2D>(@"Textures\platearmor"), startPos);
             //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
             //myChar.myCharVector = new Vector2(32, 32);
             
