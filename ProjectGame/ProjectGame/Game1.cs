@@ -89,7 +89,6 @@ namespace ProjectGame
         protected override void Initialize()
         {
             #region Initialize
-
             base.Initialize();
 
             input = new Input();
@@ -108,21 +107,13 @@ namespace ProjectGame
             map.LoadTileSheets(mapDisplayDevice);
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
-            //viewport.X = viewport.Width / 2;
-            //viewport.Y = viewport.Height / 2;
 
-            
             #endregion
         }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
-        ///  full editable fonts, if you have a font installed in the system, just change the name of the font you want to use in the file Neverwinter // arial
-        /// If you installed some new fonts, restart visual express in order to make fonts visible 
-        /// you can find some good fonts i.e. http://www.dafont.com/
-        /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
-        /// it is already changed to that font.
         /// </summary>
         protected override void LoadContent()
         {
@@ -444,8 +435,6 @@ namespace ProjectGame
             //Horrible test code for collision
 
             Layer collision = map.GetLayer("obs");
-            Tile tile;
-
             Microsoft.Xna.Framework.Rectangle characterBounds = new Microsoft.Xna.Framework.Rectangle((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y, 32, 32);
 
             int leftTile = (int)Math.Floor((float)characterBounds.Left / 32);
@@ -461,7 +450,7 @@ namespace ProjectGame
                 {
                     if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
                     {
-                        tile = collision.Tiles[x, y];
+                        Tile tile = collision.Tiles[x, y];
                         
                         if (tile != null && tile.TileIndex == 23)
                         {
