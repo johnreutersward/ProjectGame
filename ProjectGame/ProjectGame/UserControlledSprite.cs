@@ -19,8 +19,8 @@ namespace ProjectGame
             : base(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed)
         { }
         
-        public UserControlledSprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, int millisecondsPerFrame)
-            : base(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, millisecondsPerFrame)
+        public UserControlledSprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, int millisecondsPerFrame, Map currentMap)
+            : base(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, millisecondsPerFrame, currentMap)
         { }
 
         public override Vector2 direction
@@ -41,10 +41,53 @@ namespace ProjectGame
             }
         }
 
+        public override Map currentMap
+        {
+            get;
+            set;
+        }
+
         public override void Update(GameTime gameTime, Microsoft.Xna.Framework.Rectangle clientBounds)
         {
-            // Move the sprite based on direction
-            position += direction;
+           
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                position.X -= speed.X;
+                if (Collision(position))
+                {
+                    position.X += speed.X;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                position.X += speed.X;
+                if (Collision(position))
+                {
+                    position.X -= speed.X;
+                }
+            }
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                position.Y -= speed.Y;
+                if (Collision(position))
+                {
+                    position.Y += speed.Y;
+                }
+            }
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                position.Y += speed.Y;
+                if (Collision(position))
+                {
+                    position.Y -= speed.Y;
+                }
+            }
+
             
             // If sprite is off the screen, move it back within the game window
             if (position.X < 0)
@@ -59,7 +102,7 @@ namespace ProjectGame
             base.Update(gameTime, clientBounds);
         }
 
-        private bool Collision(Vector2 pos, Map currentMap)
+        private bool Collision(Vector2 pos)
         {
             
             Layer collision = currentMap.GetLayer("obs");

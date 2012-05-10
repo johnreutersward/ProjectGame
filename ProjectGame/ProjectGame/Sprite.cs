@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using xTile;
 
 namespace ProjectGame
 {
@@ -21,13 +22,19 @@ namespace ProjectGame
         protected Vector2 speed;
         protected Vector2 position;
 
+        public abstract Map currentMap
+        {
+            get;
+            set;
+        }
+
         
         //This constructor calls the next one (which has the millisecondsPerFrame attribute)
         public Sprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed) 
-            : this(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, defaultMillisecondsPerFrame)
+            : this(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, defaultMillisecondsPerFrame, null)
         {}
 
-        public Sprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, int millisecondsPerFrame)
+        public Sprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, int millisecondsPerFrame, Map currentMap)
         {
             this.textureImage = textureImage;
             this.position = position;
@@ -37,6 +44,7 @@ namespace ProjectGame
             this.sheetSize = sheetSize;
             this.speed = speed;
             this.millisecondsPerFrame = millisecondsPerFrame;
+            this.currentMap = currentMap;
         }
 
         public abstract Vector2 direction
