@@ -1,16 +1,21 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Diagnostics;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Storage;
 using xTile;
 using xTile.Dimensions;
 using xTile.Display;
-using Microsoft.Xna.Framework.Input;
 using xTile.Layers;
 using xTile.Tiles;
 
@@ -43,6 +48,9 @@ namespace ProjectGame
         int windowWidth;
         int windowHeight;
         #endregion
+        Stopwatch stopWatch;
+        public static bool done;
+
 
         #region gamestates
         public enum GameStates
@@ -73,6 +81,8 @@ namespace ProjectGame
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
             #endregion
+
+           
         }
 
         /// <summary>
@@ -104,6 +114,9 @@ namespace ProjectGame
             //viewport.X = viewport.Width / 2;
             //viewport.Y = viewport.Height / 2;
             #endregion
+
+            stopWatch = new System.Diagnostics.Stopwatch();
+            done = false;
         }
 
         /// <summary>
@@ -135,6 +148,36 @@ namespace ProjectGame
             //map = Content.Load<Map>("Maps\\theRoad");
             //map = Content.Load<Map>("Maps\\320x320_test1");
             map = Content.Load<Map>("Maps\\standard");
+            #endregion
+
+            #region windowsMode
+            // windows mode content loader
+            Conversation.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
+                Content.Load<Texture2D>(@"Textures\bg\DialogueBox"),
+                new Microsoft.Xna.Framework.Rectangle(50, 50, 400, 100),
+                Content.Load<Texture2D>(@"Textures\Misc\BorderImage"),
+                5,
+                Color.Black,
+                Content.Load<Texture2D>(@"Textures\Misc\Continue"),
+                Content);
+
+            // Load Avatars
+            DirectoryInfo directoryInfo = new DirectoryInfo(Content.RootDirectory + @"\Avatars\");
+            FileInfo[] fileInfo = directoryInfo.GetFiles();
+            ArrayList arrayList = new ArrayList();
+
+            foreach (FileInfo fi in fileInfo)
+                arrayList.Add(fi.FullName);
+
+            for (int i = 0; i < arrayList.Count; i++)
+            {
+                Conversation.Avatars.Add(Content.Load<Texture2D>(@"Avatars\" + i));
+            }
+
+            //load conversation by its id
+            Conversation.StartConversation(1);
+            
+
             #endregion
         }
 
@@ -206,9 +249,10 @@ namespace ProjectGame
                 {
                     gamestate = GameStates.MainMenu;
                 }
+               
             }
-
-            else if (gamestate == GameStates.ChooseCharacter)
+                
+           else if (gamestate == GameStates.ChooseCharacter)
             {
                 if (input.Down)
                 {
@@ -306,8 +350,8 @@ namespace ProjectGame
                         myChar.myCharVector.Y -= myChar.speed;
                     }
                 }
-                
-              
+
+
                 viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
                 viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
             }
@@ -316,8 +360,24 @@ namespace ProjectGame
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
 
-            InitializeEnemy();
+           #endregion
 
+            #region windows mode 
+            Conversation.Update(gameTime);
+/*
+            if (Conversation.Expired)
+            {
+                if (visible == true)
+                {
+
+                    Conversation.StartConversation(1);
+
+                }
+                else
+                {
+                    Conversation.RemoveBox();
+                }
+            }*/
             #endregion
         }
 
@@ -363,12 +423,31 @@ namespace ProjectGame
             }
             #endregion
 
-            #region draw enemy and char test
+            #region draw Windows
             else if (gamestate == GameStates.Something)
+            {
+                TimeSpan drawTime = stopWatch.Elapsed; 
+               // settings.DrawMenu(spriteBatch, 800, text);
+                map.Draw(mapDisplayDevice, viewport);
+                spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+                //InitializeEnemy(gameTime);
+                   // Conversation.Draw(spriteBatch);
+                spriteBatch.DrawString(text, "ms: " + drawTime.TotalMilliseconds, Vector2.UnitX * 600.0f + Vector2.UnitY * 20.0f, Color.DarkMagenta);
+
+                stopWatch.Start();
+               CreateEnemy(gameTime);
+               
+               
+            }
+            
+            #endregion
+
+            #region draw enemy and char test
+          /*  else if (gamestate == GameStates.Something)
             {
                 spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
                 spriteBatch.Draw(enemies[1].enemy1, enemies[0].enemyVector, Color.White);
-            }
+            }*/
             #endregion
 
             #region drawGame
@@ -468,23 +547,34 @@ namespace ProjectGame
             #endregion
         }
 
-        private void CreateEnemy()
+        private void CreateEnemy(GameTime gameTime)
         {
-            #region createEnemy
-            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTextures.Width / 2);
-            Enemy enemy = new Enemy();
-            enemy.Initialize(enemyTextures, position);
-            enemies.Add(enemy);
-            #endregion
+            if (stopWatch.Elapsed.Seconds > 2)
+            {
+                stopWatch.Stop();
+
+               if (done)
+                {
+                    stopWatch.Reset();
+                    stopWatch.Start();
+
+                }
+                else
+                {
+                    Conversation.Draw(spriteBatch);
+                }
+
+
+            }
+                
+           
         }
 
-        private void InitializeEnemy()
-        {
-            #region init enemy
-            //to do .. 
-            CreateEnemy();
-            #endregion
-        }
+       
+          
+           
+           
+        
 
         
     }

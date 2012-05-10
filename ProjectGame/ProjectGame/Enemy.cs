@@ -36,6 +36,6 @@ namespace ProjectGame
             Hit = 2;
 
         }
-        // public void Update(GameTime gameTime) { }
+         public void Update(GameTime gameTime) { }
     }
 }
