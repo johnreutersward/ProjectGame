@@ -33,50 +33,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\TileSets\part1_tileset.png">
-      <Name>part1_tileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\Misc\octo.png">
-      <Name>octo</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\TileSets\part2_tileset.png">
-      <Name>part2_tileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Map01.tide">
-      <Name>Map01</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-      <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TileSheets\Background01.png">
-      <Name>Background01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="TileSheets\Background02.png">
-      <Name>Background02</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="TileSheets\Background03.png">
-      <Name>Background03</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="TileSheets\TileSheet01.png">
       <Name>TileSheet01</Name>
       <Importer>TextureImporter</Importer>
@@ -106,13 +62,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Misc\octo2.png">
-      <Name>octo2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="TileSheets\tilesheet.png">
       <Name>tilesheet</Name>
       <Importer>TextureImporter</Importer>
@@ -127,15 +76,40 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Misc\blackbox.png">
-      <Name>blackbox</Name>
+    <Compile Include="Maps\standard.tide">
+      <Name>standard</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+      <SubType>Designer</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\platearmor.png">
+      <Name>platearmor</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\standard.tide">
-      <Name>standard</Name>
+    <Compile Include="Textures\blackbox.png">
+      <Name>blackbox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\octo.png">
+      <Name>octo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\octo2.png">
+      <Name>octo2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Maps\Forest.tide">
+      <Name>Forest</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
       <SubType>Designer</SubType>

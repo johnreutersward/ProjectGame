@@ -156,7 +156,7 @@ namespace ProjectGame
         public static void RemoveBox()
         {
             Expired = true;
-            Game1.done = true;
+            //Game1.done = true;
         }
 
         #endregion

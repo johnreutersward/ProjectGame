@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +19,7 @@ using xTile.Display;
 using xTile.Layers;
 using xTile.Tiles;
 
+
 namespace ProjectGame
 {
     public class Game1 : Microsoft.Xna.Framework.Game
@@ -31,6 +32,7 @@ namespace ProjectGame
         SpriteBatch spriteBatch;
 
         //char & enemies
+        Player player;
         Char myChar;
         Texture2D enemyTextures;
         List<Enemy> enemies;
@@ -45,14 +47,14 @@ namespace ProjectGame
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
+        Layer collisionLayer;
+
         int windowWidth;
         int windowHeight;
         #endregion
         Stopwatch stopWatch;
         public static bool done;
 
-
-        #region gamestates
         public enum GameStates
         {
             MainMenu,
@@ -62,7 +64,6 @@ namespace ProjectGame
             ChooseCharacter,
             End
         }
-        #endregion
 
         public Game1()
         {
@@ -70,19 +71,20 @@ namespace ProjectGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            myChar = new Char();
-            enemies = new List<Enemy>();
-            
-
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
-            #endregion
+            player = new Player();
 
-           
+            myChar = new Char();
+            enemies = new List<Enemy>();
+
+
+
+            #endregion
         }
 
         /// <summary>
@@ -94,7 +96,6 @@ namespace ProjectGame
         protected override void Initialize()
         {
             #region Initialize
-
             base.Initialize();
 
             input = new Input();
@@ -103,18 +104,15 @@ namespace ProjectGame
             choosechar = new ChooseChar();
 
             // Default game state
-            gamestate = GameStates.MainMenu;
+            gamestate = GameStates.Game;
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
             map.LoadTileSheets(mapDisplayDevice);
-
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
-            //viewport.X = viewport.Width / 2;
-            //viewport.Y = viewport.Height / 2;
-            #endregion
 
+            #endregion
             stopWatch = new System.Diagnostics.Stopwatch();
             done = false;
         }
@@ -122,32 +120,28 @@ namespace ProjectGame
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
-        ///  full editable fonts, if you have a font installed in the system, just change the name of the font you want to use in the file Neverwinter // arial
-        /// If you installed some new fonts, restart visual express in order to make fonts visible 
-        /// you can find some good fonts i.e. http://www.dafont.com/
-        /// t.ex dl this one: http://www.dafont.com/neverwinter.font, "install" on your station, change ("Fonts\\Arial") to ("Fonts\\Neverwinter") and it should work since 
-        /// it is already changed to that font.
         /// </summary>
         protected override void LoadContent()
         {
             #region LoadContent
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             text = Content.Load<SpriteFont>("Fonts\\Arial");
-            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
-            myChar.KnightIco = Content.Load<Texture2D>(@"Textures\Misc\octo2");
+            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\blackbox");
+            myChar.KnightIco = Content.Load<Texture2D>(@"Textures\octo2");
 
-            enemyTextures = Content.Load<Texture2D>(@"Textures\Misc\octo2");
+            enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Vector2 startPos = new Vector2(32, 32);
+            player.Initalize(Content.Load<Texture2D>(@"Textures\octo"), startPos);
+            //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
+            //myChar.myCharVector = new Vector2(32, 32);
 
-            myChar.myChar = Content.Load<Texture2D>(@"Textures\Misc\blackbox");
-            myChar.myCharVector = new Vector2(32, 32);
 
-            // Keeping the other maps in here for now
-            //map = Content.Load<Map>("Maps\\Map01");
-            //map = Content.Load<Map>("Maps\\theRoad");
-            //map = Content.Load<Map>("Maps\\320x320_test1");
-            map = Content.Load<Map>("Maps\\standard");
+            // All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
+            //map = Content.Load<Map>("Maps\\standard");
+            map = Content.Load<Map>("Maps\\Forest");
+            collisionLayer = map.GetLayer("obs");
             #endregion
 
             #region windowsMode
@@ -176,7 +170,7 @@ namespace ProjectGame
 
             //load conversation by its id
             Conversation.StartConversation(1);
-            
+
 
             #endregion
         }
@@ -249,10 +243,9 @@ namespace ProjectGame
                 {
                     gamestate = GameStates.MainMenu;
                 }
-               
             }
-                
-           else if (gamestate == GameStates.ChooseCharacter)
+
+            else if (gamestate == GameStates.ChooseCharacter)
             {
                 if (input.Down)
                 {
@@ -313,71 +306,36 @@ namespace ProjectGame
                 }
 
 
-                if (kb.IsKeyDown(Keys.Left))
-                {
-                    myChar.myCharVector.X -= myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.X += myChar.speed;
-                    }
-                }
 
-                if (kb.IsKeyDown(Keys.Right))
-                {
-                    myChar.myCharVector.X += myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.X -= myChar.speed;
-                    }
-                }
-
-
-                if (kb.IsKeyDown(Keys.Up))
-                {
-                    myChar.myCharVector.Y -= myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.Y += myChar.speed;
-                    }
-                }
-
-
-                if (kb.IsKeyDown(Keys.Down))
-                {
-                    myChar.myCharVector.Y += myChar.speed;
-                    if (Collision(myChar.myCharVector))
-                    {
-                        myChar.myCharVector.Y -= myChar.speed;
-                    }
-                }
-
-
-                viewport.X = (int)myChar.myCharVector.X - (int)viewport.Width / 2;
-                viewport.Y = (int)myChar.myCharVector.Y - (int)viewport.Height / 2;
+                player.Update(collisionLayer);
+                viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
+                viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
             }
+            #endregion
+
+            #region windows mode
+            Conversation.Update(gameTime);
+            /*
+                        if (Conversation.Expired)
+                        {
+                            if (visible == true)
+                            {
+
+                                Conversation.StartConversation(1);
+
+                            }
+                            else
+                            {
+                                Conversation.RemoveBox();
+                            }
+                        }*/
             #endregion
 
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
 
-           #endregion
+           // InitializeEnemy();
 
-            #region windows mode 
-            Conversation.Update(gameTime);
-/*
-            if (Conversation.Expired)
-            {
-                if (visible == true)
-                {
-
-                    Conversation.StartConversation(1);
-
-                }
-                else
-                {
-                    Conversation.RemoveBox();
-                }
-            }*/
             #endregion
         }
 
@@ -426,28 +384,28 @@ namespace ProjectGame
             #region draw Windows
             else if (gamestate == GameStates.Something)
             {
-                TimeSpan drawTime = stopWatch.Elapsed; 
-               // settings.DrawMenu(spriteBatch, 800, text);
+                TimeSpan drawTime = stopWatch.Elapsed;
+                // settings.DrawMenu(spriteBatch, 800, text);
                 map.Draw(mapDisplayDevice, viewport);
-                spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+               // spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
                 //InitializeEnemy(gameTime);
-                   // Conversation.Draw(spriteBatch);
+                // Conversation.Draw(spriteBatch);
                 spriteBatch.DrawString(text, "ms: " + drawTime.TotalMilliseconds, Vector2.UnitX * 600.0f + Vector2.UnitY * 20.0f, Color.DarkMagenta);
 
                 stopWatch.Start();
-               CreateEnemy(gameTime);
-               
-               
+                CreateEnemy(gameTime);
+
+
             }
-            
+
             #endregion
 
             #region draw enemy and char test
-          /*  else if (gamestate == GameStates.Something)
+            else if (gamestate == GameStates.Something)
             {
                 spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
                 spriteBatch.Draw(enemies[1].enemy1, enemies[0].enemyVector, Color.White);
-            }*/
+            }
             #endregion
 
             #region drawGame
@@ -455,49 +413,12 @@ namespace ProjectGame
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
+                player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
 
-                // Real ABS screen pos
-                Vector2 realPos = Vector2.Zero;
-                if (map.DisplayWidth <= windowWidth && map.DisplayHeight <= windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X;
-                    realPos.Y = myChar.myCharVector.Y;
-                }
-                else if (map.DisplayWidth > windowWidth && map.DisplayHeight <= windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X - viewport.X;
-                    realPos.Y = myChar.myCharVector.Y;
-                }
-                else if (map.DisplayWidth <= windowWidth && map.DisplayHeight > windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X;
-                    realPos.Y = myChar.myCharVector.Y - viewport.Y;
-                }
-                else if (map.DisplayWidth > windowWidth && map.DisplayHeight > windowHeight)
-                {
-                    realPos.X = myChar.myCharVector.X - viewport.X;
-                    realPos.Y = myChar.myCharVector.Y - viewport.Y;
-                }
-
-                if (myChar.chosenChar == 0)
-                {
-                    spriteBatch.Draw(myChar.WizardIco, realPos, Color.White);
-                }
-                else if (myChar.chosenChar == 1)
-                {
-                    spriteBatch.Draw(myChar.KnightIco, realPos, Color.White);
-                }
-
-                //DEBUG PRINT
-                spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 400, 0), Color.White);
-                //spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
-                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 400, 35 * 4), Color.White);
-                //spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
-                //spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
-                //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
-                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35 * 6), Color.White);
-                spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
-                spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
+                // DEBUG PRINT, magic numbers are bad, but this will do
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35 * 0));
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
+                Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
             }
 
             spriteBatch.End();
@@ -513,9 +434,6 @@ namespace ProjectGame
             //Horrible test code for collision
 
             Layer collision = map.GetLayer("obs");
-            Location tileLocation;
-            Tile tile;
-
             Microsoft.Xna.Framework.Rectangle characterBounds = new Microsoft.Xna.Framework.Rectangle((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y, 32, 32);
 
             int leftTile = (int)Math.Floor((float)characterBounds.Left / 32);
@@ -531,8 +449,8 @@ namespace ProjectGame
                 {
                     if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
                     {
-                        tile = collision.Tiles[x, y];
-                        
+                        Tile tile = collision.Tiles[x, y];
+
                         if (tile != null && tile.TileIndex == 23)
                         {
                             //Debug.Print("Collision with tile at {" + x + "," + y + "}");
@@ -543,7 +461,7 @@ namespace ProjectGame
             }
             return false;
 
-          
+
             #endregion
         }
 
@@ -553,7 +471,7 @@ namespace ProjectGame
             {
                 stopWatch.Stop();
 
-               if (done)
+                if (done)
                 {
                     stopWatch.Reset();
                     stopWatch.Start();
@@ -566,16 +484,19 @@ namespace ProjectGame
 
 
             }
-                
-           
+
+
         }
 
-       
-          
-           
-           
-        
 
-        
+        private void InitializeEnemy()
+        {
+            #region init enemy
+            //to do .. 
+           // CreateEnemy();
+            #endregion
+        }
+
+
     }
 }
