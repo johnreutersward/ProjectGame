@@ -134,7 +134,8 @@ namespace ProjectGame
             //map = Content.Load<Map>("Maps\\Map01");
             //map = Content.Load<Map>("Maps\\theRoad");
             //map = Content.Load<Map>("Maps\\320x320_test1");
-            map = Content.Load<Map>("Maps\\standard");
+            //map = Content.Load<Map>("Maps\\standard");
+            map = Content.Load<Map>("Maps\\Forest");
             //spriteManager.currentMap = new Map
             #endregion
         }

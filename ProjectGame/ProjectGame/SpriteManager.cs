@@ -42,7 +42,7 @@ namespace ProjectGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            player = new UserControlledSprite(Game.Content.Load<Texture2D>(@"Textures/platearmor"), new Vector2(32, 32), new Point(32, 32), 0, new Point(0, 0), new Point(5, 3), new Vector2(1, 1), 16, currentMap);
+            player = new UserControlledSprite(Game.Content.Load<Texture2D>(@"Textures/platearmor"), new Vector2(32, 32), new Point(32, 32), 0, new Point(0, 0), new Point(5, 3), new Vector2(1, 1),16);
         }
 
         /// <summary>

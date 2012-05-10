@@ -21,20 +21,13 @@ namespace ProjectGame
         const int defaultMillisecondsPerFrame = 16;
         protected Vector2 speed;
         protected Vector2 position;
-
-        public abstract Map currentMap
-        {
-            get;
-            set;
-        }
-
         
         //This constructor calls the next one (which has the millisecondsPerFrame attribute)
         public Sprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed) 
-            : this(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, defaultMillisecondsPerFrame, null)
+            : this(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, defaultMillisecondsPerFrame)
         {}
 
-        public Sprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, int millisecondsPerFrame, Map currentMap)
+        public Sprite(Texture2D textureImage, Vector2 position, Point frameSize, int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, int millisecondsPerFrame)
         {
             this.textureImage = textureImage;
             this.position = position;
@@ -44,12 +37,6 @@ namespace ProjectGame
             this.sheetSize = sheetSize;
             this.speed = speed;
             this.millisecondsPerFrame = millisecondsPerFrame;
-            this.currentMap = currentMap;
-        }
-
-        public abstract Vector2 direction
-        {
-            get;
         }
 
         public virtual void Update(GameTime gameTime, Rectangle clientBounds)
