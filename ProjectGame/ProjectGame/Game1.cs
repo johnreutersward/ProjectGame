@@ -24,7 +24,6 @@ namespace ProjectGame
         public static GameStates gamestate;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
 
         //char & enemies
         Player player;
@@ -95,10 +94,6 @@ namespace ProjectGame
             menu = new Menu();
             settings = new Settings();
             choosechar = new ChooseChar();
-            
-
-            //priteManager = new SpriteManager(this);
-            //Components.Add(spriteManager);
 
             // Default game state
             gamestate = GameStates.Game;
@@ -343,25 +338,10 @@ namespace ProjectGame
                 map.Draw(mapDisplayDevice, viewport);
                 player.Draw(spriteBatch, new Vector2(map.DisplayWidth,map.DisplayHeight), new Vector2(windowWidth,windowHeight), new Vector2(viewport.X, viewport.Y));
 
-                //if (myChar.chosenChar == 0)
-                //{
-                //    spriteBatch.Draw(myChar.WizardIco, realPos, Color.White);
-                //}
-                //else if (myChar.chosenChar == 1)
-                //{
-                //    spriteBatch.Draw(myChar.KnightIco, realPos, Color.White);
-                //}
-
-                //DEBUG PRINT
-                spriteBatch.DrawString(text, "charpos: " + myChar.myCharVector.ToString(), new Vector2(viewport.Width - 400, 0), Color.White);
-                //spriteBatch.DrawString(text, "layersize: " + map.GetLayer("stones").DisplaySize.ToString(), new Vector2(viewport.Width - 300, 35), Color.White);
-                spriteBatch.DrawString(text, "mapsize: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 400, 35 * 4), Color.White);
-                //spriteBatch.DrawString(text, "layerID: " + map.GetLayer("stones").Id, new Vector2(viewport.Width - 300, 35*2), Color.White);
-                //spriteBatch.DrawString(text, "validTile: " + map.GetLayer("grass").IsValidTileLocation((int)myChar.myCharVector.X,(int)myChar.myCharVector.Y), new Vector2(viewport.Width - 300, 35*3), Color.White);
-                //spriteBatch.DrawString(text, "layer2map: " + map.GetLayer("stones").ConvertLayerToMapLocation(new Location((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y), viewport.Size).ToString(), new Vector2(viewport.Width - 300, 35 * 5), Color.White);
-                spriteBatch.DrawString(text, "viewportX: " + viewport.X, new Vector2(viewport.Width - 400, 35 * 6), Color.White);
-                spriteBatch.DrawString(text, "viewportY: " + viewport.Y, new Vector2(viewport.Width - 400, 35 * 7), Color.White);
-                spriteBatch.DrawString(text, "COLLISION " + Collision(myChar.myCharVector).ToString(), new Vector2(viewport.Width - 500, 35 * 10), Color.White);
+                // DEBUG PRINT, magic numbers are bad, but this will do
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35*0));
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35*1));
+                Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
             }
 
             spriteBatch.End();
