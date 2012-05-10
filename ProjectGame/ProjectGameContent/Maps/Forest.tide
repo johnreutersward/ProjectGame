@@ -1548,6 +1548,131 @@
       </TileArray>
       <Properties />
     </Layer>
+    <Layer Id="sand" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="100 x 15" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <TileSheet Ref="untitled tile sheet" />
+          <Static Index="494" BlendMode="Alpha" />
+          <Static Index="495" BlendMode="Alpha" />
+          <Static Index="496" BlendMode="Alpha" />
+          <Static Index="497" BlendMode="Alpha" />
+          <Static Index="498" BlendMode="Alpha" />
+          <Static Index="496" BlendMode="Alpha" />
+          <Static Index="497" BlendMode="Alpha" />
+          <Static Index="498" BlendMode="Alpha" />
+          <Static Index="496" BlendMode="Alpha" />
+          <Static Index="498" BlendMode="Alpha" />
+          <Static Index="499" BlendMode="Alpha" />
+          <Null Count="84" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="574" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="579" BlendMode="Alpha" />
+          <Null Count="84" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="574" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="579" BlendMode="Alpha" />
+          <Null Count="84" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="574" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="595" BlendMode="Alpha" />
+          <Static Index="596" BlendMode="Alpha" />
+          <Static Index="595" BlendMode="Alpha" />
+          <Static Index="596" BlendMode="Alpha" />
+          <Static Index="596" BlendMode="Alpha" />
+          <Static Index="599" BlendMode="Alpha" />
+          <Null Count="84" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="574" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="579" BlendMode="Alpha" />
+          <Null Count="90" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="574" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="579" BlendMode="Alpha" />
+          <Null Count="90" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="574" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="555" BlendMode="Alpha" />
+          <Static Index="579" BlendMode="Alpha" />
+          <Null Count="90" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <Static Index="594" BlendMode="Alpha" />
+          <Static Index="595" BlendMode="Alpha" />
+          <Static Index="596" BlendMode="Alpha" />
+          <Static Index="596" BlendMode="Alpha" />
+          <Static Index="599" BlendMode="Alpha" />
+          <Null Count="90" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
     <Layer Id="edge" Visible="True">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="100 x 15" TileSize="32 x 32" />
