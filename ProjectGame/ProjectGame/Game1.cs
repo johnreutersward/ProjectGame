@@ -474,7 +474,8 @@ namespace ProjectGame
         {
             if (stopWatch.Elapsed.Seconds > 2)
             {
-                stopWatch.Stop();
+                gamestate = GameStates.Settings;
+                /*stopWatch.Stop();
 
                 if (done)
                 {
@@ -486,7 +487,7 @@ namespace ProjectGame
                 {
                     Conversation.Draw(spriteBatch);
                 }
-
+                */
 
             }
 
