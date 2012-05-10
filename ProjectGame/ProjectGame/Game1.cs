@@ -1,18 +1,24 @@
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Diagnostics;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Storage;
 using xTile;
 using xTile.Dimensions;
 using xTile.Display;
-using Microsoft.Xna.Framework.Input;
 using xTile.Layers;
 using xTile.Tiles;
+
 
 namespace ProjectGame
 {
@@ -46,6 +52,8 @@ namespace ProjectGame
         int windowWidth;
         int windowHeight;
         #endregion
+        Stopwatch stopWatch;
+        public static bool done;
 
         public enum GameStates
         {
@@ -73,9 +81,9 @@ namespace ProjectGame
 
             myChar = new Char();
             enemies = new List<Enemy>();
-            
 
-            
+
+
             #endregion
         }
 
@@ -105,6 +113,8 @@ namespace ProjectGame
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
 
             #endregion
+            stopWatch = new System.Diagnostics.Stopwatch();
+            done = false;
         }
 
         /// <summary>
@@ -118,7 +128,7 @@ namespace ProjectGame
             text = Content.Load<SpriteFont>("Fonts\\Arial");
             myChar.WizardIco = Content.Load<Texture2D>(@"Textures\blackbox");
             myChar.KnightIco = Content.Load<Texture2D>(@"Textures\octo2");
-            
+
             enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
 
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -126,12 +136,42 @@ namespace ProjectGame
             player.Initalize(Content.Load<Texture2D>(@"Textures\platearmor"), startPos);
             //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
             //myChar.myCharVector = new Vector2(32, 32);
-            
+
 
             // All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
             //map = Content.Load<Map>("Maps\\standard");
             map = Content.Load<Map>("Maps\\Forest");
             collisionLayer = map.GetLayer("obs");
+            #endregion
+
+            #region windowsMode
+            // windows mode content loader
+            Conversation.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
+                Content.Load<Texture2D>(@"Textures\bg\DialogueBox"),
+                new Microsoft.Xna.Framework.Rectangle(50, 50, 400, 100),
+                Content.Load<Texture2D>(@"Textures\Misc\BorderImage"),
+                5,
+                Color.Black,
+                Content.Load<Texture2D>(@"Textures\Misc\Continue"),
+                Content);
+
+            // Load Avatars
+            DirectoryInfo directoryInfo = new DirectoryInfo(Content.RootDirectory + @"\Avatars\");
+            FileInfo[] fileInfo = directoryInfo.GetFiles();
+            ArrayList arrayList = new ArrayList();
+
+            foreach (FileInfo fi in fileInfo)
+                arrayList.Add(fi.FullName);
+
+            for (int i = 0; i < arrayList.Count; i++)
+            {
+                Conversation.Avatars.Add(Content.Load<Texture2D>(@"Avatars\" + i));
+            }
+
+            //load conversation by its id
+            Conversation.StartConversation(1);
+
+
             #endregion
         }
 
@@ -273,10 +313,28 @@ namespace ProjectGame
             }
             #endregion
 
+            #region windows mode
+            Conversation.Update(gameTime);
+            /*
+                        if (Conversation.Expired)
+                        {
+                            if (visible == true)
+                            {
+
+                                Conversation.StartConversation(1);
+
+                            }
+                            else
+                            {
+                                Conversation.RemoveBox();
+                            }
+                        }*/
+            #endregion
+
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
 
-            InitializeEnemy();
+           // InitializeEnemy();
 
             #endregion
         }
@@ -323,6 +381,25 @@ namespace ProjectGame
             }
             #endregion
 
+            #region draw Windows
+            else if (gamestate == GameStates.Something)
+            {
+                TimeSpan drawTime = stopWatch.Elapsed;
+                // settings.DrawMenu(spriteBatch, 800, text);
+                map.Draw(mapDisplayDevice, viewport);
+               // spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
+                //InitializeEnemy(gameTime);
+                // Conversation.Draw(spriteBatch);
+                spriteBatch.DrawString(text, "ms: " + drawTime.TotalMilliseconds, Vector2.UnitX * 600.0f + Vector2.UnitY * 20.0f, Color.DarkMagenta);
+
+                stopWatch.Start();
+                CreateEnemy(gameTime);
+
+
+            }
+
+            #endregion
+
             #region draw enemy and char test
             else if (gamestate == GameStates.Something)
             {
@@ -336,6 +413,11 @@ namespace ProjectGame
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
+                player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
+
+                // DEBUG PRINT, magic numbers are bad, but this will do
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 360, 35 * 0));
+                Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
                 player.Draw(spriteBatch, new Vector2(map.DisplayWidth,map.DisplayHeight), new Vector2(windowWidth,windowHeight), new Vector2(viewport.X, viewport.Y));
 
                 // DEBUG PRINT, magic numbers are bad, but this will do
@@ -373,7 +455,7 @@ namespace ProjectGame
                     if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
                     {
                         Tile tile = collision.Tiles[x, y];
-                        
+
                         if (tile != null && tile.TileIndex == 23)
                         {
                             //Debug.Print("Collision with tile at {" + x + "," + y + "}");
@@ -384,28 +466,42 @@ namespace ProjectGame
             }
             return false;
 
-          
+
             #endregion
         }
 
-        private void CreateEnemy()
+        private void CreateEnemy(GameTime gameTime)
         {
-            #region createEnemy
-            Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTextures.Width / 2);
-            Enemy enemy = new Enemy();
-            enemy.Initialize(enemyTextures, position);
-            enemies.Add(enemy);
-            #endregion
+            if (stopWatch.Elapsed.Seconds > 2)
+            {
+                stopWatch.Stop();
+
+                if (done)
+                {
+                    stopWatch.Reset();
+                    stopWatch.Start();
+
+                }
+                else
+                {
+                    Conversation.Draw(spriteBatch);
+                }
+
+
+            }
+
+
         }
+
 
         private void InitializeEnemy()
         {
             #region init enemy
             //to do .. 
-            CreateEnemy();
+           // CreateEnemy();
             #endregion
         }
 
-        
+
     }
 }

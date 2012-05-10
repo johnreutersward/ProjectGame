@@ -47,7 +47,7 @@ namespace ProjectGame
 
         public void Update(Layer collisionLayer)
         {
-             if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 playerDirection = Direction.Left;
                 Position.X -= speed;
