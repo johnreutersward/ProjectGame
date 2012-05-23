@@ -11,8 +11,11 @@ namespace ProjectGame
     class Char
     {   // character textures
         public Texture2D myChar;
-        public Texture2D WizardIco;
-        public Texture2D KnightIco;
+        public Texture2D ClothIco;
+        public Texture2D DarkIco;
+        public Texture2D GoldenIco;
+        public Texture2D LeatherIco;
+        
 
         //char position
         public Vector2 myCharVector = Vector2.Zero;

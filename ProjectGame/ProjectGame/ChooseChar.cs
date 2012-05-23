@@ -32,8 +32,10 @@ namespace ProjectGame
         {
             ChooseCharacter = "Choose your hero:";
             CharacterList = new List<string>();
-            CharacterList.Add("Wizard");
-            CharacterList.Add("Knight");
+            CharacterList.Add("Sven-Erik - the Commoner");
+            CharacterList.Add("Hans-krister - the Druid of the Woods");
+            CharacterList.Add("Ser Excellence - the Knight");
+            CharacterList.Add("Nighty Knight - the Dark Knight");
             CharacterList.Add("Back");
             iteratorchar = 0;
 
@@ -49,7 +51,7 @@ namespace ProjectGame
             return CharacterList[index];
         }
 
-        public void DrawMenu(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter)
+        public void DrawMenu(SpriteBatch batch, float screenWidth, SpriteFont Neverwinter)
         {
             batch.DrawString(Neverwinter, ChooseCharacter, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(ChooseCharacter).X / 2, 20), Color.White);
             int yPos = 100;
@@ -62,7 +64,7 @@ namespace ProjectGame
                     DefColor = Color.Gray;
                 }
 
-                batch.DrawString(Neverwinter, GetItem(i), new Vector2(screenWidth / 2 - Neverwinter.MeasureString(GetItem(i)).X / 2, yPos), DefColor);
+                batch.DrawString(Neverwinter, GetItem(i), new Vector2(30, yPos), DefColor);
                 yPos += 50;
             }
         }

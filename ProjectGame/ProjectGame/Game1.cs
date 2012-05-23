@@ -34,7 +34,7 @@ namespace ProjectGame
         //char & enemies
         Player player;
         Char myChar;
-        Texture2D enemyTextures;
+        //Texture2D enemyTextures;
         List<Enemy> enemies;
 
         // menu & char screen
@@ -105,7 +105,7 @@ namespace ProjectGame
             choosechar = new ChooseChar();
 
             // Default game state
-            gamestate = GameStates.Game;
+            gamestate = GameStates.MainMenu;
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
@@ -127,15 +127,20 @@ namespace ProjectGame
             #region LoadContent
             spriteBatch = new SpriteBatch(GraphicsDevice);
             text = Content.Load<SpriteFont>("Fonts\\Arial");
-            myChar.WizardIco = Content.Load<Texture2D>(@"Textures\blackbox");
-            myChar.KnightIco = Content.Load<Texture2D>(@"Textures\octo2");
+            myChar.ClothIco = Content.Load<Texture2D>(@"Textures\clotharmorico");
+            myChar.DarkIco = Content.Load<Texture2D>(@"Textures\deathknightico");
+            myChar.GoldenIco = Content.Load<Texture2D>(@"Textures\goldenarmorico");
+            myChar.LeatherIco = Content.Load<Texture2D>(@"Textures\leatherarmorico");
+           
             world_map = Content.Load<Texture2D>(@"Textures\game_world");
 
-            enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
-
-            // Create a new SpriteBatch, which can be used to draw textures.
-            Vector2 startPos = new Vector2(32, 128);
-            player.Initalize(Content.Load<Texture2D>(@"Textures\platearmor"), startPos);
+          
+            
+           
+              
+            
+                //player.Initalize(Content.Load<Texture2D>(@"Textures\platearmor"), startPos);
+           
             //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
             //myChar.myCharVector = new Vector2(32, 32);
 
@@ -262,18 +267,30 @@ namespace ProjectGame
                 {
                     if (choosechar.IterChar == 0)
                     {
-                        // Set character to wizard 
+                        // Set character to the commoner
                         myChar.chosenChar = 0;
                         gamestate = GameStates.Game;
                     }
                     else if (choosechar.IterChar == 1)
                     {
-                        //set character to Knight
+                        //set character to the druid
                         myChar.chosenChar = 1;
                         gamestate = GameStates.Game;
                     }
-
                     else if (choosechar.IterChar == 2)
+                    {
+                        //set character to the knight
+                        myChar.chosenChar = 2;
+                        gamestate = GameStates.Game;
+                    }
+                    else if (choosechar.IterChar == 3)
+                    {
+                        //set character to the dark knight
+                        myChar.chosenChar = 3;
+                        gamestate = GameStates.Game;
+                    }
+
+                    else if (choosechar.IterChar == 4)
                     {
                         gamestate = GameStates.MainMenu;
                     }
@@ -371,13 +388,27 @@ namespace ProjectGame
             else if (gamestate == GameStates.ChooseCharacter)
             {
                 choosechar.DrawMenu(spriteBatch, 800, text);
+               
+                Vector2 startPos = new Vector2(32, 128);
                 if (choosechar.IterChar == 0)
                 {
-                    spriteBatch.Draw(myChar.WizardIco, new Vector2(500, 100), Color.White);
+                    spriteBatch.Draw(myChar.ClothIco, new Vector2(420, 100), Color.White);
+                    player.Initalize(Content.Load<Texture2D>(@"Textures\clotharmor"), startPos);
                 }
                 else if (choosechar.IterChar == 1)
                 {
-                    spriteBatch.Draw(myChar.KnightIco, new Vector2(500, 150), Color.White);
+                    spriteBatch.Draw(myChar.LeatherIco, new Vector2(580, 145), Color.White);
+                    player.Initalize(Content.Load<Texture2D>(@"Textures\leatherarmor"), startPos);
+                }
+                else if (choosechar.IterChar == 2)
+                {
+                    spriteBatch.Draw(myChar.GoldenIco, new Vector2(440, 190), Color.White);
+                    player.Initalize(Content.Load<Texture2D>(@"Textures\goldenarmor"), startPos);
+                }
+                else if (choosechar.IterChar == 3)
+                {
+                    spriteBatch.Draw(myChar.DarkIco, new Vector2(490, 235), Color.White);
+                    player.Initalize(Content.Load<Texture2D>(@"Textures\deathknight"), startPos);
                 }
 
             }
