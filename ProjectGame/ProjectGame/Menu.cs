@@ -59,7 +59,7 @@ namespace ProjectGame
                 Color DefColor = Color.White;
                 if (i == Iterator)
                 {
-                    DefColor = Color.Gray;
+                    DefColor = Color.SaddleBrown;
                 }
 
                 batch.DrawString(Neverwinter, GetItem(i), new Vector2(screenWidth / 2 - Neverwinter.MeasureString(GetItem(i)).X / 2, yPos), DefColor);

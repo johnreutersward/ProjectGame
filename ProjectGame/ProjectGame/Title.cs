@@ -12,8 +12,8 @@ namespace ProjectGame
       public void DrawEnd(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D bg)
         {
             batch.Draw(bg, new Vector2(0, 0), Color.White);
-            string prompt = "Press Enter to Continue";
-            batch.DrawString(Neverwinter, prompt, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(prompt).X / 2, 400), Color.White);
+            string prompt = "Press Enter";
+            batch.DrawString(Neverwinter, prompt, new Vector2(6, 435), Color.DarkSlateGray);
         }
     }
 }

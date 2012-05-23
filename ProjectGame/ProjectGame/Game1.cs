@@ -45,6 +45,7 @@ namespace ProjectGame
         private ChooseChar choosechar;
         Texture2D world_map;
         Texture2D menubg;
+        Texture2D choosebg;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         Map map;
@@ -138,6 +139,7 @@ namespace ProjectGame
            
             world_map = Content.Load<Texture2D>(@"Textures\game_worldfit");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
+            choosebg = Content.Load<Texture2D>(@"Textures\bg2");
           
             
            
@@ -403,12 +405,12 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
-                choosechar.DrawMenu(spriteBatch, 800, text, menubg);
+                choosechar.DrawMenu(spriteBatch, 800, text, choosebg);
                
                 Vector2 startPos = new Vector2(32, 128);
                 if (choosechar.IterChar == 0)
                 {
-                    spriteBatch.Draw(myChar.ClothIco, new Vector2(420, 100), Color.White);
+                    spriteBatch.Draw(myChar.ClothIco, new Vector2(580, 100), Color.White);
                     player.Initalize(Content.Load<Texture2D>(@"Textures\clotharmor"), startPos);
                 }
                 else if (choosechar.IterChar == 1)
@@ -418,12 +420,12 @@ namespace ProjectGame
                 }
                 else if (choosechar.IterChar == 2)
                 {
-                    spriteBatch.Draw(myChar.GoldenIco, new Vector2(440, 190), Color.White);
+                    spriteBatch.Draw(myChar.GoldenIco, new Vector2(580, 190), Color.White);
                     player.Initalize(Content.Load<Texture2D>(@"Textures\goldenarmor"), startPos);
                 }
                 else if (choosechar.IterChar == 3)
                 {
-                    spriteBatch.Draw(myChar.DarkIco, new Vector2(490, 235), Color.White);
+                    spriteBatch.Draw(myChar.DarkIco, new Vector2(580, 235), Color.White);
                     player.Initalize(Content.Load<Texture2D>(@"Textures\deathknight"), startPos);
                 }
 
