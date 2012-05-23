@@ -70,7 +70,7 @@ namespace ProjectGame
                     }
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 playerDirection = Direction.Right;
                 Position.X += speed;
@@ -89,7 +89,7 @@ namespace ProjectGame
                     }
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 playerDirection = Direction.Up;
                 Position.Y -= speed;
@@ -108,7 +108,7 @@ namespace ProjectGame
                     }
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 playerDirection = Direction.Down;
                 Position.Y += speed;

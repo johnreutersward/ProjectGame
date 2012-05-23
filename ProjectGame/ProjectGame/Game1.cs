@@ -42,6 +42,7 @@ namespace ProjectGame
         private Menu menu;
         private Settings settings;
         private ChooseChar choosechar;
+        Texture2D world_map;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         Map map;
@@ -128,6 +129,7 @@ namespace ProjectGame
             text = Content.Load<SpriteFont>("Fonts\\Arial");
             myChar.WizardIco = Content.Load<Texture2D>(@"Textures\blackbox");
             myChar.KnightIco = Content.Load<Texture2D>(@"Textures\octo2");
+            world_map = Content.Load<Texture2D>(@"Textures\game_world");
 
             enemyTextures = Content.Load<Texture2D>(@"Textures\octo2");
 
@@ -356,7 +358,7 @@ namespace ProjectGame
 
             if (gamestate == GameStates.MainMenu)
             {
-                menu.DrawMenu(spriteBatch, 800, text);
+                menu.DrawMenu(spriteBatch, 800, text, world_map);
             }
             else if (gamestate == GameStates.Settings)
             {
@@ -364,7 +366,7 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.End)
             {
-                menu.DrawEnd(spriteBatch, 800, text);
+                menu.DrawEnd(spriteBatch, 800, text, world_map);
             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
