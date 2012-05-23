@@ -51,8 +51,9 @@ namespace ProjectGame
             return CharacterList[index];
         }
 
-        public void DrawMenu(SpriteBatch batch, float screenWidth, SpriteFont Neverwinter)
+        public void DrawMenu(SpriteBatch batch, float screenWidth, SpriteFont Neverwinter, Texture2D bg)
         {
+            batch.Draw(bg, new Vector2(0, 0), Color.White);
             batch.DrawString(Neverwinter, ChooseCharacter, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(ChooseCharacter).X / 2, 20), Color.White);
             int yPos = 100;
             

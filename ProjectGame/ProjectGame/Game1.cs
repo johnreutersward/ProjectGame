@@ -395,7 +395,7 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.Settings)
             {
-                settings.DrawMenu(spriteBatch, 800, text);
+                settings.DrawMenu(spriteBatch, 800, text, menubg);
             }
             else if (gamestate == GameStates.End)
             {
@@ -403,7 +403,7 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
-                choosechar.DrawMenu(spriteBatch, 800, text);
+                choosechar.DrawMenu(spriteBatch, 800, text, menubg);
                
                 Vector2 startPos = new Vector2(32, 128);
                 if (choosechar.IterChar == 0)

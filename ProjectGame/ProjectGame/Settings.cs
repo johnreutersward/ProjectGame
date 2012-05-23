@@ -42,8 +42,9 @@ namespace ProjectGame
             return SettingsItems[index];
         }
 
-        public void DrawMenu(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter)
+        public void DrawMenu(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D bg)
         {
+            batch.Draw(bg, new Vector2(0, 0), Color.White);
             batch.DrawString(Neverwinter, Options, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(Options).X / 2, 20), Color.White);
             int yPos = 100;
             for (int i = 0; i < OptionCount(); i++)
