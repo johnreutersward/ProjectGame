@@ -137,7 +137,7 @@ namespace ProjectGame
             myChar.LeatherIco = Content.Load<Texture2D>(@"Textures\leatherarmorico");
            
             world_map = Content.Load<Texture2D>(@"Textures\game_worldfit");
-            menubg = Content.Load<Texture2D>(@"Textures\testbgfit");
+            menubg = Content.Load<Texture2D>(@"Textures\bg1");
           
             
            
