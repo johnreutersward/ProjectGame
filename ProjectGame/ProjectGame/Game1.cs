@@ -40,9 +40,11 @@ namespace ProjectGame
         // menu & char screen
         private SpriteFont text;
         private Menu menu;
+        private Title title;
         private Settings settings;
         private ChooseChar choosechar;
         Texture2D world_map;
+        Texture2D menubg;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         Map map;
@@ -58,6 +60,7 @@ namespace ProjectGame
 
         public enum GameStates
         {
+            TitleScreen,
             MainMenu,
             Game,
             Settings,
@@ -101,11 +104,12 @@ namespace ProjectGame
 
             input = new Input();
             menu = new Menu();
+            title = new Title();
             settings = new Settings();
             choosechar = new ChooseChar();
 
             // Default game state
-            gamestate = GameStates.MainMenu;
+            gamestate = GameStates.TitleScreen;
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
@@ -132,8 +136,8 @@ namespace ProjectGame
             myChar.GoldenIco = Content.Load<Texture2D>(@"Textures\goldenarmorico");
             myChar.LeatherIco = Content.Load<Texture2D>(@"Textures\leatherarmorico");
            
-            world_map = Content.Load<Texture2D>(@"Textures\game_world");
-
+            world_map = Content.Load<Texture2D>(@"Textures\game_worldfit");
+            menubg = Content.Load<Texture2D>(@"Textures\testbgfit");
           
             
            
@@ -238,6 +242,14 @@ namespace ProjectGame
             }
 
             else if (gamestate == GameStates.End)
+            {
+                if (input.Enter)
+                {
+                    gamestate = GameStates.MainMenu;
+                }
+            }
+
+            else if (gamestate == GameStates.TitleScreen)
             {
                 if (input.Enter)
                 {
@@ -375,7 +387,11 @@ namespace ProjectGame
 
             if (gamestate == GameStates.MainMenu)
             {
-                menu.DrawMenu(spriteBatch, 800, text, world_map);
+                menu.DrawMenu(spriteBatch, 800, text, menubg);
+            }
+            else if (gamestate == GameStates.TitleScreen)
+            {
+                title.DrawEnd(spriteBatch, 800, text, world_map);
             }
             else if (gamestate == GameStates.Settings)
             {
