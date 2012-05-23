@@ -51,7 +51,7 @@ namespace ProjectGame
 
         public void DrawMenu(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D bg)
         {
-            batch.Draw(bg, new Vector2(-100, -400), Color.White);
+            //batch.Draw(bg, new Vector2(0, 0), Color.White);
             batch.DrawString(Neverwinter, Title, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(Title).X / 2, 20), Color.White);
             int yPos = 100;
             for (int i = 0; i < OptionCount(); i++)
@@ -71,7 +71,7 @@ namespace ProjectGame
 
         public void DrawEnd(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D bg)
         {
-            batch.Draw(bg, new Vector2(0, 0), Color.White);
+            //batch.Draw(bg, new Vector2(0, 0), Color.White);
             batch.DrawString(Neverwinter, InfoText, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(InfoText).X / 2, 300), Color.White);
             string prompt = "Press Enter to Continue";
             batch.DrawString(Neverwinter, prompt, new Vector2(screenWidth / 2 - Neverwinter.MeasureString(prompt).X / 2, 400), Color.White);
