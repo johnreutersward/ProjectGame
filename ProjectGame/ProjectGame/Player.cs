@@ -193,7 +193,8 @@ namespace ProjectGame
                                                 }
                         else if (tile != null && tile.TileIndex == 27)
                         {
-                            Game1.gamestate = Game1.GameStates.Settings;
+                            Game1.gamestate = Game1.GameStates.House1;
+                                              
                             return true;
                         }
                         else if (tile != null && tile.TileIndex == 28)

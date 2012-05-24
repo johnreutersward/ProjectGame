@@ -48,7 +48,7 @@ namespace ProjectGame
         Texture2D choosebg;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
-        Map map;
+        public static Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         Layer collisionLayer;
@@ -67,6 +67,7 @@ namespace ProjectGame
             Settings,
             Something,
             ChooseCharacter,
+            House1,
             End
         }
 
@@ -250,7 +251,6 @@ namespace ProjectGame
                     gamestate = GameStates.MainMenu;
                 }
             }
-
             else if (gamestate == GameStates.TitleScreen)
             {
                 if (input.Enter)
@@ -390,6 +390,12 @@ namespace ProjectGame
             if (gamestate == GameStates.MainMenu)
             {
                 menu.DrawMenu(spriteBatch, 800, text, menubg);
+            }
+            if (gamestate == GameStates.House1)
+            {
+                map.Draw(mapDisplayDevice, viewport);
+                player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
+
             }
             else if (gamestate == GameStates.TitleScreen)
             {

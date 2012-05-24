@@ -246,6 +246,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maps\standard2.tide">
+      <Name>standard2</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Maps\Foresttest.tide">
       <Name>Foresttest</Name>
       <Importer>TideImporter</Importer>
