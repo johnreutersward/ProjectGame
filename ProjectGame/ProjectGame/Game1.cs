@@ -49,6 +49,8 @@ namespace ProjectGame
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         public static Map map;
+        public static Map forestMap;
+        public static Map inhousMap;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         Layer collisionLayer;
@@ -116,6 +118,8 @@ namespace ProjectGame
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
             map.LoadTileSheets(mapDisplayDevice);
+            forestMap.LoadTileSheets(mapDisplayDevice);
+            inhousMap.LoadTileSheets(mapDisplayDevice);
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
 
@@ -158,9 +162,11 @@ namespace ProjectGame
             // test for portals in forest
             //map = Content.Load<Map>("Maps\\Foresttest");
             // test for the room
-            map = Content.Load<Map>("Maps\\Standard2");
+            forestMap = Content.Load<Map>("Maps\\Foresttest");
+            inhousMap = Content.Load<Map>("Maps\\standard2");
+            map = forestMap;
             
-            collisionLayer = map.GetLayer("obs");
+            //collisionLayer = map.GetLayer("obs");
             #endregion
 
             #region windowsMode
@@ -343,9 +349,7 @@ namespace ProjectGame
                     gamestate = GameStates.MainMenu;
                 }
 
-
-
-                player.Update(gameTime, collisionLayer);
+                player.Update(gameTime, map.GetLayer("obs"));
                 viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
                 viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
             }

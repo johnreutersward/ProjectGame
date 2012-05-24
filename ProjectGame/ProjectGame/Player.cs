@@ -194,7 +194,10 @@ namespace ProjectGame
                        */
                         else if (tile != null && tile.TileIndex == 27)
                         {
-                            Game1.gamestate = Game1.GameStates.House1;
+                            Game1.map = Game1.inhousMap;
+                            //Position = new Vector2(400, 280);
+                            Position = new Vector2(380, 284);
+                            //Game1.gamestate = Game1.GameStates.House1;
                                               
                             return true;
                         }
