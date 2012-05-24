@@ -49,6 +49,7 @@ namespace ProjectGame
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         public static Map map;
+        public static Map room;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         Layer collisionLayer;
@@ -115,6 +116,7 @@ namespace ProjectGame
 
             //xTile
             mapDisplayDevice = new XnaDisplayDevice(this.Content, this.GraphicsDevice);
+            room.LoadTileSheets(mapDisplayDevice);
             map.LoadTileSheets(mapDisplayDevice);
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
@@ -156,9 +158,10 @@ namespace ProjectGame
             // forest map
             //map = Content.Load<Map>("Maps\\Forest");
             // test for portals in forest
-            //map = Content.Load<Map>("Maps\\Foresttest");
+            map = Content.Load<Map>("Maps\\Foresttest");
             // test for the room
-            map = Content.Load<Map>("Maps\\Standard2");
+            //map = Content.Load<Map>("Maps\\Standard2");
+            room = Content.Load<Map>("Maps\\Standard2");
             
             collisionLayer = map.GetLayer("obs");
             #endregion
@@ -397,9 +400,10 @@ namespace ProjectGame
                 menu.DrawMenu(spriteBatch, 800, text, menubg);
             }
             if (gamestate == GameStates.House1)
-            {
-               player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
-            }
+                {
+                room.Draw(mapDisplayDevice, viewport);
+                player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
+                }
             else if (gamestate == GameStates.TitleScreen)
             {
                 title.DrawEnd(spriteBatch, 800, text, world_map);
@@ -417,6 +421,7 @@ namespace ProjectGame
                 choosechar.DrawMenu(spriteBatch, 800, text, choosebg);
                
                 Vector2 startPos = new Vector2(32, 128);
+               
                 if (choosechar.IterChar == 0)
                 {
                     spriteBatch.Draw(myChar.ClothIco, new Vector2(580, 100), Color.White);

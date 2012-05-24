@@ -195,6 +195,8 @@ namespace ProjectGame
                         else if (tile != null && tile.TileIndex == 27)
                         {
                             Game1.gamestate = Game1.GameStates.House1;
+                            Vector2 startPos = new Vector2(280, 280);
+                            Position = startPos;
                                               
                             return true;
                         }
