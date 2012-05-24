@@ -75,7 +75,7 @@ namespace ProjectGame
         {
             #region initclasses etc
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+           Content.RootDirectory = "Content";
             IsMouseVisible = true;
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
@@ -153,8 +153,13 @@ namespace ProjectGame
 
 
             // All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
-            //map = Content.Load<Map>("Maps\\standard");
-            map = Content.Load<Map>("Maps\\Foresttest");
+            // forest map
+            //map = Content.Load<Map>("Maps\\Forest");
+            // test for portals in forest
+            //map = Content.Load<Map>("Maps\\Foresttest");
+            // test for the room
+            map = Content.Load<Map>("Maps\\Standard2");
+            
             collisionLayer = map.GetLayer("obs");
             #endregion
 
@@ -393,9 +398,7 @@ namespace ProjectGame
             }
             if (gamestate == GameStates.House1)
             {
-                map.Draw(mapDisplayDevice, viewport);
-                player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
-
+               player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
             }
             else if (gamestate == GameStates.TitleScreen)
             {

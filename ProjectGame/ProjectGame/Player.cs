@@ -186,11 +186,12 @@ namespace ProjectGame
                             Debug.Print("Collision with tile at {" + x + "," + y + "}");
                             return true;
                         }
-                           else if (tile != null && tile.TileIndex == 26)
+                      /*     else if (tile != null && tile.TileIndex == 26)
                          {
                          Game1.gamestate = Game1.GameStates.MainMenu;
                          return true;
                                                 }
+                       */
                         else if (tile != null && tile.TileIndex == 27)
                         {
                             Game1.gamestate = Game1.GameStates.House1;
