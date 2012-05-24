@@ -182,9 +182,26 @@ namespace ProjectGame
                         Tile tile = collisionLayer.Tiles[x, y];
                         if (tile != null && tile.TileIndex == 23)
                         {
+                            
                             Debug.Print("Collision with tile at {" + x + "," + y + "}");
                             return true;
                         }
+                           else if (tile != null && tile.TileIndex == 26)
+                         {
+                         Game1.gamestate = Game1.GameStates.MainMenu;
+                         return true;
+                                                }
+                        else if (tile != null && tile.TileIndex == 27)
+                        {
+                            Game1.gamestate = Game1.GameStates.Settings;
+                            return true;
+                        }
+                        else if (tile != null && tile.TileIndex == 28)
+                        {
+                            Game1.gamestate = Game1.GameStates.TitleScreen;
+                            return true;
+                        }
+
                     }
                 }
             }

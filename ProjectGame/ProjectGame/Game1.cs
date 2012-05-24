@@ -153,7 +153,7 @@ namespace ProjectGame
 
             // All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
             //map = Content.Load<Map>("Maps\\standard");
-            map = Content.Load<Map>("Maps\\Forest");
+            map = Content.Load<Map>("Maps\\Foresttest");
             collisionLayer = map.GetLayer("obs");
             #endregion
 
@@ -505,9 +505,11 @@ namespace ProjectGame
 
                         if (tile != null && tile.TileIndex == 23)
                         {
+                           
                             //Debug.Print("Collision with tile at {" + x + "," + y + "}");
                             return true;
                         }
+                      
                     }
                 }
             }
@@ -516,6 +518,10 @@ namespace ProjectGame
 
             #endregion
         }
+
+
+
+        
 
         private void CreateEnemy(GameTime gameTime)
         {
