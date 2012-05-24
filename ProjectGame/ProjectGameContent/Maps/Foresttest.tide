@@ -2080,8 +2080,7 @@
         </Row>
         <Row>
           <Static Index="991" BlendMode="Alpha" />
-          <Null Count="98" />
-          <Static Index="998" BlendMode="Alpha" />
+          <Null Count="99" />
         </Row>
         <Row>
           <Static Index="991" BlendMode="Alpha" />
@@ -2860,7 +2859,7 @@
       </TileArray>
       <Properties />
     </Layer>
-    <Layer Id="obs" Visible="True">
+    <Layer Id="obs" Visible="False">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="100 x 15" TileSize="32 x 32" />
       <TileArray>
@@ -3024,15 +3023,9 @@
         </Row>
         <Row>
           <Static Index="23" BlendMode="Alpha" />
-          <Static Index="26" BlendMode="Alpha" />
-          <Static Index="26" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="27" BlendMode="Alpha" />
-          <Static Index="27" BlendMode="Alpha" />
-          <Null Count="2" />
-          <Static Index="28" BlendMode="Alpha" />
-          <Static Index="28" BlendMode="Alpha" />
-          <Null Count="10" />
+          <Static Index="23" BlendMode="Alpha" />
+          <Static Index="23" BlendMode="Alpha" />
+          <Null Count="17" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="14" />
           <Static Index="23" BlendMode="Alpha" />
@@ -3145,10 +3138,7 @@
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="1" />
           <Static Index="23" BlendMode="Alpha" />
-          <Null Count="2" />
-          <Static Index="28" BlendMode="Alpha" />
-          <Static Index="28" BlendMode="Alpha" />
-          <Null Count="9" />
+          <Null Count="13" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="16" />
           <Static Index="23" BlendMode="Alpha" />
@@ -3163,17 +3153,23 @@
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="39" />
           <Static Index="23" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="740" BlendMode="Alpha" />
+          <Static Index="740" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="741" BlendMode="Alpha" />
+          <Static Index="741" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="23" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="23" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="742" BlendMode="Alpha" />
+          <Static Index="742" BlendMode="Alpha" />
           <Null Count="9" />
-          <Static Index="27" BlendMode="Alpha" />
-          <Static Index="27" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="23" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="23" BlendMode="Alpha" />
-          <Null Count="13" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="16" />
-          <Static Index="23" BlendMode="Alpha" />
+          <Static Index="760" BlendMode="Alpha" />
         </Row>
         <Row>
           <Static Index="23" BlendMode="Alpha" />
@@ -3187,8 +3183,7 @@
           <Null Count="40" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
-          <Static Index="26" BlendMode="Alpha" />
-          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="2" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
@@ -3202,7 +3197,8 @@
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
-          <Null Count="2" />
+          <Null Count="1" />
+          <Static Index="742" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
@@ -3211,7 +3207,7 @@
           <Null Count="4" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="16" />
-          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="760" BlendMode="Alpha" />
         </Row>
         <Row>
           <Static Index="23" BlendMode="Alpha" />
@@ -3239,7 +3235,10 @@
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="42" />
           <Static Index="23" BlendMode="Alpha" />
-          <Null Count="4" />
+          <Null Count="1" />
+          <Static Index="743" BlendMode="Alpha" />
+          <Static Index="743" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="16" />
           <Static Index="23" BlendMode="Alpha" />
@@ -3259,8 +3258,7 @@
           <Null Count="32" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
-          <Static Index="26" BlendMode="Alpha" />
-          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="2" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="8" />

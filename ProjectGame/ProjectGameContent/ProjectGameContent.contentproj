@@ -253,8 +253,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\standard2.tide">
-      <Name>standard2</Name>
+    <Compile Include="Maps\standard2a.tide">
+      <Name>standard2a</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\standard2b.tide">
+      <Name>standard2b</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\standard3a.tide">
+      <Name>standard3a</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\standard3b.tide">
+      <Name>standard3b</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
     </Compile>
