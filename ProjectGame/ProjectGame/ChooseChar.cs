@@ -30,12 +30,12 @@ namespace ProjectGame
         }
         public ChooseChar()
         {
-            ChooseCharacter = "Choose your hero:";
+            ChooseCharacter = "Choose your hero";
             CharacterList = new List<string>();
-            CharacterList.Add("Sven-Erik - the Commoner");
-            CharacterList.Add("Hans-krister - the Druid of the Woods");
-            CharacterList.Add("Ser Excellence - the Knight");
-            CharacterList.Add("Nighty Knight - the Dark Knight");
+            CharacterList.Add("Kjell-Erik - the Commoner");
+            CharacterList.Add("Hans-Krister - the Druid");
+            CharacterList.Add("Sir Excellence - the Noble Knight");
+            CharacterList.Add("Nighty Knight - the Keeper of grief");
             CharacterList.Add("Back");
             iteratorchar = 0;
 
