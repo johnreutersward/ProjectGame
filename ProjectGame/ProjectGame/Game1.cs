@@ -150,7 +150,7 @@ namespace ProjectGame
             myChar.GoldenIco = Content.Load<Texture2D>(@"Textures\goldenarmorico");
             myChar.LeatherIco = Content.Load<Texture2D>(@"Textures\leatherarmorico");
            
-            world_map = Content.Load<Texture2D>(@"Textures\game_worldfit");
+            world_map = Content.Load<Texture2D>(@"Textures\gameTitle_v3");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
           
