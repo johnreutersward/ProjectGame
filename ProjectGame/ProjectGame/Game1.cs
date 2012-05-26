@@ -59,6 +59,8 @@ namespace ProjectGame
         xTile.Dimensions.Rectangle viewport;
         Layer collisionLayer;
 
+        Song intro;
+
         int windowWidth;
         int windowHeight;
         #endregion
@@ -153,8 +155,8 @@ namespace ProjectGame
             world_map = Content.Load<Texture2D>(@"Textures\gameTitle_v3");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
-          
-            
+
+            intro = Content.Load<Song>(@"Audio\intro");
            
               
             
@@ -180,7 +182,7 @@ namespace ProjectGame
             
             //collisionLayer = map.GetLayer("obs");
             #endregion
-
+            MediaPlayer.Play(intro);
             #region windowsMode
             // windows mode content loader
             Conversation.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
@@ -229,13 +231,14 @@ namespace ProjectGame
         protected override void Update(GameTime gameTime)
         {
             #region update
-
+            
             input.Update();
 
             #region MainMenu
             // Manages menu 
             if (gamestate == GameStates.MainMenu)
             {
+                
                 if (input.Down)
                 {
                     menu.Iterator++;
