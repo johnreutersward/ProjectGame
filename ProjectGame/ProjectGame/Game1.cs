@@ -158,8 +158,8 @@ namespace ProjectGame
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
 
-          //  intro = Content.Load<Song>(@"Audio\intro");
-            intro = Content.Load<Song>(@"Audio\StoryBegins");
+            intro = Content.Load<Song>(@"Audio\intro");
+          //  intro = Content.Load<Song>(@"Audio\StoryBegins");
             gameost = Content.Load<Song>(@"Audio\SneakySnitch");
 
             
