@@ -320,6 +320,7 @@ namespace ProjectGame
                         myChar.chosenChar = 0;
                         gamestate = GameStates.Game;
                         MediaPlayer.Play(gameost);
+                        MediaPlayer.IsRepeating = true; 
                        
                     }
                     else if (choosechar.IterChar == 1)
@@ -328,6 +329,7 @@ namespace ProjectGame
                         myChar.chosenChar = 1;
                         gamestate = GameStates.Game;
                         MediaPlayer.Play(gameost);
+                        MediaPlayer.IsRepeating = true; 
                     }
                     else if (choosechar.IterChar == 2)
                     {
@@ -335,6 +337,7 @@ namespace ProjectGame
                         myChar.chosenChar = 2;
                         gamestate = GameStates.Game;
                         MediaPlayer.Play(gameost);
+                        MediaPlayer.IsRepeating = true; 
                     }
                     else if (choosechar.IterChar == 3)
                     {
@@ -342,6 +345,7 @@ namespace ProjectGame
                         myChar.chosenChar = 3;
                         gamestate = GameStates.Game;
                         MediaPlayer.Play(gameost);
+                        MediaPlayer.IsRepeating = true; 
                     }
 
                     else if (choosechar.IterChar == 4)
