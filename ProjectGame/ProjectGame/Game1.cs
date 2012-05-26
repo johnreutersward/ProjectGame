@@ -418,7 +418,7 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.TitleScreen)
             {
-                title.DrawEnd(spriteBatch, 800, text, world_map);
+                title.DrawEnd(spriteBatch, 800, world_map);
             }
             else if (gamestate == GameStates.Settings)
             {
