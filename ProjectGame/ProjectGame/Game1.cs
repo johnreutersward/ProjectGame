@@ -60,6 +60,8 @@ namespace ProjectGame
         Layer collisionLayer;
 
         Song intro;
+        Song gameost;
+        int playlist;
 
         int windowWidth;
         int windowHeight;
@@ -156,7 +158,11 @@ namespace ProjectGame
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
 
-            intro = Content.Load<Song>(@"Audio\intro");
+          //  intro = Content.Load<Song>(@"Audio\intro");
+            intro = Content.Load<Song>(@"Audio\StoryBegins");
+            gameost = Content.Load<Song>(@"Audio\SneakySnitch");
+
+            
            
               
             
@@ -183,6 +189,8 @@ namespace ProjectGame
             //collisionLayer = map.GetLayer("obs");
             #endregion
             MediaPlayer.Play(intro);
+         
+
             #region windowsMode
             // windows mode content loader
             Conversation.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
@@ -283,6 +291,7 @@ namespace ProjectGame
                 {
                     gamestate = GameStates.MainMenu;
                 }
+                
             }
             else if (gamestate == GameStates.Settings)
             {
@@ -310,29 +319,35 @@ namespace ProjectGame
                         // Set character to the commoner
                         myChar.chosenChar = 0;
                         gamestate = GameStates.Game;
+                        MediaPlayer.Play(gameost);
+                       
                     }
                     else if (choosechar.IterChar == 1)
                     {
                         //set character to the druid
                         myChar.chosenChar = 1;
                         gamestate = GameStates.Game;
+                        MediaPlayer.Play(gameost);
                     }
                     else if (choosechar.IterChar == 2)
                     {
                         //set character to the knight
                         myChar.chosenChar = 2;
                         gamestate = GameStates.Game;
+                        MediaPlayer.Play(gameost);
                     }
                     else if (choosechar.IterChar == 3)
                     {
                         //set character to the dark knight
                         myChar.chosenChar = 3;
                         gamestate = GameStates.Game;
+                        MediaPlayer.Play(gameost);
                     }
 
                     else if (choosechar.IterChar == 4)
                     {
                         gamestate = GameStates.MainMenu;
+                        
                     }
 
                 }
@@ -362,6 +377,7 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.Escape))
                 {
                     gamestate = GameStates.MainMenu;
+                    MediaPlayer.Play(intro);
                 }
 
                 player.Update(gameTime, map.GetLayer("obs"));
@@ -394,6 +410,10 @@ namespace ProjectGame
            // InitializeEnemy();
 
             #endregion
+
+                
+           
+            
         }
 
         /// <summary>
