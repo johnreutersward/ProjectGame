@@ -65,28 +65,32 @@ namespace ProjectGame
                 if (IterSettings == 0)
                 {
 
-                    batch.DrawString(Neverwinter, "Use left / right key to change the value", new Vector2(150, 300), Color.White);
+                    batch.DrawString(Neverwinter, "Left key - Off, Right key - On", new Vector2(200, 350), Color.White);
 
                     if (onoffmusic == 1)
                     {
-                        if (i == iterator)
-                        {
-                            DefColor = Color.SaddleBrown;
-                        }
-                        batch.DrawString(Neverwinter, "On", new Vector2(450, 100), DefColor);
+
+                        batch.DrawString(Neverwinter, "On", new Vector2(450, 100), Color.SaddleBrown);
 
                     }
-                    else if (onoffmusic == 0)
+                    else if (onoffmusic == 0 && IterSettings == 0)
                     {
-                        if (i == iterator)
-                        {
-                            DefColor = Color.SaddleBrown;
-                        }
 
-                        batch.DrawString(Neverwinter, "Off", new Vector2(450, 100), DefColor);
+
+                        batch.DrawString(Neverwinter, "Off", new Vector2(450, 100), Color.SaddleBrown);
 
                     }
                 }
+                if (IterSettings == 1)
+                {
+                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 350), Color.White);
+                }
+                if (IterSettings == 2)
+                {
+                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 350), Color.White);
+                }
+
+
                 batch.DrawString(Neverwinter, GetItem(i), new Vector2(screenWidth / 2 - Neverwinter.MeasureString(GetItem(i)).X / 2, yPos), DefColor);
                 yPos += 50;
             }
