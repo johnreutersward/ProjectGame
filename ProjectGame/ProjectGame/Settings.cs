@@ -32,9 +32,9 @@ namespace ProjectGame
             Options = "Options";
             SettingsItems = new List<string>();
             SettingsItems.Add("Music");
+            SettingsItems.Add("Toogle Fullscreen");
             SettingsItems.Add("Back");
             iterator = 0;
-            InfoText = string.Empty;
             onoffmusic = 1;
 
         }
@@ -47,7 +47,7 @@ namespace ProjectGame
         {
             return SettingsItems[index];
         }
-
+        
         public void DrawMenu(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D bg)
         {
             batch.Draw(bg, new Vector2(0, 0), Color.White);
@@ -62,7 +62,7 @@ namespace ProjectGame
                 }
 
 
-                else if (IterSettings == 0)
+                if (IterSettings == 0)
                 {
 
                     batch.DrawString(Neverwinter, "Use left / right key to change the value", new Vector2(150, 300), Color.White);
@@ -92,6 +92,7 @@ namespace ProjectGame
             }
            // batch.DrawString(Neverwinter, "Use left / right key to change the value", new Vector2(150, 300), Color.White);
         }
+       
 
         
 

@@ -300,7 +300,7 @@ namespace ProjectGame
                     settings.IterSettings--;
                 }
 
-                else if (input.Left)
+                if (input.Left)
                 {
                     if (settings.IterSettings == 0)
                     {
@@ -323,11 +323,16 @@ namespace ProjectGame
                 {
                     if (settings.IterSettings == 1)
                     {
+                        graphics.ToggleFullScreen();
+                    }
+                
+                
+                    else if (settings.IterSettings == 2)
+                    {
                         gamestate = GameStates.MainMenu;
                     }
                 }
-
-            }
+             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
                 if (input.Down)
