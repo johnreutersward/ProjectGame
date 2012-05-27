@@ -65,6 +65,10 @@ namespace ProjectGame
                     DefColor = Color.SaddleBrown;
                 }
 
+                
+                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 400), Color.White);
+                
+
                 batch.DrawString(Neverwinter, GetItem(i), new Vector2(30, yPos), DefColor);
                 yPos += 50;
             }

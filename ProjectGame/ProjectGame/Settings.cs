@@ -65,7 +65,7 @@ namespace ProjectGame
                 if (IterSettings == 0)
                 {
 
-                    batch.DrawString(Neverwinter, "Left key - Off, Right key - On", new Vector2(200, 350), Color.White);
+                    batch.DrawString(Neverwinter, "Left key - Off, Right key - On", new Vector2(200, 400), Color.White);
 
                     if (onoffmusic == 1)
                     {
@@ -83,11 +83,11 @@ namespace ProjectGame
                 }
                 if (IterSettings == 1)
                 {
-                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 350), Color.White);
+                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 400), Color.White);
                 }
                 if (IterSettings == 2)
                 {
-                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 350), Color.White);
+                    batch.DrawString(Neverwinter, "Press Enter", new Vector2(320, 400), Color.White);
                 }
 
 
