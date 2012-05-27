@@ -33,7 +33,6 @@ namespace ProjectGame
             MenuItems = new List<string>();
             MenuItems.Add("Single Player");
             MenuItems.Add("Settings");
-            MenuItems.Add("Something");
             MenuItems.Add("Exit Game");
             Iterator = 0;
             InfoText = string.Empty;

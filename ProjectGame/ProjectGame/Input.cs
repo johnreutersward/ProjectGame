@@ -52,7 +52,37 @@ namespace ProjectGame
                 }
             }
         }
-  
+
+        public bool Right
+        {
+            get
+            {
+                if (Game1.gamestate == Game1.GameStates.Settings)
+                {
+                    return keyboardState.IsKeyDown(Keys.Right) && lastState.IsKeyUp(Keys.Down);
+                }
+                else
+                {
+                    return keyboardState.IsKeyDown(Keys.Right);
+                }
+            }
+        }
+
+        public bool Left
+        {
+            get
+            {
+                if (Game1.gamestate == Game1.GameStates.Settings)
+                {
+                    return keyboardState.IsKeyDown(Keys.Left) && lastState.IsKeyUp(Keys.Left);
+                }
+                else
+                {
+                    return keyboardState.IsKeyDown(Keys.Left);
+                }
+            }
+        }
+
         public bool Enter
         {
             get
