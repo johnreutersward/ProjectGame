@@ -32,7 +32,7 @@ namespace ProjectGame
             Options = "Options";
             SettingsItems = new List<string>();
             SettingsItems.Add("Music");
-            SettingsItems.Add("Toogle Fullscreen");
+            SettingsItems.Add("Toggle Fullscreen");
             SettingsItems.Add("Back");
             iterator = 0;
             onoffmusic = 1;
