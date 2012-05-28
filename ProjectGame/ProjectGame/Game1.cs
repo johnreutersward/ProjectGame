@@ -39,6 +39,7 @@ namespace ProjectGame
 
         // menu & char screen
         public static SpriteFont text;
+        public static SpriteFont textconv;
         private Menu menu;
         public static Conv blabla;
         private Title title;
@@ -59,7 +60,7 @@ namespace ProjectGame
         public static Map second;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
-        Layer collisionLayer;
+       // Layer collisionLayer;
 
         public Song intro;
         public Song gameost;
@@ -149,6 +150,7 @@ namespace ProjectGame
             #region LoadContent
             spriteBatch = new SpriteBatch(GraphicsDevice);
             text = Content.Load<SpriteFont>("Fonts\\Arial");
+            textconv = Content.Load<SpriteFont>("Fonts\\Segoe");
             myChar.ClothIco = Content.Load<Texture2D>(@"Textures\clotharmorico");
             myChar.DarkIco = Content.Load<Texture2D>(@"Textures\deathknightico");
             myChar.GoldenIco = Content.Load<Texture2D>(@"Textures\goldenarmorico");
@@ -436,6 +438,11 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.F))
                 {
                     graphics.ToggleFullScreen();
+                }
+
+                if (kb.IsKeyDown(Keys.Enter))
+                {
+                    Player.doConversation = false;
                 }
 
                 if (kb.IsKeyDown(Keys.Escape))

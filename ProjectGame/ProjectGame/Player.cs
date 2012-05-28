@@ -138,12 +138,10 @@ namespace ProjectGame
             {
                 effect = SpriteEffects.FlipHorizontally;
             }
-           if (doConversation)
+
+            if (doConversation)
             {
-               // Conversation.Draw(spriteBatch);
-                Game1.blabla.DrawConv(spriteBatch, 800, Game1.text, Game1.bg);
-                   
-              
+              Game1.blabla.DrawConv(spriteBatch, 800, Game1.textconv, Game1.bg); 
             }
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
         }
