@@ -72,6 +72,8 @@ namespace ProjectGame
         Stopwatch stopWatch;
         public static bool done;
 
+        public KeyboardState OldKeyState;
+
         public enum GameStates
         {
             TitleScreen,
@@ -440,13 +442,13 @@ namespace ProjectGame
                     graphics.ToggleFullScreen();
                 }
 
-                if (kb.IsKeyDown(Keys.Enter))
+                if (kb.IsKeyDown(Keys.Enter) && OldKeyState.IsKeyUp(Keys.Enter))
                 {
                   
                                       
                     if (Player.count > Player.convset)
                     {
-                        ++Player.convset;
+                        Player.convset++;
                     }
                    
                    
@@ -454,6 +456,7 @@ namespace ProjectGame
                    
 
                 }
+                OldKeyState = kb;
 
                 if (kb.IsKeyDown(Keys.F1))
                 {
