@@ -163,6 +163,12 @@ namespace ProjectGame
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M 3 SCREEN");
             }
+            if (doConversation && convset == 3)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Boom Shakalaka");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "--------------");
+            }
 
 
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
@@ -304,10 +310,9 @@ namespace ProjectGame
                             
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
                            
-                            //not working with 3 screens
-                            count = 2;
-                            //working with two
-                            //count = 1;
+                            
+                            count = 3;
+                            
                             doConversation = true;
                             
                             

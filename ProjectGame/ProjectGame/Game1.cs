@@ -450,10 +450,11 @@ namespace ProjectGame
                     {
                         Player.convset++;
                     }
-                   
-                   
-                    // Player.doConversation = false; 
-                   
+
+                    else if (Player.convset == Player.count)
+                    {
+                        Player.doConversation = false;
+                    }
 
                 }
                 OldKeyState = kb;
