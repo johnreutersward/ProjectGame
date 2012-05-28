@@ -59,6 +59,10 @@ namespace ProjectGame
         xTile.Dimensions.Rectangle viewport;
         Layer collisionLayer;
 
+        public Song intro;
+        public Song gameost;
+        public int play;
+
         int windowWidth;
         int windowHeight;
         #endregion
@@ -71,7 +75,6 @@ namespace ProjectGame
             MainMenu,
             Game,
             Settings,
-            Something,
             ChooseCharacter,
             End
         }
@@ -152,7 +155,11 @@ namespace ProjectGame
             world_map = Content.Load<Texture2D>(@"Textures\gameTitle_v3");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
-          
+
+            intro = Content.Load<Song>(@"Audio\intro");
+          //  intro = Content.Load<Song>(@"Audio\StoryBegins");
+            gameost = Content.Load<Song>(@"Audio\SneakySnitch");
+
             
            
               
@@ -179,6 +186,8 @@ namespace ProjectGame
             
             //collisionLayer = map.GetLayer("obs");
             #endregion
+            MediaPlayer.Play(intro);
+         
 
             #region windowsMode
             // windows mode content loader
@@ -228,13 +237,14 @@ namespace ProjectGame
         protected override void Update(GameTime gameTime)
         {
             #region update
-
+            
             input.Update();
 
             #region MainMenu
             // Manages menu 
             if (gamestate == GameStates.MainMenu)
             {
+                
                 if (input.Down)
                 {
                     menu.Iterator++;
@@ -256,10 +266,6 @@ namespace ProjectGame
                     }
                     else if (menu.Iterator == 2)
                     {
-                        gamestate = GameStates.Something;
-                    }
-                    else if (menu.Iterator == 3)
-                    {
                         this.Exit();
                     }
                     menu.Iterator = 0;
@@ -279,15 +285,53 @@ namespace ProjectGame
                 {
                     gamestate = GameStates.MainMenu;
                 }
+                
             }
             else if (gamestate == GameStates.Settings)
             {
-                if (input.Enter)
-                {
-                    gamestate = GameStates.MainMenu;
-                }
-            }
 
+                if (input.Down)
+                {
+                    settings.IterSettings++;
+                }
+                else if (input.Up)
+                {
+                    settings.IterSettings--;
+                }
+
+                if (input.Left)
+                {
+                    if (settings.IterSettings == 0)
+                    {
+                        settings.onoffmusic = 0;
+                        MediaPlayer.Stop();
+                        play = 0;
+                    }
+                 
+                }
+                else if (input.Right)
+                {
+                    if (settings.IterSettings == 0)
+                    {
+                        settings.onoffmusic = 1;
+                        MediaPlayer.Play(intro);
+                        play = 1;
+                    }
+                }
+                else if (input.Enter)
+                {
+                    if (settings.IterSettings == 1)
+                    {
+                        graphics.ToggleFullScreen();
+                    }
+                
+                
+                    else if (settings.IterSettings == 2)
+                    {
+                        gamestate = GameStates.MainMenu;
+                    }
+                }
+             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
                 if (input.Down)
@@ -306,29 +350,53 @@ namespace ProjectGame
                         // Set character to the commoner
                         myChar.chosenChar = 0;
                         gamestate = GameStates.Game;
+                        if (play == 1)
+                        {
+                            MediaPlayer.Play(gameost);
+                            MediaPlayer.IsRepeating = true;
+                        }
                     }
                     else if (choosechar.IterChar == 1)
                     {
                         //set character to the druid
                         myChar.chosenChar = 1;
                         gamestate = GameStates.Game;
+                        if (play == 1)
+                        {
+                            MediaPlayer.Play(gameost);
+                            MediaPlayer.IsRepeating = true;
+                        }
+                       
                     }
                     else if (choosechar.IterChar == 2)
                     {
                         //set character to the knight
                         myChar.chosenChar = 2;
                         gamestate = GameStates.Game;
+                        if (play == 1)
+                        {
+                            MediaPlayer.Play(gameost);
+                            MediaPlayer.IsRepeating = true;
+                        }
+                        
                     }
                     else if (choosechar.IterChar == 3)
                     {
                         //set character to the dark knight
                         myChar.chosenChar = 3;
                         gamestate = GameStates.Game;
+                        if (play == 1)
+                        {
+                            MediaPlayer.Play(gameost);
+                            MediaPlayer.IsRepeating = true;
+                        }
+                        
                     }
 
                     else if (choosechar.IterChar == 4)
                     {
                         gamestate = GameStates.MainMenu;
+
                     }
 
                 }
@@ -339,7 +407,7 @@ namespace ProjectGame
             #endregion
 
             #region Game
-            else if (gamestate == GameStates.Game || gamestate == GameStates.Something)
+            else if (gamestate == GameStates.Game)
             {
                 KeyboardState kb = Keyboard.GetState();
 
@@ -358,6 +426,11 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.Escape))
                 {
                     gamestate = GameStates.MainMenu;
+                    if (play == 1)
+                    {
+                        MediaPlayer.Play(intro);
+                        MediaPlayer.IsRepeating = true;
+                    }
                 }
 
                 player.Update(gameTime, map.GetLayer("obs"));
@@ -390,6 +463,10 @@ namespace ProjectGame
            // InitializeEnemy();
 
             #endregion
+
+                
+           
+            
         }
 
         /// <summary>
@@ -413,7 +490,7 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.TitleScreen)
             {
-                title.DrawEnd(spriteBatch, 800, text, world_map);
+                title.DrawEnd(spriteBatch, 800, world_map);
             }
             else if (gamestate == GameStates.Settings)
             {
@@ -453,7 +530,7 @@ namespace ProjectGame
             #endregion
 
             #region draw Windows
-            else if (gamestate == GameStates.Something)
+          /*  else if (gamestate == GameStates.Something)
             {
                 TimeSpan drawTime = stopWatch.Elapsed;
                 // settings.DrawMenu(spriteBatch, 800, text);
@@ -468,15 +545,15 @@ namespace ProjectGame
 
 
             }
-
+            */
             #endregion
 
             #region draw enemy and char test
-            else if (gamestate == GameStates.Something)
+            /*else if (gamestate == GameStates.Something)
             {
                 spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
                 spriteBatch.Draw(enemies[1].enemy1, enemies[0].enemyVector, Color.White);
-            }
+            }*/
             #endregion
 
             #region drawGame
@@ -567,6 +644,13 @@ namespace ProjectGame
 
         }
 
+        public void MusicControl()
+        {
+            if (play == 1)
+            { MediaPlayer.Play(intro); }
+            else if (play == 1)
+            { MediaPlayer.Stop(); }
+        }
 
         private void InitializeEnemy()
         {
@@ -576,6 +660,6 @@ namespace ProjectGame
             #endregion
         }
 
-
+       
     }
 }
