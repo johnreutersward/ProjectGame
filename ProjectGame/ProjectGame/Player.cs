@@ -21,7 +21,7 @@ namespace ProjectGame
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 10;
-        public int speed = 2;
+        public int speed = 5;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
         public static bool doConversation;
@@ -309,15 +309,33 @@ namespace ProjectGame
                         {
                             
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
-                           
+
+                            Game1.gamestate = Game1.GameStates.End; 
+                     //       count = 7;
+                       //     convset = 4;
                             
-                            count = 7;
-                            convset = 4;
-                            
-                            doConversation = true;
+                         //   doConversation = true;
                             
                             
                           
+                        }
+                        
+                        else if (tile != null && tile.TileIndex == 1901)
+                        {
+
+                            // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
+                            count = 7;
+                            convset = 4;
+                            doConversation = true;
+                        }
+                        //template for tile conv
+                        else if (tile != null && tile.TileIndex == 200000)
+                        {
+
+                            // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
+                                   count = 7;
+                                   convset = 4;
+                                   doConversation = true;
                         }
 
                        

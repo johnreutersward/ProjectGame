@@ -48,6 +48,7 @@ namespace ProjectGame
         Texture2D world_map;
         Texture2D menubg;
         Texture2D choosebg;
+        Texture2D gameover;
         public static Texture2D bg;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
@@ -162,6 +163,7 @@ namespace ProjectGame
             world_map = Content.Load<Texture2D>(@"Textures\gameTitle_v3");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
+            gameover = Content.Load<Texture2D>(@"Textures\gameover");
 
             intro = Content.Load<Song>(@"Audio\intro");
           //  intro = Content.Load<Song>(@"Audio\StoryBegins");
@@ -183,7 +185,7 @@ namespace ProjectGame
             // test for portals in forest
             //map = Content.Load<Map>("Maps\\Foresttest");
             // test for the room
-            forestMap = Content.Load<Map>("Maps\\Forest");
+            forestMap = Content.Load<Map>("Maps\\Foresttest");
             inhousMapa = Content.Load<Map>("Maps\\standard2a");
             inhousMapb = Content.Load<Map>("Maps\\standard2b");
             inhous2Mapa = Content.Load<Map>("Maps\\standard3a");
@@ -528,6 +530,7 @@ namespace ProjectGame
 
             if (gamestate == GameStates.MainMenu)
             {
+               
                 menu.DrawMenu(spriteBatch, 800, text, menubg);
             }
             else if (gamestate == GameStates.TitleScreen)
@@ -540,7 +543,7 @@ namespace ProjectGame
             }
             else if (gamestate == GameStates.End)
             {
-                menu.DrawEnd(spriteBatch, 800, text, world_map);
+                spriteBatch.Draw(gameover, new Vector2(0, 0), Color.White);
             }
             else if (gamestate == GameStates.ChooseCharacter)
             {
