@@ -10,20 +10,21 @@ namespace ProjectGame
 {
     public class Conv
     {
-    public void Update(GameTime gameTime)
-        { 
-        if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-        {
-            Player.doConversation = false;
-        }
-        }
+        public static int counter;
+        public static bool end = false;
+        String texter = "text1";
 
 
-        public void DrawConv(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D background)
+     public void DrawConv(SpriteBatch batch, int screenWidth, SpriteFont Neverwinter, Texture2D background)
         {
-            batch.Draw(background, new Vector2(100, 100), Color.White);
-            batch.DrawString(Neverwinter, "text", new Vector2(120, 120), Color.White);
-        }
+        
+         // draw conv box
+         batch.Draw(background, new Vector2(100, 100), Color.White);
+         // draw text   
+         batch.DrawString(Neverwinter, texter, new Vector2(120, 120), Color.White);
+        
+        
+     }
 
 
 

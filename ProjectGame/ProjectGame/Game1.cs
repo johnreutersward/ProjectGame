@@ -41,7 +41,7 @@ namespace ProjectGame
         public static SpriteFont text;
         public static SpriteFont textconv;
         private Menu menu;
-        public static Conv blabla;
+        public static Conv Conversationbox;
         private Title title;
         private Settings settings;
         private ChooseChar choosechar;
@@ -114,7 +114,7 @@ namespace ProjectGame
         {
             #region Initialize
             base.Initialize();
-            blabla = new Conv();
+            Conversationbox = new Conv();
             input = new Input();
             menu = new Menu();
             title = new Title();
@@ -442,6 +442,13 @@ namespace ProjectGame
 
                 if (kb.IsKeyDown(Keys.Enter))
                 {
+                    if (map == forestMap)
+                    {
+                        Conv.counter = 2;
+                        
+
+                    }
+                    
                     Player.doConversation = false;
                 }
 
