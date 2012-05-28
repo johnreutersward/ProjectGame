@@ -25,6 +25,9 @@ namespace ProjectGame
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
         public static bool doConversation;
+        public static int convset = 0;
+        public static int count = 0;
+        
          
 
         public Rectangle playerBounds
@@ -139,11 +142,29 @@ namespace ProjectGame
                 effect = SpriteEffects.FlipHorizontally;
             }
 
-            if (doConversation)
+             if (doConversation && convset == 0)
             {
-              Game1.Conversationbox.DrawConv(spriteBatch, 800, Game1.textconv, Game1.bg); 
-               
+              Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+              Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Long long time ago ..  ");
+              Game1.Conversationbox.DrawConv(spriteBatch, 120, 130, Game1.textconv, "Long long text  ..  ");
+              Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "Copy me  ..  ");
             }
+
+            if (doConversation && convset == 1)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M THE SECOND SCREEN");
+                  
+            }
+            if (doConversation && convset == 2)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M 3 SCREEN");
+            }
+
+
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
         }
 
@@ -278,6 +299,21 @@ namespace ProjectGame
                            
                             return true;
                         }
+                        else if (tile != null && tile.TileIndex == 1408)
+                        {
+                            
+                            // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
+                           
+                            //not working with 3 screens
+                            count = 2;
+                            //working with two
+                            //count = 1;
+                            doConversation = true;
+                            
+                            
+                          
+                        }
+
                        
 
                     }

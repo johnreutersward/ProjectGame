@@ -181,7 +181,7 @@ namespace ProjectGame
             // test for portals in forest
             //map = Content.Load<Map>("Maps\\Foresttest");
             // test for the room
-            forestMap = Content.Load<Map>("Maps\\Forest1");
+            forestMap = Content.Load<Map>("Maps\\Forest");
             inhousMapa = Content.Load<Map>("Maps\\standard2a");
             inhousMapb = Content.Load<Map>("Maps\\standard2b");
             inhous2Mapa = Content.Load<Map>("Maps\\standard3a");
@@ -442,17 +442,20 @@ namespace ProjectGame
 
                 if (kb.IsKeyDown(Keys.Enter))
                 {
-                    if (map == forestMap)
+                  
+                                      
+                    if (Player.count > Player.convset)
                     {
-                        Conv.counter = 2;
-                        
-
+                        ++Player.convset;
                     }
-                    
-                    Player.doConversation = false;
+                   
+                   
+                    // Player.doConversation = false; 
+                   
+
                 }
 
-                if (kb.IsKeyDown(Keys.Escape))
+                if (kb.IsKeyDown(Keys.F1))
                 {
                     gamestate = GameStates.MainMenu;
                     if (play == 1)
@@ -462,6 +465,7 @@ namespace ProjectGame
                     }
                 }
 
+               
                 player.Update(gameTime, map.GetLayer("obs"));
                 viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
                 viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
@@ -685,14 +689,7 @@ namespace ProjectGame
 
         }
 
-        public void MusicControl()
-        {
-            if (play == 1)
-            { MediaPlayer.Play(intro); }
-            else if (play == 1)
-            { MediaPlayer.Stop(); }
-        }
-
+       
         private void InitializeEnemy()
         {
             #region init enemy
