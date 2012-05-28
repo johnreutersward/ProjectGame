@@ -15,7 +15,7 @@ namespace ProjectGame
         public Texture2D DarkIco;
         public Texture2D GoldenIco;
         public Texture2D LeatherIco;
-        
+        public Texture2D Wizardico;
 
         //char position
         public Vector2 myCharVector = Vector2.Zero;

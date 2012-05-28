@@ -36,6 +36,7 @@ namespace ProjectGame
             CharacterList.Add("Hans-Krister - the Druid");
             CharacterList.Add("Sir Excellence - the Noble Knight");
             CharacterList.Add("Nighty Knight - the Keeper of grief");
+            CharacterList.Add("Simon the Wizard - Loremaster");
             CharacterList.Add("Back");
             iteratorchar = 0;
 

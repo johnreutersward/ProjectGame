@@ -17,13 +17,15 @@ namespace ProjectGame
         public Direction playerDirection = Direction.Right;
         public Texture2D PlayerTexture;
         public Point frameSize = new Point(64,64);
-        public Point currentFrame = new Point(0,0);
+        public Point currentFrame = new Point(1,1);
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 10;
         public int speed = 2;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
+        public static bool doConversation;
+         
 
         public Rectangle playerBounds
         {
@@ -135,6 +137,13 @@ namespace ProjectGame
             if (playerDirection == Direction.Left)
             {
                 effect = SpriteEffects.FlipHorizontally;
+            }
+           if (doConversation)
+            {
+               // Conversation.Draw(spriteBatch);
+                Game1.blabla.DrawConv(spriteBatch, 800, Game1.text, Game1.bg);
+                   
+              
             }
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
         }
@@ -258,6 +267,19 @@ namespace ProjectGame
 
                             return true;
                         }
+
+
+                        else if (tile != null && tile.TileIndex == 942)
+                        {
+                           // Game1.map = Game1.second;
+                            //Position = new Vector2(100, 100);
+                            doConversation = true;
+                         
+                        
+                           
+                            return true;
+                        }
+                       
 
                     }
                 }

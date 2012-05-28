@@ -38,14 +38,16 @@ namespace ProjectGame
         List<Enemy> enemies;
 
         // menu & char screen
-        private SpriteFont text;
+        public static SpriteFont text;
         private Menu menu;
+        public static Conv blabla;
         private Title title;
         private Settings settings;
         private ChooseChar choosechar;
         Texture2D world_map;
         Texture2D menubg;
         Texture2D choosebg;
+        public static Texture2D bg;
 
         // xTile map, display device reference and rendering viewport (this is pretty awesome!)
         public static Map map;
@@ -111,13 +113,13 @@ namespace ProjectGame
         {
             #region Initialize
             base.Initialize();
-
+            blabla = new Conv();
             input = new Input();
             menu = new Menu();
             title = new Title();
             settings = new Settings();
             choosechar = new ChooseChar();
-
+            play = 1;
             // Default game state
             gamestate = GameStates.TitleScreen;
 
@@ -151,6 +153,7 @@ namespace ProjectGame
             myChar.DarkIco = Content.Load<Texture2D>(@"Textures\deathknightico");
             myChar.GoldenIco = Content.Load<Texture2D>(@"Textures\goldenarmorico");
             myChar.LeatherIco = Content.Load<Texture2D>(@"Textures\leatherarmorico");
+            myChar.Wizardico = Content.Load<Texture2D>(@"Textures\Wizardico");
            
             world_map = Content.Load<Texture2D>(@"Textures\gameTitle_v3");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
@@ -176,7 +179,7 @@ namespace ProjectGame
             // test for portals in forest
             //map = Content.Load<Map>("Maps\\Foresttest");
             // test for the room
-            forestMap = Content.Load<Map>("Maps\\Foresttest");
+            forestMap = Content.Load<Map>("Maps\\Forest1");
             inhousMapa = Content.Load<Map>("Maps\\standard2a");
             inhousMapb = Content.Load<Map>("Maps\\standard2b");
             inhous2Mapa = Content.Load<Map>("Maps\\standard3a");
@@ -187,19 +190,19 @@ namespace ProjectGame
             //collisionLayer = map.GetLayer("obs");
             #endregion
             MediaPlayer.Play(intro);
-         
+            bg = Content.Load<Texture2D>(@"Textures\bg\DialogueBox");
 
             #region windowsMode
             // windows mode content loader
-            Conversation.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
+          /*  Conv.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
                 Content.Load<Texture2D>(@"Textures\bg\DialogueBox"),
                 new Microsoft.Xna.Framework.Rectangle(50, 50, 400, 100),
                 Content.Load<Texture2D>(@"Textures\Misc\BorderImage"),
                 5,
                 Color.Black,
-                Content.Load<Texture2D>(@"Textures\Misc\Continue"),
-                Content);
-
+                Content.Load<Texture2D>(@"Textures\Misc\Continue")
+                );
+            */
             // Load Avatars
             DirectoryInfo directoryInfo = new DirectoryInfo(Content.RootDirectory + @"\Avatars\");
             FileInfo[] fileInfo = directoryInfo.GetFiles();
@@ -207,14 +210,14 @@ namespace ProjectGame
 
             foreach (FileInfo fi in fileInfo)
                 arrayList.Add(fi.FullName);
-
+            /*
             for (int i = 0; i < arrayList.Count; i++)
             {
                 Conversation.Avatars.Add(Content.Load<Texture2D>(@"Avatars\" + i));
             }
-
+            */
             //load conversation by its id
-            Conversation.StartConversation(1);
+            //Conversation.StartConversation(1);
 
 
             #endregion
@@ -392,8 +395,20 @@ namespace ProjectGame
                         }
                         
                     }
-
                     else if (choosechar.IterChar == 4)
+                    {
+                        //set character to the wizard
+                        myChar.chosenChar = 4;
+                        gamestate = GameStates.Game;
+                        if (play == 1)
+                        {
+                            MediaPlayer.Play(gameost);
+                            MediaPlayer.IsRepeating = true;
+                        }
+
+                    }
+
+                    else if (choosechar.IterChar == 5)
                     {
                         gamestate = GameStates.MainMenu;
 
@@ -440,21 +455,26 @@ namespace ProjectGame
             #endregion
 
             #region windows mode
-            Conversation.Update(gameTime);
-            /*
-                        if (Conversation.Expired)
+            //Conversation.Update(gameTime);
+            
+           /* if (Conversation.Expired)
+            {
+                Player.doConversation = false;
+                
+            }*/
+                    /*    if (Conversation.Expired)
                         {
                             if (visible == true)
                             {
 
-                                Conversation.StartConversation(1);
+                                
 
                             }
                             else
                             {
                                 Conversation.RemoveBox();
                             }
-                        }*/
+                        } */
             #endregion
 
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
@@ -525,27 +545,33 @@ namespace ProjectGame
                     spriteBatch.Draw(myChar.DarkIco, new Vector2(580, 235), Color.White);
                     player.Initalize(Content.Load<Texture2D>(@"Textures\deathknight"), startPos);
                 }
+                else if (choosechar.IterChar == 4)
+                {
+                    spriteBatch.Draw(myChar.Wizardico, new Vector2(580, 280), Color.White);
+                    player.Initalize(Content.Load<Texture2D>(@"Textures\Wizard_spreadsheet"), startPos);
+                }
+
 
             }
             #endregion
 
             #region draw Windows
-          /*  else if (gamestate == GameStates.Something)
+           /* else if (gamestate == GameStates.Game)
             {
                 TimeSpan drawTime = stopWatch.Elapsed;
                 // settings.DrawMenu(spriteBatch, 800, text);
-                map.Draw(mapDisplayDevice, viewport);
+               // map.Draw(mapDisplayDevice, viewport);
                // spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
                 //InitializeEnemy(gameTime);
-                // Conversation.Draw(spriteBatch);
+                 Conversation.Draw(spriteBatch);
                 spriteBatch.DrawString(text, "ms: " + drawTime.TotalMilliseconds, Vector2.UnitX * 600.0f + Vector2.UnitY * 20.0f, Color.DarkMagenta);
 
                 stopWatch.Start();
-                CreateEnemy(gameTime);
+               // CreateEnemy(gameTime);
 
 
-            }
-            */
+            }*/
+          
             #endregion
 
             #region draw enemy and char test
@@ -561,6 +587,7 @@ namespace ProjectGame
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
+               
                 player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
 
                 // DEBUG PRINT, magic numbers are bad, but this will do

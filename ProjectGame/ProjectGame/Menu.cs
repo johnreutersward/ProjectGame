@@ -29,7 +29,7 @@ namespace ProjectGame
 
         public Menu()
         {
-            Title = "Land of Magic";
+            Title = "Journey into Game Development";
             MenuItems = new List<string>();
             MenuItems.Add("Single Player");
             MenuItems.Add("Settings");

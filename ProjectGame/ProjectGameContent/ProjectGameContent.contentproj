@@ -33,7 +33,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileSheets\TileSheet01.png">
+    <Compile Include="Textures\TileSheets\TileSheet01.png">
       <Name>TileSheet01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -48,7 +48,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileSheets\part2_tileset.png">
+    <Compile Include="Textures\TileSheets\part2_tileset.png">
       <Name>part2_tileset</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -62,7 +62,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileSheets\tilesheet.png">
+    <Compile Include="Textures\TileSheets\tilesheet.png">
       <Name>tilesheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -88,14 +88,6 @@
       <Name>blackbox</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Forest.tide">
-      <Name>Forest</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +290,76 @@
       <Name>StoryBegins</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Wizard_spreadsheet.png">
+      <Name>Wizard_spreadsheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Wizard_spreadsheet_jwr.png">
+      <Name>Wizard_spreadsheet_jwr</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TileSheets\mack__s_tile_set__b_by_draymondc-d2z3zbl.png">
+      <Name>mack__s_tile_set__b_by_draymondc-d2z3zbl</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\part2_tileset.png">
+      <Name>part2_tileset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\tilea2-boden_6443_von_refmap.png">
+      <Name>tilea2-boden_6443_von_refmap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\tileb-markt_6447_von_refmap.png">
+      <Name>tileb-markt_6447_von_refmap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\tiled-inneneinrichtung_6449_von_refmap.png">
+      <Name>tiled-inneneinrichtung_6449_von_refmap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\tilesheet.png">
+      <Name>tilesheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\TileSheet01.png">
+      <Name>TileSheet01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Wizardico.png">
+      <Name>Wizardico</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Maps\Forest.tide">
+      <Name>Forest</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Maps\Forest1.tide">
+      <Name>Forest1</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
