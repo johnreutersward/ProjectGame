@@ -142,7 +142,7 @@ namespace ProjectGame
                 effect = SpriteEffects.FlipHorizontally;
             }
 
-             if (doConversation && convset == 0)
+             if (doConversation && convset == 4)
             {
               Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
               Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Long long time ago ..  ");
@@ -150,20 +150,20 @@ namespace ProjectGame
               Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "Copy me  ..  ");
             }
 
-            if (doConversation && convset == 1)
+            if (doConversation && convset == 5)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M THE SECOND SCREEN");
                   
             }
-            if (doConversation && convset == 2)
+            if (doConversation && convset == 6)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M 3 SCREEN");
             }
-            if (doConversation && convset == 3)
+            if (doConversation && convset == 7)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Boom Shakalaka");
@@ -311,7 +311,8 @@ namespace ProjectGame
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
                            
                             
-                            count = 3;
+                            count = 7;
+                            convset = 4;
                             
                             doConversation = true;
                             
