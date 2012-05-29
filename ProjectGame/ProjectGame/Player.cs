@@ -294,7 +294,7 @@ namespace ProjectGame
                         else if (tile != null && tile.TileIndex == 760)
                         {
                             Game1.map = Game1.second;
-                            Position = new Vector2(100, 100);
+                            Position = new Vector2(32, 100);
 
 
                             return true;
