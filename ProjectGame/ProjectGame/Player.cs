@@ -145,29 +145,35 @@ namespace ProjectGame
              if (doConversation && convset == 4)
             {
               Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-              Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Long long time ago ..  ");
-              Game1.Conversationbox.DrawConv(spriteBatch, 120, 130, Game1.textconv, "Long long text  ..  ");
-              Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "Copy me  ..  ");
+              Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "You are to late!");
+              Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: What happend here?");
             }
 
             if (doConversation && convset == 5)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M THE SECOND SCREEN");
-                  
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "The town folk, they are all dead!");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: What killed them?");
             }
             if (doConversation && convset == 6)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Ha fuck that shit ");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "I'M 3 SCREEN");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "An evil monster sent from the heavens to purge this land");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "The elder call him ... the garbage collecter, gods be true!");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "Let me guess, was he mumbling about mark-and-sweep?");
             }
             if (doConversation && convset == 7)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "Boom Shakalaka");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "--------------");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "What!? You knew of the monster");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: Yes, but I heard the town was under attack from Goblins?");
+            }
+            if (doConversation && convset == 8)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "The monster took care of them aswell");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "... he said that the authors had not kept the reference to the ArrayList<Goblins> and they all had to die!");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: Neat bro, cya");
             }
 
 
@@ -324,7 +330,7 @@ namespace ProjectGame
                         {
 
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
-                            count = 7;
+                            count = 8;
                             convset = 4;
                             doConversation = true;
                         }
