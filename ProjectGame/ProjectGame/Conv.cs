@@ -35,7 +35,7 @@ namespace ProjectGame
         {
         
          // draw conv box
-         batch.Draw(background, new Vector2(100, 100), Color.White);
+         batch.Draw(background, new Vector2(50, 100), Color.White);
          // draw text   
          //batch.DrawString(Neverwinter, texter, new Vector2(120, 120), Color.White);
         

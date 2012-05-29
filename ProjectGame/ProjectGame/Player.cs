@@ -21,12 +21,14 @@ namespace ProjectGame
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 10;
-        public int speed = 5;
+        public int speed = 7;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
         public static bool doConversation;
         public static int convset = 0;
         public static int count = 0;
+        public static int collision = 0;
+        public static int notreaded = 0;
         
          
 
@@ -132,6 +134,17 @@ namespace ProjectGame
                     }
                 }
             }
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && collision == 1 && notreaded == 0)
+            {
+                
+                doConversation = true;
+                           }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Enter) && convset == 14)
+            {
+                notreaded = 1;
+                doConversation = false;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)
@@ -146,35 +159,64 @@ namespace ProjectGame
             {
               Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
               Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "You are to late!");
-              Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: What happend here?");
+             
             }
 
-            if (doConversation && convset == 5)
-            {
-                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "The town folk, they are all dead!");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: What killed them?");
-            }
+             if (doConversation && convset == 5)
+             {
+                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "YOU: What happend here?");
+             }
+
             if (doConversation && convset == 6)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "An evil monster sent from the heavens to purge this land");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "The elder call him ... the garbage collecter, gods be true!");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "Let me guess, was he mumbling about mark-and-sweep?");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "The town folk, they are all dead!");
+               
             }
             if (doConversation && convset == 7)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "What!? You knew of the monster");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: Yes, but I heard the town was under attack from Goblins?");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "YOU: What killed them?");
             }
             if (doConversation && convset == 8)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "The monster took care of them aswell");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "... he said that the authors had not kept the reference to the ArrayList<Goblins> and they all had to die!");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 240, Game1.textconv, "YOU: Neat bro, cya");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "An evil monster sent from the heavens to purge this land");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "The elder call him ... the garbage collecter, gods be true!");
+               
             }
+            if (doConversation && convset == 9)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "YOU: Let me guess, was he mumbling about mark-and-sweep?");
+            }
+            if (doConversation && convset == 10)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "What!? You knew of the monster");
+               
+            }
+            if (doConversation && convset == 11)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "YOU: Yes, but I heard the town was under attack from Goblins?");
+            }
+            if (doConversation && convset == 12)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 115, Game1.textconv, "The monster took care of them aswell");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 128, Game1.textconv, "... he said that the authors had not kept the reference");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 141, Game1.textconv, "to the ArrayList<Goblins> and they all had to die!");
+            }
+            if (doConversation && convset == 13)
+            {
+                Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
+                               Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "YOU: Neat bro, cya");
+                               notreaded = 1;
+                               
+            }
+
 
 
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
@@ -330,9 +372,10 @@ namespace ProjectGame
                         {
 
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
-                            count = 8;
+                            count = 14;
                             convset = 4;
-                            doConversation = true;
+                            collision = 1;
+                           
                         }
                         //template for tile conv
                         else if (tile != null && tile.TileIndex == 200000)

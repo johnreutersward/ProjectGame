@@ -196,7 +196,7 @@ namespace ProjectGame
             //collisionLayer = map.GetLayer("obs");
             #endregion
             MediaPlayer.Play(intro);
-            bg = Content.Load<Texture2D>(@"Textures\bg\DialogueBox");
+            bg = Content.Load<Texture2D>(@"Textures\DialogueBoxlong");
 
             #region windowsMode
             // windows mode content loader
@@ -283,9 +283,21 @@ namespace ProjectGame
 
             else if (gamestate == GameStates.End)
             {
+                KeyboardState kb = Keyboard.GetState();
+
                 if (input.Enter)
                 {
                     gamestate = GameStates.MainMenu;
+                }
+                
+                if (kb.IsKeyDown(Keys.Escape))
+                {
+                    gamestate = GameStates.MainMenu;
+                    if (play == 1)
+                    {
+                        MediaPlayer.Play(intro);
+                        MediaPlayer.IsRepeating = true;
+                    }
                 }
             }
             else if (gamestate == GameStates.TitleScreen)
@@ -446,8 +458,8 @@ namespace ProjectGame
 
                 if (kb.IsKeyDown(Keys.Enter) && OldKeyState.IsKeyUp(Keys.Enter))
                 {
-                  
-                                      
+
+
                     if (Player.count > Player.convset)
                     {
                         Player.convset++;
@@ -455,13 +467,16 @@ namespace ProjectGame
 
                     else if (Player.convset == Player.count)
                     {
+                        Player.notreaded = 1;
                         Player.doConversation = false;
                     }
+
+
 
                 }
                 OldKeyState = kb;
 
-                if (kb.IsKeyDown(Keys.F1))
+                if (kb.IsKeyDown(Keys.Escape))
                 {
                     gamestate = GameStates.MainMenu;
                     if (play == 1)
@@ -471,7 +486,7 @@ namespace ProjectGame
                     }
                 }
 
-               
+
                 player.Update(gameTime, map.GetLayer("obs"));
                 viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
                 viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
