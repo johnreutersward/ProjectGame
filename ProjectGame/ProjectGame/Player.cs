@@ -20,7 +20,7 @@ namespace ProjectGame
         public Point currentFrame = new Point(1,1);
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
-        public int collisionOffset = 10;
+        public int collisionOffset = 20;
         public int speed = 3;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
@@ -30,8 +30,7 @@ namespace ProjectGame
         public static int collision = 0;
         public static int notreaded = 0;
         public ProjectileManager projectileManager;
-        //public List<ProjectileManager.Knife> knvies;
-        
+        public KeyboardState OldKeyState;        
         
         public Player(ProjectileManager projectileManager)
         {
@@ -154,14 +153,27 @@ namespace ProjectGame
             }
 
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && OldKeyState.IsKeyUp(Keys.Space))
             {
-                projectileManager.AddKnife(Position, ProjectileManager.Knife.KnifeDirection.Right);
+                switch (playerDirection)
+                {
+                    case Direction.Down: projectileManager.AddKnife(new Vector2(playerBounds.Center.X, playerBounds.Center.Y), ProjectileManager.Knife.KnifeDirection.Down); break;
+                    case Direction.Up: projectileManager.AddKnife(new Vector2(playerBounds.Center.X, playerBounds.Center.Y), ProjectileManager.Knife.KnifeDirection.Up); break;
+                    case Direction.Left: projectileManager.AddKnife(new Vector2(playerBounds.Center.X, playerBounds.Center.Y), ProjectileManager.Knife.KnifeDirection.Left); break;
+                    case Direction.Right: projectileManager.AddKnife(new Vector2(playerBounds.Center.X, playerBounds.Center.Y), ProjectileManager.Knife.KnifeDirection.Right); break;
+                }
             }
+            OldKeyState = Keyboard.GetState();
 
             foreach (ProjectileManager.Knife theKnife in projectileManager.knives)
             {
-                theKnife.Position.X++;
+                switch (theKnife.dir)
+                {
+                    case ProjectileManager.Knife.KnifeDirection.Down: theKnife.Position.Y += theKnife.Speed; theKnife.kniferotaion += theKnife.Speed; break;
+                    case ProjectileManager.Knife.KnifeDirection.Up: theKnife.Position.Y -= theKnife.Speed; theKnife.kniferotaion += theKnife.Speed; break;
+                    case ProjectileManager.Knife.KnifeDirection.Right: theKnife.Position.X += theKnife.Speed; theKnife.kniferotaion += theKnife.Speed; break;
+                    case ProjectileManager.Knife.KnifeDirection.Left: theKnife.Position.X -= theKnife.Speed; theKnife.kniferotaion += theKnife.Speed; break;
+                }
             }
         }
 
@@ -240,7 +252,8 @@ namespace ProjectGame
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
             foreach (ProjectileManager.Knife theKnife in projectileManager.knives)
             {
-                spriteBatch.Draw(theKnife.Texture, theKnife.Position, Color.White);
+                //spriteBatch.Draw(theKnife.Texture, CalculateScreenPositionKnife(mapDimension, windowDimension, viewport, theKnife.Position), Color.White);
+                spriteBatch.Draw(theKnife.Texture, CalculateScreenPositionKnife(mapDimension, windowDimension, viewport, theKnife.Position), null, Color.White, theKnife.kniferotaion, new Vector2(0,0),1f,SpriteEffects.None,0);
             }
         }
 
@@ -269,6 +282,33 @@ namespace ProjectGame
             }
             return realPosition;
         }
+
+        private Vector2 CalculateScreenPositionKnife(Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport, Vector2 KnifePosition)
+        {
+            Vector2 realPosition = Vector2.Zero;
+            if (mapDimension.X <= windowDimension.X && mapDimension.Y <= windowDimension.Y)
+            {
+                realPosition.X = KnifePosition.X;
+                realPosition.Y = KnifePosition.Y;
+            }
+            else if (mapDimension.X > windowDimension.X && mapDimension.Y <= windowDimension.Y)
+            {
+                realPosition.X = KnifePosition.X - viewport.X;
+                realPosition.Y = KnifePosition.Y;
+            }
+            else if (mapDimension.X <= windowDimension.X && mapDimension.Y > windowDimension.Y)
+            {
+                realPosition.X = KnifePosition.X;
+                realPosition.Y = KnifePosition.Y - viewport.Y;
+            }
+            else if (mapDimension.X > windowDimension.X && mapDimension.Y > windowDimension.Y)
+            {
+                realPosition.X = KnifePosition.X - viewport.X;
+                realPosition.Y = KnifePosition.Y - viewport.Y;
+            }
+            return realPosition;
+        }
+
 
         private bool Collision(Vector2 pos, Layer collisionLayer)
         {

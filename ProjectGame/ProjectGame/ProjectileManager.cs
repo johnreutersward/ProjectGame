@@ -34,7 +34,9 @@ namespace ProjectGame
         {
             public Vector2 Position;
             public Texture2D Texture;
+            public int Speed = 10;
             public KnifeDirection dir;
+            public float kniferotaion = 0.08727f;
 
             public enum KnifeDirection
             {
@@ -72,7 +74,7 @@ namespace ProjectGame
 
         public void AddKnife(Vector2 Position, Knife.KnifeDirection Dir)
         {
-
+            //Debug.Print("Knife " + Position);
             knives.Add(new Knife(Position, this.Texture, Dir));
 
         }
