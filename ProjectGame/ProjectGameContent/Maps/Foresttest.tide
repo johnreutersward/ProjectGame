@@ -2899,7 +2899,7 @@
       </TileArray>
       <Properties />
     </Layer>
-    <Layer Id="obs" Visible="False">
+    <Layer Id="obs" Visible="True">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="100 x 15" TileSize="32 x 32" />
       <TileArray>
@@ -3015,11 +3015,7 @@
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="14" />
           <Static Index="23" BlendMode="Alpha" />
-          <Null Count="9" />
-          <Static Index="23" BlendMode="Alpha" />
-          <Static Index="23" BlendMode="Alpha" />
-          <Static Index="23" BlendMode="Alpha" />
-          <Null Count="6" />
+          <Null Count="18" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="1" />
@@ -3058,9 +3054,8 @@
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="4" />
           <Static Index="23" BlendMode="Alpha" />
-          <Null Count="1" />
           <Static Index="23" BlendMode="Alpha" />
-          <Null Count="6" />
+          <Null Count="7" />
           <Static Index="23" BlendMode="Alpha" />
           <Null Count="3" />
           <Static Index="23" BlendMode="Alpha" />
@@ -3331,8 +3326,7 @@
           <Null Count="46" />
           <Static Index="23" BlendMode="Alpha" />
           <Static Index="23" BlendMode="Alpha" />
-          <Static Index="23" BlendMode="Alpha" />
-          <Null Count="5" />
+          <Null Count="6" />
           <Static Index="23" BlendMode="Alpha" />
         </Row>
         <Row>

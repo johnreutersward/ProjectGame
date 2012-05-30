@@ -20,7 +20,7 @@ namespace ProjectGame
         public Point currentFrame = new Point(1,1);
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
-        public int collisionOffset = 20;
+        public int collisionOffset = 10;
         public int speed = 3;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
