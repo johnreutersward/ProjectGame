@@ -29,8 +29,15 @@ namespace ProjectGame
         public static int count = 0;
         public static int collision = 0;
         public static int notreaded = 0;
+        public ProjectileManager projectileManager;
+        //public List<ProjectileManager.Knife> knvies;
         
-         
+        
+        public Player(ProjectileManager projectileManager)
+        {
+            this.projectileManager = projectileManager;
+            //knvies = new List<ProjectileManager.Knife>();
+        }
 
         public Rectangle playerBounds
         {
@@ -145,6 +152,17 @@ namespace ProjectGame
                 notreaded = 1;
                 doConversation = false;
             }
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                projectileManager.AddKnife(Position, ProjectileManager.Knife.KnifeDirection.Right);
+            }
+
+            foreach (ProjectileManager.Knife theKnife in projectileManager.knives)
+            {
+                theKnife.Position.X++;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)
@@ -220,6 +238,10 @@ namespace ProjectGame
 
 
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
+            foreach (ProjectileManager.Knife theKnife in projectileManager.knives)
+            {
+                spriteBatch.Draw(theKnife.Texture, theKnife.Position, Color.White);
+            }
         }
 
         private Vector2 CalculateScreenPosition(Vector2 mapDimension, Vector2 windowDimension, Vector2 viewport)

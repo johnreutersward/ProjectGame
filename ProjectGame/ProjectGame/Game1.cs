@@ -74,7 +74,8 @@ namespace ProjectGame
         public static bool done;
 
         public KeyboardState OldKeyState;
-
+        public Texture2D knife;
+        ProjectileManager projectileManager;
         public enum GameStates
         {
             TitleScreen,
@@ -97,7 +98,8 @@ namespace ProjectGame
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
-            player = new Player();
+            projectileManager = new ProjectileManager();
+            player = new Player(projectileManager);
 
             myChar = new Char();
             enemies = new List<Enemy>();
@@ -168,6 +170,9 @@ namespace ProjectGame
             intro = Content.Load<Song>(@"Audio\intro");
           //  intro = Content.Load<Song>(@"Audio\StoryBegins");
             gameost = Content.Load<Song>(@"Audio\SneakySnitch");
+
+            knife = Content.Load<Texture2D>(@"TileSheets\knife");
+            projectileManager.setTexture(knife);
 
             
            
