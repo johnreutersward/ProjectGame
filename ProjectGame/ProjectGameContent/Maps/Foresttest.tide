@@ -2899,7 +2899,7 @@
       </TileArray>
       <Properties />
     </Layer>
-    <Layer Id="obs" Visible="True">
+    <Layer Id="obs" Visible="False">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="100 x 15" TileSize="32 x 32" />
       <TileArray>
