@@ -90,8 +90,9 @@ namespace ProjectGame
         {
             #region initclasses etc
             graphics = new GraphicsDeviceManager(this);
+            graphics.ToggleFullScreen();
            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
             // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
             graphics.PreferredBackBufferWidth = 800;

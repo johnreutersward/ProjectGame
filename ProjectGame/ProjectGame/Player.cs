@@ -21,7 +21,7 @@ namespace ProjectGame
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 10;
-        public int speed = 2;
+        public int speed = 3;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
         public static bool doConversation;

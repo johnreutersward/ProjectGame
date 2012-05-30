@@ -65,7 +65,7 @@ namespace ProjectGame
         public void setTexture(Texture2D Texture)
         {
             this.Texture = Texture;
-            AddKnife(new Vector2(0, 0), Knife.KnifeDirection.Right);
+            //AddKnife(new Vector2(0, 0), Knife.KnifeDirection.Right);
             
 
         }
