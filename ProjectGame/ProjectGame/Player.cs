@@ -21,7 +21,7 @@ namespace ProjectGame
         public Point sheetSize = new Point(5,9);
         public Vector2 Position;
         public int collisionOffset = 10;
-        public int speed = 7;
+        public int speed = 2;
         public int timeSinceLastFrame = 0;
         public int defaultMillisecondsPerFrame = 60;
         public static bool doConversation;
@@ -407,6 +407,12 @@ namespace ProjectGame
                                    count = 7;
                                    convset = 4;
                                    doConversation = true;
+                        }
+                        else if (tile != null && tile.TileIndex == 1881)
+                        {
+
+                            Game1.map = Game1.forestMap;
+                            Position = new Vector2(3112, 226);
                         }
 
                        
