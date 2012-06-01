@@ -91,12 +91,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WindowsGameLibrary1\WindowsMode.csproj">
-      <Project>{18C7891F-AF04-4044-951C-95BD96A6C180}</Project>
-      <Name>WindowsMode</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Avatars\0.png">
       <Name>0</Name>
       <Importer>TextureImporter</Importer>
@@ -132,23 +126,6 @@
       <Name>Continue</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="WindowsText\1.xml">
-      <Name>1</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </Compile>
-    <Compile Include="WindowsText\2.xml">
-      <Name>2</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </Compile>
-    <Compile Include="WindowsText\3.xml">
-      <Name>3</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
