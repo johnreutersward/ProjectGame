@@ -10,8 +10,6 @@ using Microsoft.Xna.Framework.Input;
 using xTile.Layers;
 using xTile.Tiles;
 
-
-
 namespace ProjectGame
 {
     class Player

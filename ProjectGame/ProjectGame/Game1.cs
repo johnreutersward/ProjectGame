@@ -3,17 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
-using System.Timers;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Storage;
 
 using xTile;
 using xTile.Dimensions;
@@ -50,7 +45,6 @@ namespace ProjectGame
         Texture2D gameover;
         public static Texture2D bg;
         public Texture2D knife;
-        Stopwatch stopWatch;
         public static bool done;
         public KeyboardState OldKeyState;
         ProjectileManager projectileManager;
@@ -121,8 +115,6 @@ namespace ProjectGame
             second.LoadTileSheets(mapDisplayDevice);
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
-            
-            stopWatch = new System.Diagnostics.Stopwatch();
             done = false;
         }
 
