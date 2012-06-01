@@ -33,46 +33,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\TileSheets\TileSheet01.png">
-      <Name>TileSheet01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\theRoad.tide">
-      <Name>theRoad</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-      <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\TileSheets\part2_tileset.png">
-      <Name>part2_tileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Fonts\Arial.spritefont">
       <Name>Arial</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\TileSheets\tilesheet.png">
-      <Name>tilesheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\320x320_test1.tide">
-      <Name>320x320_test1</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -81,13 +45,6 @@
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\blackbox.png">
-      <Name>blackbox</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -180,20 +137,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\testbg.jpg">
-      <Name>testbg</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\testbgfit.png">
-      <Name>testbgfit</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\game_worldfit.png">
       <Name>game_worldfit</Name>
       <Importer>TextureImporter</Importer>
@@ -263,11 +206,6 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\StoryBegins.mp3">
-      <Name>StoryBegins</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Textures\Wizard_spreadsheet.png">
@@ -284,11 +222,6 @@
   <ItemGroup>
     <Compile Include="TileSheets\mack__s_tile_set__b_by_draymondc-d2z3zbl.png">
       <Name>mack__s_tile_set__b_by_draymondc-d2z3zbl</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="TileSheets\part2_tileset.png">
-      <Name>part2_tileset</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -312,31 +245,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="TileSheets\TileSheet01.png">
-      <Name>TileSheet01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Textures\Wizardico.png">
       <Name>Wizardico</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Forest.tide">
-      <Name>Forest</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Forest1.tide">
-      <Name>Forest1</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -354,17 +268,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileSheets\knife.png">
-      <Name>knife</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Maps\cave.tide">
       <Name>cave</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\knife.png">
+      <Name>knife</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
