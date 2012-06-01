@@ -188,7 +188,7 @@ namespace ProjectGame
              if (doConversation && convset == 4)
             {
               Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-              Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "You are to late!");
+              Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "BOY: You are to late!");
              
             }
 
@@ -201,7 +201,7 @@ namespace ProjectGame
             if (doConversation && convset == 6)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "The town folk, they are all dead!");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "BOY: The town folk, they are all dead!");
                
             }
             if (doConversation && convset == 7)
@@ -212,8 +212,8 @@ namespace ProjectGame
             if (doConversation && convset == 8)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "An evil monster sent from the heavens to purge this land");
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "The elder call him ... the garbage collecter, gods be true!");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "BOY: An evil monster sent from the heavens to purge this land");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 140, Game1.textconv, "The elders call him ... the garbage collecter, gods be true!");
                
             }
             if (doConversation && convset == 9)
@@ -224,7 +224,7 @@ namespace ProjectGame
             if (doConversation && convset == 10)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "What!? You knew of the monster");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "BOY: What!? You knew of the monster");
                
             }
             if (doConversation && convset == 11)
@@ -235,7 +235,7 @@ namespace ProjectGame
             if (doConversation && convset == 12)
             {
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
-                Game1.Conversationbox.DrawConv(spriteBatch, 120, 115, Game1.textconv, "The monster took care of them aswell");
+                Game1.Conversationbox.DrawConv(spriteBatch, 120, 115, Game1.textconv, "BOY: The monster took care of them aswell");
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 128, Game1.textconv, "... he said that the authors had not kept the reference");
                 Game1.Conversationbox.DrawConv(spriteBatch, 120, 141, Game1.textconv, "to the ArrayList<Goblins> and they all had to die!");
             }
@@ -395,6 +395,7 @@ namespace ProjectGame
 
                             return true;
                         }
+                     
                         else if (tile != null && tile.TileIndex == 760)
                         {
                             Game1.map = Game1.second;

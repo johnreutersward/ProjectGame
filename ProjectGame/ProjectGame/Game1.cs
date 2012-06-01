@@ -59,6 +59,7 @@ namespace ProjectGame
         public static Map inhous2Mapa;
         public static Map inhous2Mapb;
         public static Map second;
+        public static Map cave;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
        // Layer collisionLayer;
@@ -197,6 +198,7 @@ namespace ProjectGame
             inhous2Mapa = Content.Load<Map>("Maps\\standard3a");
             inhous2Mapb = Content.Load<Map>("Maps\\standard3b");
             second = Content.Load<Map>("Maps\\standard");
+            cave = Content.Load<Map>("Maps\\cave");
             map = forestMap;
             
             //collisionLayer = map.GetLayer("obs");
@@ -637,9 +639,9 @@ namespace ProjectGame
                 player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
 
                 // DEBUG PRINT, magic numbers are bad, but this will do
-                Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 400, 35 * 0));
-                Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
-                Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
+                ///Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 400, 35 * 0));
+                //Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
+                //Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
                 
             }
 
