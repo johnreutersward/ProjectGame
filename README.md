@@ -11,4 +11,5 @@ Hints
 Content attribution
 -------------------
 Textures from BrowserQuest: http://browserquest.mozilla.org/ Source: https://github.com/mozilla/BrowserQuest
+
 Music from composer Kevin MacLeod: http://incompetech.com/
