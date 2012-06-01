@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using System.Timers;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -13,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Storage;
+
 using xTile;
 using xTile.Dimensions;
 using xTile.Display;
@@ -24,20 +26,17 @@ namespace ProjectGame
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        #region instances
-
+        
         private Input input;
         public static GameStates gamestate;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        int windowWidth;
+        int windowHeight;
 
-        //char & enemies
+        // Misc content
         Player player;
         Char myChar;
-        //Texture2D enemyTextures;
-        List<Enemy> enemies;
-
-        // menu & char screen
         public static SpriteFont text;
         public static SpriteFont textconv;
         private Menu menu;
@@ -50,8 +49,13 @@ namespace ProjectGame
         Texture2D choosebg;
         Texture2D gameover;
         public static Texture2D bg;
+        public Texture2D knife;
+        Stopwatch stopWatch;
+        public static bool done;
+        public KeyboardState OldKeyState;
+        ProjectileManager projectileManager;
 
-        // xTile map, display device reference and rendering viewport (this is pretty awesome!)
+        // xTile maps, display device reference and rendering viewport
         public static Map map;
         public static Map forestMap;
         public static Map inhousMapa;
@@ -61,22 +65,13 @@ namespace ProjectGame
         public static Map second;
         public static Map cave;
         IDisplayDevice mapDisplayDevice;
-        xTile.Dimensions.Rectangle viewport;
-       // Layer collisionLayer;
+        xTile.Dimensions.Rectangle viewport;       
 
+        // Music
         public Song intro;
         public Song gameost;
         public int play;
 
-        int windowWidth;
-        int windowHeight;
-        #endregion
-        Stopwatch stopWatch;
-        public static bool done;
-
-        public KeyboardState OldKeyState;
-        public Texture2D knife;
-        ProjectileManager projectileManager;
         public enum GameStates
         {
             TitleScreen,
@@ -89,37 +84,21 @@ namespace ProjectGame
 
         public Game1()
         {
-            #region initclasses etc
             graphics = new GraphicsDeviceManager(this);
             graphics.ToggleFullScreen();
-           Content.RootDirectory = "Content";
+            Content.RootDirectory = "Content";
             IsMouseVisible = false;
-            // Why these values? Well 32 * 25 = 800 & 32 * 15 = 480 so it all works out! The map can be much bigger if we want it to! this is just the size of the window!
-            // You can still go full screen, try it in-game by pressing "f" (it takes awhile)
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             windowWidth = graphics.PreferredBackBufferWidth;
             windowHeight = graphics.PreferredBackBufferHeight;
             projectileManager = new ProjectileManager();
             player = new Player(projectileManager);
-
             myChar = new Char();
-            enemies = new List<Enemy>();
-
-
-
-            #endregion
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.   
-        /// </summary>
         protected override void Initialize()
         {
-            #region Initialize
             base.Initialize();
             Conversationbox = new Conv();
             input = new Input();
@@ -142,56 +121,39 @@ namespace ProjectGame
             second.LoadTileSheets(mapDisplayDevice);
             // Make sure that viewport size = window size
             viewport = new xTile.Dimensions.Rectangle(new Size(windowWidth, windowHeight));
-
-            #endregion
+            
             stopWatch = new System.Diagnostics.Stopwatch();
             done = false;
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            #region LoadContent
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Fonts
             text = Content.Load<SpriteFont>("Fonts\\Arial");
             textconv = Content.Load<SpriteFont>("Fonts\\Segoe");
+
+            // Character textures
             myChar.ClothIco = Content.Load<Texture2D>(@"Textures\clotharmorico");
             myChar.DarkIco = Content.Load<Texture2D>(@"Textures\deathknightico");
             myChar.GoldenIco = Content.Load<Texture2D>(@"Textures\goldenarmorico");
             myChar.LeatherIco = Content.Load<Texture2D>(@"Textures\leatherarmorico");
             myChar.Wizardico = Content.Load<Texture2D>(@"Textures\Wizardico");
            
+            //  Misc textures
             world_map = Content.Load<Texture2D>(@"Textures\gameTitle_v3");
             menubg = Content.Load<Texture2D>(@"Textures\bg1");
             choosebg = Content.Load<Texture2D>(@"Textures\bg2");
             gameover = Content.Load<Texture2D>(@"Textures\gameover");
-
-            intro = Content.Load<Song>(@"Audio\intro");
-          //  intro = Content.Load<Song>(@"Audio\StoryBegins");
-            gameost = Content.Load<Song>(@"Audio\SneakySnitch");
-
-            knife = Content.Load<Texture2D>(@"TileSheets\knife");
+            knife = Content.Load<Texture2D>(@"Textures\knife");
             projectileManager.setTexture(knife);
 
+            // Music
+            intro = Content.Load<Song>(@"Audio\intro");          
+            gameost = Content.Load<Song>(@"Audio\SneakySnitch");
             
-           
-              
-            
-                //player.Initalize(Content.Load<Texture2D>(@"Textures\platearmor"), startPos);
-           
-            //myChar.myChar = Content.Load<Texture2D>(@"Textures\blackbox");
-            //myChar.myCharVector = new Vector2(32, 32);
-
-
-            // All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
-            // forest map
-            //map = Content.Load<Map>("Maps\\Forest");
-            // test for portals in forest
-            //map = Content.Load<Map>("Maps\\Foresttest");
-            // test for the room
+            // Maps - All maps must have a invisible layer called "obs" that uses tile 23 to mark obstacles
             forestMap = Content.Load<Map>("Maps\\Foresttest");
             inhousMapa = Content.Load<Map>("Maps\\standard2a");
             inhousMapb = Content.Load<Map>("Maps\\standard2b");
@@ -199,61 +161,29 @@ namespace ProjectGame
             inhous2Mapb = Content.Load<Map>("Maps\\standard3b");
             second = Content.Load<Map>("Maps\\standard");
             cave = Content.Load<Map>("Maps\\cave");
+            
+            // Set default map
             map = forestMap;
             
-            //collisionLayer = map.GetLayer("obs");
-            #endregion
+            // Start intro music
             MediaPlayer.Play(intro);
+            
             bg = Content.Load<Texture2D>(@"Textures\DialogueBoxlong");
-
-            #region windowsMode
-            // windows mode content loader
-          /*  Conv.Initialize(Content.Load<SpriteFont>(@"Fonts\Segoe"),
-                Content.Load<Texture2D>(@"Textures\bg\DialogueBox"),
-                new Microsoft.Xna.Framework.Rectangle(50, 50, 400, 100),
-                Content.Load<Texture2D>(@"Textures\Misc\BorderImage"),
-                5,
-                Color.Black,
-                Content.Load<Texture2D>(@"Textures\Misc\Continue")
-                );
-            */
-            // Load Avatars
             DirectoryInfo directoryInfo = new DirectoryInfo(Content.RootDirectory + @"\Avatars\");
             FileInfo[] fileInfo = directoryInfo.GetFiles();
             ArrayList arrayList = new ArrayList();
 
             foreach (FileInfo fi in fileInfo)
                 arrayList.Add(fi.FullName);
-            /*
-            for (int i = 0; i < arrayList.Count; i++)
-            {
-                Conversation.Avatars.Add(Content.Load<Texture2D>(@"Avatars\" + i));
-            }
-            */
-            //load conversation by its id
-            //Conversation.StartConversation(1);
-
-
-            #endregion
+            
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            #region update
             
             input.Update();
 
@@ -467,7 +397,6 @@ namespace ProjectGame
                 if (kb.IsKeyDown(Keys.Enter) && OldKeyState.IsKeyUp(Keys.Enter))
                 {
 
-
                     if (Player.count > Player.convset)
                     {
                         Player.convset++;
@@ -478,9 +407,6 @@ namespace ProjectGame
                         Player.notreaded = 1;
                         Player.doConversation = false;
                     }
-
-
-
                 }
                 OldKeyState = kb;
 
@@ -494,59 +420,22 @@ namespace ProjectGame
                     }
                 }
 
-
                 player.Update(gameTime, map.GetLayer("obs"));
                 viewport.X = (int)player.Position.X - (int)viewport.Width / 2;
                 viewport.Y = (int)player.Position.Y - (int)viewport.Height / 2;
             }
             #endregion
 
-            #region windows mode
-            //Conversation.Update(gameTime);
-            
-           /* if (Conversation.Expired)
-            {
-                Player.doConversation = false;
-                
-            }*/
-                    /*    if (Conversation.Expired)
-                        {
-                            if (visible == true)
-                            {
-
-                                
-
-                            }
-                            else
-                            {
-                                Conversation.RemoveBox();
-                            }
-                        } */
-            #endregion
-
             map.Update(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
-
-           // InitializeEnemy();
-
-            #endregion
-
-                
-           
             
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            #region draw
             // background color
             GraphicsDevice.Clear(Color.Black);
 
-            // Draws the main map screen aswell as text and other UI stuff. Break into smaller modules in ze future
             spriteBatch.Begin();
 
             #region drawMenu
@@ -603,131 +492,18 @@ namespace ProjectGame
             }
             #endregion
 
-            #region draw Windows
-           /* else if (gamestate == GameStates.Game)
-            {
-                TimeSpan drawTime = stopWatch.Elapsed;
-                // settings.DrawMenu(spriteBatch, 800, text);
-               // map.Draw(mapDisplayDevice, viewport);
-               // spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
-                //InitializeEnemy(gameTime);
-                 Conversation.Draw(spriteBatch);
-                spriteBatch.DrawString(text, "ms: " + drawTime.TotalMilliseconds, Vector2.UnitX * 600.0f + Vector2.UnitY * 20.0f, Color.DarkMagenta);
-
-                stopWatch.Start();
-               // CreateEnemy(gameTime);
-
-
-            }*/
-          
-            #endregion
-
-            #region draw enemy and char test
-            /*else if (gamestate == GameStates.Something)
-            {
-                spriteBatch.Draw(myChar.myChar, myChar.myCharVector, Color.White);
-                spriteBatch.Draw(enemies[1].enemy1, enemies[0].enemyVector, Color.White);
-            }*/
-            #endregion
-
-            #region drawGame
             // ACTUALL GAME MODE
             else if (gamestate == GameStates.Game)
             {
                 map.Draw(mapDisplayDevice, viewport);
-               
                 player.Draw(spriteBatch, new Vector2(map.DisplayWidth, map.DisplayHeight), new Vector2(windowWidth, windowHeight), new Vector2(viewport.X, viewport.Y));
-
                 // DEBUG PRINT, magic numbers are bad, but this will do
                 ///Debug.OnScreenPrint(spriteBatch, text, "PlayerPos: " + player.Position.ToString(), new Vector2(viewport.Width - 400, 35 * 0));
                 //Debug.OnScreenPrint(spriteBatch, text, "PlayerDir: " + player.playerDirection.ToString(), new Vector2(viewport.Width - 360, 35 * 1));
                 //Debug.OnScreenPrint(spriteBatch, text, "MapDim: " + map.DisplaySize.ToString(), new Vector2(viewport.Width - 360, 35 * 2));
-                
             }
-
             spriteBatch.End();
             base.Draw(gameTime);
-            #endregion
-
-            #endregion
         }
-
-        private bool Collision(Vector2 pos)
-        {
-            #region collision
-            //Horrible test code for collision
-
-            Layer collision = map.GetLayer("obs");
-            Microsoft.Xna.Framework.Rectangle characterBounds = new Microsoft.Xna.Framework.Rectangle((int)myChar.myCharVector.X, (int)myChar.myCharVector.Y, 32, 32);
-
-            int leftTile = (int)Math.Floor((float)characterBounds.Left / 32);
-            int rightTile = (int)Math.Ceiling(((float)characterBounds.Right / 32)) - 1;
-            int topTile = (int)Math.Floor((float)characterBounds.Top / 32);
-            int bottomTile = (int)Math.Ceiling(((float)characterBounds.Bottom / 32)) - 1;
-
-            //Debug.Print("left: " + leftTile + " right: " + rightTile + " top: " + topTile + " bottom: " + bottomTile);
-
-            for (int y = topTile; y <= bottomTile; ++y)
-            {
-                for (int x = leftTile; x <= rightTile; ++x)
-                {
-                    if ((x >= 0 && x < collision.LayerWidth) && (y >= 0 && y < collision.LayerHeight))
-                    {
-                        Tile tile = collision.Tiles[x, y];
-
-                        if (tile != null && tile.TileIndex == 23)
-                        {
-                           
-                            //Debug.Print("Collision with tile at {" + x + "," + y + "}");
-                            return true;
-                        }
-                      
-                    }
-                }
-            }
-            return false;
-
-
-            #endregion
-        }
-
-
-
-        
-
-        private void CreateEnemy(GameTime gameTime)
-        {
-            if (stopWatch.Elapsed.Seconds > 2)
-            {
-                gamestate = GameStates.Settings;
-                /*stopWatch.Stop();
-
-                if (done)
-                {
-                    stopWatch.Reset();
-                    stopWatch.Start();
-
-                }
-                else
-                {
-                    Conversation.Draw(spriteBatch);
-                }
-                */
-
-            }
-
-
-        }
-
-       
-        private void InitializeEnemy()
-        {
-            #region init enemy
-            //to do .. 
-           // CreateEnemy();
-            #endregion
-        }
-
-       
     }
 }

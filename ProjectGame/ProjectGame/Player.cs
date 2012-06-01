@@ -35,7 +35,6 @@ namespace ProjectGame
         public Player(ProjectileManager projectileManager)
         {
             this.projectileManager = projectileManager;
-            //knvies = new List<ProjectileManager.Knife>();
         }
 
         public Rectangle playerBounds
@@ -244,10 +243,7 @@ namespace ProjectGame
                 Game1.Conversationbox.DrawBox(spriteBatch, 800, Game1.textconv, Game1.bg);
                                Game1.Conversationbox.DrawConv(spriteBatch, 120, 120, Game1.textconv, "YOU: Neat bro, cya");
                                notreaded = 1;
-                               
             }
-
-
 
             spriteBatch.Draw(PlayerTexture, CalculateScreenPosition(mapDimension, windowDimension, viewport), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
             foreach (ProjectileManager.Knife theKnife in projectileManager.knives)
@@ -418,27 +414,19 @@ namespace ProjectGame
                         }
                         else if (tile != null && tile.TileIndex == 1408)
                         {
-                            
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
-
                             Game1.gamestate = Game1.GameStates.End; 
-                     //       count = 7;
-                       //     convset = 4;
-                            
-                         //   doConversation = true;
-                            
-                            
-                          
+                            // count = 7;
+                            // convset = 4;
+                            // doConversation = true;
                         }
                         
                         else if (tile != null && tile.TileIndex == 1901)
                         {
-
                             // how many screens count to 1 -> for 2 screens, 2  -> for three screens etc..
                             count = 14;
                             convset = 4;
                             collision = 1;
-                           
                         }
                         //template for tile conv
                         else if (tile != null && tile.TileIndex == 200000)
