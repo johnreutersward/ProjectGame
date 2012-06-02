@@ -396,7 +396,7 @@ namespace ProjectGame
 
                     else if (Player.convset == Player.count)
                     {
-                        Player.notreaded = 1;
+                        //Player.notreaded = 1;
                         Player.doConversation = false;
                     }
                 }
