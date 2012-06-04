@@ -18,3 +18,10 @@ Content attribution
 * Textures from [BrowserQuest](http://browserquest.mozilla.org/) | [Source](https://github.com/mozilla/BrowserQuest)
 * Music from composer [Kevin MacLeod](http://incompetech.com/)
 
+Screenshots
+-----------
+![Town](http://dl.dropbox.com/u/6791833/github/ProjectGame_town.png)
+![Wasteland](http://dl.dropbox.com/u/6791833/github/ProjectGame_wasteland.png)
+![Hero](http://dl.dropbox.com/u/6791833/github/ProjectGame_hero.png)
+
+
